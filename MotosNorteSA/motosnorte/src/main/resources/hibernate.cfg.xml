@@ -1,0 +1,37 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">root</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/MOTOSNORTE?createDatabaseIfNotExist=true</property>
+		 <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="show_sql">true</property>
+		
+		<!-- ESTO CREA LA BASE A PARTIR DE LAS ENTIDADES -->
+		<!--  <property name="hibernate.hbm2ddl.auto">update</property>-->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		
+		<mapping class="edu.utn.seminario.motosnorte.domain.CategoriaMoto"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.CategoriaRepuesto"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Cilindrada"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Cliente"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.DetallePedidoMotos"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.DetallePedidoRepuestos"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Marca"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Moto"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.MovimientoStockMoto"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Pedido"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Repuesto"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.StockMotos"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.CondicionDePago"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.MovimientoStockRepuesto"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.StockRepuestos"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Sucursal"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Usuario"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Estado"></mapping>
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,32 @@
+
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<h:form>
+		<p:menubar>
+			<p:submenu label=" Propiedad" icon="fa fa-home">
+				<p:menuitem value="Alta" url="altaPropiedad.xhtml" />
+				<p:menuitem value="Propiedades en Alquiler"
+					url="listadoDePropiedades.xhtml?op=2" />
+				<p:menuitem value="Propiedades en Venta"
+					url="listadoDePropiedades.xhtml?op=1" />
+			</p:submenu>
+			<p:submenu label="Ciudad" icon="fa fa-map-marker">
+				<p:menuitem value="Alta"  url="altaCiudad.xhtml"/>
+			</p:submenu>
+			<p:submenu label="Usuario" icon="fa fa-users">
+				<p:menuitem value="Alta" url="altaUsuario.xhtml"/>
+			</p:submenu>
+			<f:facet name="options">
+				<p:commandButton id="logout" value="Logout" icon="ui-icon-extlink"
+					action="#{loginBean.logout}" />
+			</f:facet>
+		</p:menubar>
+		<!--  </p:outputPanel>-->
+	</h:form>
+</ui:composition>
+
+

@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<script
+			src="http://maps.google.com/maps/api/js?key=AIzaSyCx4dm20kpJe8m93gltqH5RIUtL4dWAbKA"
+			type="text/javascript"></script>
+		<h:outputScript library="js" name="common.js" />
+		<f:metadata>
+		</f:metadata>
+		<p:panel id="content">
+			<p:focus context="content" />
+			<div class="ui-grid ui-grid-responsive">
+				<h1 align="center">Error</h1>
+				<BR /> <BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3"></div>
+					<div class="ui-grid-col-6">
+						<p:messages for="errorMsg" showDetail="true" 
+						binding="#{errorBean.mensaje}">
+						</p:messages>
+					</div>
+					<div class="ui-grid-col-3"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-3">
+					<p:commandButton value="Ok" action="#{errorBean.confirmar()}"/>
+					</div>
+					<div class="ui-grid-col-4"></div>
+				</div>
+			</div>
+			<BR />
+		</p:panel>
+	</ui:define>
+</ui:composition>

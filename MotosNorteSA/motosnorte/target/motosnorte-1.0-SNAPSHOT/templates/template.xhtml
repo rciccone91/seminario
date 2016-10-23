@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html" id="fview">
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Adm. Inmobiliaria</title>
+		<ui:debug />
+		<h:head>
+		</h:head>
+		<h:body>
+			<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF; width:80%">
+
+				<!--  <p:layoutUnit position="north" size="9%" id="north" >
+				</p:layoutUnit>-->
+				
+				 <!-- <p:layoutUnit position="west" id="west" resizable="false" style="border:0;overflow:hidden;" size="10%">
+				</p:layoutUnit> -->
+				<p:layoutUnit styleClass="layoutUnitCenter" position="center">
+					<h:panelGroup id="panelPrueba">		
+						<ui:include src="menu.xhtml" />
+						<h:form id="mainForm">
+							<p:messages autoUpdate="true" id="msgs" showDetail="true" showSummary="true" />
+							<ui:insert name="content" />
+						</h:form>
+					</h:panelGroup>
+				</p:layoutUnit>
+				
+				
+				<!--  <p:layoutUnit position="east" size="10%" style="width:0px; display:none;" id="east">
+				</p:layoutUnit>-->
+				
+				<!--  <p:layoutUnit position="south" resizable="true" id="south">
+					<ui:include src="footer.xhtml" />
+				</p:layoutUnit>-->
+
+			</p:layout>
+			
+			<!--  <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" 
+				draggable="false" closable="false" resizable="false" 
+				visible="false" position="center" maximizable="false" minimizable="false" >
+				<p:graphicImage value="#{resource['images/ajax-loader.gif']}" />
+			</p:dialog>-->
+			<f:metadata>
+			<ui:insert name="metadata" />
+			</f:metadata>
+	</h:body>
+
+</f:view>
+</html>		

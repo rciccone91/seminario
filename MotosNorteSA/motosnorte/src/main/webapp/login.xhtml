@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html" id="fview">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Motos Norte</title>
+	<ui:debug />
+	<h:head>
+	</h:head>
+	<h:body>
+		<p:layout fullPage="true" resizeTitle="resize"
+			style="background-color:#FFFFFF; width:80%">
+
+			<!--  <p:layoutUnit position="north" size="9%" id="north" >
+				</p:layoutUnit>-->
+
+			<!-- <p:layoutUnit position="west" id="west" resizable="false" style="border:0;overflow:hidden;" size="10%">
+				</p:layoutUnit> -->
+			<p:layoutUnit styleClass="layoutUnitCenter" position="center">
+				<h:form id="mainForm">
+					<p:panel id="content">
+						<p:focus context="content" />
+						<h1 align="center">MotosNorte SA - Login</h1>
+						<br />
+						<br />
+						<br />
+						<div class="ui-grid ui-grid-responsive">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-5"></div>
+								<div class="ui-grid-col-2">
+									<p:outputLabel>Usuario: </p:outputLabel>
+									<p:inputText id="user" value="#{loginBean.user}"
+										required="true"
+										requiredMessage="Por favor, ingresar el usuario" />
+								</div>
+								<div class="ui-grid-col-5"></div>
+							</div>
+						</div>
+						<div class="ui-grid ui-grid-responsive">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-5"></div>
+								<div class="ui-grid-col-2">
+									<p:outputLabel>Password: </p:outputLabel>
+									<p:password id="pass" value="#{loginBean.password}"
+										required="true"
+										requiredMessage="Por favor, ingresar la password" />
+								</div>
+								<div class="ui-grid-col-5"></div>
+							</div>
+						</div>
+						<br />
+						<div class="ui-grid ui-grid-responsive">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-5"></div>
+								<div class="ui-grid-col-2">
+									<p:commandButton id="entrar" value="Entrar" action="#{loginBean.login}"></p:commandButton>
+								</div>
+								<div class="ui-grid-col-5"></div>
+							</div>
+						</div>
+						<br />
+						<div class="ui-grid ui-grid-responsive">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-3"></div>
+								<div class="ui-grid-col-6">
+									<p:messages id="msg" autoUpdate="true" closable="true"
+										showSummary="true" showDetail="true" showIcon="true" />
+								</div>
+								<div class="ui-grid-col-3"></div>
+							</div>
+						</div>
+					</p:panel>
+					<p:blockUI block="content" trigger="entrar">
+						<p:graphicImage library="images" name="ajax-loader.gif" />
+					</p:blockUI>
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+	</h:body>
+</f:view>
+</html>
