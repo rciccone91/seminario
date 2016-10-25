@@ -20,6 +20,10 @@ public class Cliente implements Serializable{
 	private Date fechaNacimiento;
 	private String telefono;
 	private Boolean active;
+	@Column(nullable=true)
+	private String direccion;
+	@Column(nullable=true)
+	private String mail;
 	
 	public Cliente() {
 	}
@@ -86,5 +90,21 @@ public class Cliente implements Serializable{
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 }

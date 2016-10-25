@@ -14,6 +14,7 @@ public class Usuario implements Serializable{
 	@Column(name="usuario_id")
 	private String usuario;
 	private String contrasenia;
+	@Column(nullable=true)
 	private Integer legajo;
 	private Integer rol;
 	private Boolean activo;

@@ -17,15 +17,18 @@ public class Moto implements Serializable{
 	@OneToOne
 	@JoinColumn(name="marca_id")
 	private Marca marca;
+	@Column(nullable=true)
 	private Date año;
 	@OneToOne
-	@JoinColumn(name="cilindrada_id")
+	@JoinColumn(name="cilindrada_id",nullable=true)
 	private Cilindrada cilindrada;
+	@Column(nullable=true)
 	private String color;
+	@Column(nullable=true)
 	private Integer peso;
 	private Integer precio;
 	@OneToOne
-	@JoinColumn(name="categoriamoto_id")
+	@JoinColumn(name="categoriamoto_id",nullable=true)
 	private CategoriaMoto categoriaMoto;
 	private Boolean activo;
 

@@ -20,6 +20,7 @@ public class Repuesto implements Serializable{
 	@OneToOne
 	@JoinColumn(name="moto_id")
 	private Moto motoCompatible;
+	@Column(nullable=true)
 	private String descripcion;
 	private Integer precio;
 	@OneToOne
