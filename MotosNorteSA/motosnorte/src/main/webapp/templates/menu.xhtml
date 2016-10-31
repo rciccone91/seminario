@@ -7,20 +7,27 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<h:form>
 		<p:menubar>
-			<p:submenu label=" Propiedad" icon="fa fa-home">
-				<p:menuitem value="Alta" url="altaPropiedad.xhtml" />
-				<p:menuitem value="Propiedades en Alquiler"
-					url="listadoDePropiedades.xhtml?op=2" />
-				<p:menuitem value="Propiedades en Venta"
-					url="listadoDePropiedades.xhtml?op=1" />
+			<p:submenu label=" Productos" icon="fa fa-cubes"
+				rendered="#{menuBean.mostrarUsuario()}">
+				<p:submenu label="  Repuestos" icon="fa fa-cogs">
+					<p:menuitem value="Nuevo Repuesto" url="datosRepuesto.xhtml?op=crear"/>
+					<p:menuitem value="Modificar Repuesto" url="seleccionarRepuesto.xhtml?op=modificar" />
+					<p:menuitem value="Eliminar Repuesto" url="seleccionarRepuesto.xhtml?op=eliminar"/>
+				</p:submenu>
+				<p:submenu label="  Motos" icon="fa fa-motorcycle"
+					rendered="#{menuBean.mostrarUsuario()}">
+					<p:menuitem value="Nueva Moto" url="datosMoto.xhtml?op=crear"/>
+					<p:menuitem value="Modificar Moto" url="seleccionarMoto.xhtml?op=modificar"/>
+					<p:menuitem value="Eliminar Moto" url="seleccionarMoto.xhtml?op=eliminar"/>
+				</p:submenu>
 			</p:submenu>
-			<p:submenu label="Ciudad" icon="fa fa-map-marker">
-				<p:menuitem value="Alta"  url="altaCiudad.xhtml"/>
-			</p:submenu>
-			<p:submenu label="Usuario" icon="fa fa-users" rendered="#{menuBean.mostrarUsuario()}">
-				<p:menuitem value="Nuevo Usuario" url="nuevoUsuario.xhtml"/>
-				<p:menuitem value="Modificar Usuario" url="seleccionarUsuario.xhtml?op=modificar"/>
-				<p:menuitem value="Eliminar Usuario" url="seleccionarUsuario.xhtml?op=eliminar"/>
+			<p:submenu label="Usuario" icon="fa fa-users"
+				rendered="#{menuBean.mostrarUsuario()}">
+				<p:menuitem value="Nuevo Usuario" url="nuevoUsuario.xhtml" />
+				<p:menuitem value="Modificar Usuario"
+					url="seleccionarUsuario.xhtml?op=modificar" />
+				<p:menuitem value="Eliminar Usuario"
+					url="seleccionarUsuario.xhtml?op=eliminar" />
 			</p:submenu>
 			<f:facet name="options">
 				<p:commandButton id="logout" value="Logout" icon="ui-icon-extlink"

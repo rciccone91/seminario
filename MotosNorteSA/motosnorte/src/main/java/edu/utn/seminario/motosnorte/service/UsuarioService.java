@@ -3,6 +3,10 @@ package edu.utn.seminario.motosnorte.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 import edu.utn.seminario.motosnorte.dao.RolDao;
 import edu.utn.seminario.motosnorte.dao.UsuarioDao;
 import edu.utn.seminario.motosnorte.domain.Rol;

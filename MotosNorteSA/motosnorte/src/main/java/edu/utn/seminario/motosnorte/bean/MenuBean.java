@@ -13,5 +13,10 @@ public class MenuBean {
 	public Boolean mostrarUsuario(){
 		return SessionHelper.getRolId().equals(Constants.ADMINISTRADOR_ID);
 	}
+	
+	public Boolean mostrarProductos(){
+		return SessionHelper.getRolId().equals(Constants.ADMINISTRADOR_ID)
+				|| SessionHelper.getRolId().equals(Constants.EMPLEADO_DE_DEPOSITO_ID);
+	}
 
 }

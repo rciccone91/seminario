@@ -15,42 +15,48 @@
 		<p:panel id="content">
 			<p:focus context="content" />
 			<div class="ui-grid ui-grid-responsive">
-				<h1 align="center">Seleccionar Usuario</h1>
+				<h1 align="center">Seleccionar Moto</h1>
 				<BR /> <BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-3"></div>
-					<div class="ui-grid-col-6">
-						<p:dataTable var="us" value="#{seleccionarUsuarioBean.usuarios}"
-							scrollable="true" scrollHeight="220" style="float: right">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-8">
+						<p:dataTable var="moto"
+							value="#{seleccionarMotoBean.motos}" scrollable="true"
+							scrollHeight="290" style="float: right">
 							<p:column headerText="ID" rendered="false">
-								<h:outputText value="#{us.id}" style="text-align: center" />
+								<h:outputText value="#{moto.id}" style="text-align: center" />
 							</p:column>
-							<p:column headerText="Usuario" sortBy="#{us.usuario}">
-								<h:outputText value="#{us.usuario}" style="text-align: center" />
-							</p:column>
-
-							<p:column headerText="Legajo">
-								<h:outputText value="#{us.legajo}" />
+							<p:column headerText="Modelo" sortBy="#{moto.modelo}">
+								<h:outputText value="#{moto.modelo}" style="text-align: center" />
 							</p:column>
 
-							<p:column headerText="Rol">
-								<h:outputText value="#{us.descripcionDeRol}" />
+							<p:column headerText="Precio">
+								<h:outputText value="#{moto.precio}" />
+							</p:column>
+							<p:column headerText="Categoria">
+								<h:outputText value="#{moto.categoriaMoto}" />
+							</p:column>
+							<p:column headerText="Marca">
+								<h:outputText value="#{moto.marca}" />
+							</p:column>
+							<p:column headerText="Cilindrada">
+								<h:outputText value="#{moto.cilindrada}" />
 							</p:column>
 							<p:column headerText="Activo">
-								<p:selectBooleanCheckbox value="#{us.activo}" disabled="true" />
+								<p:selectBooleanCheckbox value="#{moto.activo}" disabled="true" />
 							</p:column>
 							<p:column headerText="Acción"
-								rendered="#{seleccionarUsuarioBean.mostrarModificar()}">
+								rendered="#{seleccionarMotoBean.mostrarModificar()}">
 								<p:button value="Modificar"
-									outcome="modificarUsuario.xhtml?usuario=#{us.usuario}" />
+									outcome="datosMoto.xhtml?op=modificar&amp;id=#{moto.id}" />
 							</p:column>
 							<p:column headerText="Acción"
-								rendered="#{seleccionarUsuarioBean.mostrarEliminar()}">
-								<p:commandButton value="Eliminar" 
-								actionListener="#{seleccionarUsuarioBean.eliminarUsuario(us)}"
-								oncomplete="redirect()">
-									<p:confirm header="Confirmación" 
-									message="¿Realmente desea dar de baja al usuario?"
+								rendered="#{seleccionarMotoBean.mostrarEliminar()}">
+								<p:commandButton value="Eliminar"
+									actionListener="#{seleccionarMotoBean.eliminarMoto(moto)}"
+									oncomplete="redirect()">
+									<p:confirm header="Confirmación"
+										message="¿Realmente desea dar de baja la moto?"
 										icon="ui-icon-alert" />
 								</p:commandButton>
 							</p:column>
@@ -62,7 +68,7 @@
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</p:confirmDialog>
 					</div>
-					<div class="ui-grid-col-3"></div>
+					<div class="ui-grid-col-2"></div>
 				</div>
 			</div>
 		</p:panel>

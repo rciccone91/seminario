@@ -1,0 +1,162 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<script
+			src="http://maps.google.com/maps/api/js?key=AIzaSyCx4dm20kpJe8m93gltqH5RIUtL4dWAbKA"
+			type="text/javascript"></script>
+		<h:outputScript library="js" name="common.js" />
+		<f:metadata>
+		</f:metadata>
+		<p:panel id="content">
+			<p:focus context="content" />
+			<div class="ui-grid ui-grid-responsive">
+				<h1 align="center">Repuesto</h1>
+				<BR /> <BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Modelo: "></p:outputLabel>
+					</div>
+					<div class="ui-grid-col-3">
+						<p:inputText id="modelo" value="#{datosRepuestoBean.modelo}"
+							required="true" maxlength="20"
+							requiredMessage="El modelo del repuesto debe ser ingresado">
+							<f:validateLength minimum="4" />
+						</p:inputText>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="modelo" />
+					</div>
+					<div class="ui-grid-col-2"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Descripcion : "></p:outputLabel>
+					</div>
+					<div class="ui-grid-col-5">
+						<p:inputTextarea id="descripcion" scrollHeight="200" cols="75"
+							value="#{datosRepuestoBean.descripcion}" maxlength="200">
+						</p:inputTextarea>
+					</div>
+					<div class="ui-grid-col-3"></div>
+					<div class="ui-grid-col-1"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Precio: "></p:outputLabel>
+					</div>
+					<div class="ui-grid-col-3">
+						<pe:inputNumber value="#{datosRepuestoBean.precio}"
+							required="true" maxValue="99999" id="precio"
+							requiredMessage="El precio debe ser ingresado"></pe:inputNumber>
+
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="precio" />
+					</div>
+					<div class="ui-grid-col-2"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Categoría: " />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectOneMenu id="categoria" onstyle="width:125px"
+							value="#{datosRepuestoBean.categoriaRepuesto}" required="true"
+							requiredMessage="Se debe seleccionar la categoria del repuesto"
+							converter="categoriaRepuestoConverter">
+							<f:selectItem itemLabel="Seleccionar.." />
+							<f:selectItems value="#{datosRepuestoBean.categorias}" var="c"
+								itemLabel="#{c.categoriaRepuesto}" itemValue="#{c}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="categoria" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Marca:  " />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectOneMenu id="marca" onstyle="width:125px"
+							value="#{datosRepuestoBean.marca}" required="true"
+							requiredMessage="Se debe selecionar la marca"
+							converter="marcaConverter">
+							<f:selectItem itemLabel="Seleccionar.." />
+							<f:selectItems value="#{datosRepuestoBean.marcas}" var="c"
+								itemLabel="#{c.marca}" itemValue="#{c}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="marca" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Moto Compatible: " />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectOneMenu id="moto" onstyle="width:125px"
+							value="#{datosRepuestoBean.motoCompatible}" required="true"
+							requiredMessage="Se debe seleccionar el rol del usuario a crear"
+							converter="motoConverter">
+							<f:selectItem itemLabel="Seleccionar.." />
+							<f:selectItems value="#{datosRepuestoBean.motos}" var="c"
+								itemLabel="#{c.modelo}" itemValue="#{c}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="moto" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-2">
+						<p:commandButton id="guardarBtn" value="Guardar"
+							rendered="#{datosRepuestoBean.mostrarBotonGuardar()}"
+							action="#{datosRepuestoBean.guardar}" update="@parent"
+							binding="#{datosRepuestoBean.mensaje}" />
+						<p:commandButton id="modificarBtn" value="Modificar"
+							rendered="#{datosRepuestoBean.mostrarBotonModificar()}"
+							action="#{datosRepuestoBean.guardar}" update="@parent" />
+					</div>
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-4"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-5">
+						<p:messages for="guardarBtn" showDetail="true" closable="true"></p:messages>
+						<p:messages for="modificarBtn" showDetail="true" closable="true"></p:messages>
+					</div>
+					<div class="ui-grid-col-3"></div>
+				</div>
+			</div>
+			<BR />
+			<p:blockUI block="content" trigger="guardarBtn">
+				<p:graphicImage library="images" name="ajax-loader.gif" />
+			</p:blockUI>
+			<p:blockUI block="content" trigger="modificarBtn">
+				<p:graphicImage library="images" name="ajax-loader.gif" />
+			</p:blockUI>
+		</p:panel>
+	</ui:define>
+</ui:composition>

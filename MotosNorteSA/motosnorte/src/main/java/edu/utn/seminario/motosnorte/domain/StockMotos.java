@@ -53,4 +53,50 @@ public class StockMotos implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cantidad == null) ? 0 : cantidad.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((moto == null) ? 0 : moto.hashCode());
+		result = prime * result + ((sucursal == null) ? 0 : sucursal.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StockMotos other = (StockMotos) obj;
+		if (cantidad == null) {
+			if (other.cantidad != null)
+				return false;
+		} else if (!cantidad.equals(other.cantidad))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (moto == null) {
+			if (other.moto != null)
+				return false;
+		} else if (!moto.equals(other.moto))
+			return false;
+		if (sucursal == null) {
+			if (other.sucursal != null)
+				return false;
+		} else if (!sucursal.equals(other.sucursal))
+			return false;
+		return true;
+	}
+	
+	
+	
 }

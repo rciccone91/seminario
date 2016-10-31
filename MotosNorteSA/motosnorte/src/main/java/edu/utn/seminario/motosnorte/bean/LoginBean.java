@@ -17,7 +17,7 @@ import edu.utn.seminario.motosnorte.service.UsuarioService;
 
 @ManagedBean(name="loginBean")
 @SessionScoped
-public class LoginBean implements Serializable{
+public class LoginBean {
 
 	private String user;
 	private String password;

@@ -66,4 +66,49 @@ public class DetallePedidoRepuestos implements Serializable{
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cantidad == null) ? 0 : cantidad.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
+		result = prime * result + ((repuesto == null) ? 0 : repuesto.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallePedidoRepuestos other = (DetallePedidoRepuestos) obj;
+		if (cantidad == null) {
+			if (other.cantidad != null)
+				return false;
+		} else if (!cantidad.equals(other.cantidad))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (pedido == null) {
+			if (other.pedido != null)
+				return false;
+		} else if (!pedido.equals(other.pedido))
+			return false;
+		if (repuesto == null) {
+			if (other.repuesto != null)
+				return false;
+		} else if (!repuesto.equals(other.repuesto))
+			return false;
+		return true;
+	}
+	
+	
 }

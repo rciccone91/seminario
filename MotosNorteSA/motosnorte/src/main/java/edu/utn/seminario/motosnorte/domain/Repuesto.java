@@ -79,11 +79,11 @@ public class Repuesto implements Serializable{
 		this.precio = precio;
 	}
 
-	public CategoriaRepuesto getCategoriaMoto() {
+	public CategoriaRepuesto getCategoriaRepuesto() {
 		return categoriaRepuesto;
 	}
 
-	public void setCategoriaMoto(CategoriaRepuesto categoriaRepuesto) {
+	public void setCategoriaRepuesto(CategoriaRepuesto categoriaRepuesto) {
 		this.categoriaRepuesto = categoriaRepuesto;
 	}
 
@@ -93,6 +93,73 @@ public class Repuesto implements Serializable{
 
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((activo == null) ? 0 : activo.hashCode());
+		result = prime * result + ((categoriaRepuesto == null) ? 0 : categoriaRepuesto.hashCode());
+		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
+		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
+		result = prime * result + ((motoCompatible == null) ? 0 : motoCompatible.hashCode());
+		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Repuesto other = (Repuesto) obj;
+		if (activo == null) {
+			if (other.activo != null)
+				return false;
+		} else if (!activo.equals(other.activo))
+			return false;
+		if (categoriaRepuesto == null) {
+			if (other.categoriaRepuesto != null)
+				return false;
+		} else if (!categoriaRepuesto.equals(other.categoriaRepuesto))
+			return false;
+		if (descripcion == null) {
+			if (other.descripcion != null)
+				return false;
+		} else if (!descripcion.equals(other.descripcion))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (marca == null) {
+			if (other.marca != null)
+				return false;
+		} else if (!marca.equals(other.marca))
+			return false;
+		if (modelo == null) {
+			if (other.modelo != null)
+				return false;
+		} else if (!modelo.equals(other.modelo))
+			return false;
+		if (motoCompatible == null) {
+			if (other.motoCompatible != null)
+				return false;
+		} else if (!motoCompatible.equals(other.motoCompatible))
+			return false;
+		if (precio == null) {
+			if (other.precio != null)
+				return false;
+		} else if (!precio.equals(other.precio))
+			return false;
+		return true;
 	}
 	
 	

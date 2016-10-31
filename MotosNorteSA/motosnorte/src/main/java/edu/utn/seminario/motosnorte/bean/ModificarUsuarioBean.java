@@ -16,7 +16,6 @@ import edu.utn.seminario.motosnorte.domain.Rol;
 import edu.utn.seminario.motosnorte.domain.Usuario;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
 import edu.utn.seminario.motosnorte.exception.UsuarioYaExistenteException;
-import edu.utn.seminario.motosnorte.service.RolService;
 import edu.utn.seminario.motosnorte.service.UsuarioService;
 
 @SuppressWarnings("serial")
