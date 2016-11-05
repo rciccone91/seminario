@@ -13,12 +13,17 @@ public class MovimientoStockMoto implements Serializable {
 	@Column(name="movimientostockmoto_id")
 	private Integer id;
 	@OneToOne
-	@JoinColumn(name="moto_id")
+	@JoinColumn(name="moto_id",nullable=false)
 	private Moto moto;
-	private Integer cantidad;
+	@Column(nullable=false)
+	private int cantidad;
 	@OneToOne
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name="usuario_id",nullable=false)
 	private Usuario usuario;
+	@OneToOne
+	@JoinColumn(name="sucursal_id",nullable=false)
+	private Sucursal sucursal;
+	@Column(nullable=false)
 	private Date fecha;
 	
 	public MovimientoStockMoto() {
@@ -40,20 +45,20 @@ public class MovimientoStockMoto implements Serializable {
 		this.moto = moto;
 	}
 
-	public Integer getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(Integer cantidad) {
-		this.cantidad = cantidad;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
 	}
 
 	public Date getFecha() {
@@ -64,14 +69,19 @@ public class MovimientoStockMoto implements Serializable {
 		this.fecha = fecha;
 	}
 
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cantidad == null) ? 0 : cantidad.hashCode());
+		result = prime * result + cantidad;
 		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((moto == null) ? 0 : moto.hashCode());
+		result = prime * result + ((sucursal == null) ? 0 : sucursal.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
@@ -85,10 +95,7 @@ public class MovimientoStockMoto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		MovimientoStockMoto other = (MovimientoStockMoto) obj;
-		if (cantidad == null) {
-			if (other.cantidad != null)
-				return false;
-		} else if (!cantidad.equals(other.cantidad))
+		if (cantidad != other.cantidad)
 			return false;
 		if (fecha == null) {
 			if (other.fecha != null)
@@ -105,6 +112,11 @@ public class MovimientoStockMoto implements Serializable {
 				return false;
 		} else if (!moto.equals(other.moto))
 			return false;
+		if (sucursal == null) {
+			if (other.sucursal != null)
+				return false;
+		} else if (!sucursal.equals(other.sucursal))
+			return false;
 		if (usuario == null) {
 			if (other.usuario != null)
 				return false;
@@ -112,6 +124,6 @@ public class MovimientoStockMoto implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	
 }

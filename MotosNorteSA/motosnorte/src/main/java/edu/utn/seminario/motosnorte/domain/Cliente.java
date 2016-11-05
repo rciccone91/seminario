@@ -13,12 +13,19 @@ public class Cliente implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cliente_id")
 	private Integer id;
+	@Column(nullable=false)
 	private String nombre;
+	@Column(nullable=false)
 	private String apellido;
+	@Column(nullable=false)
 	private String dni;
+	@Column(nullable=false)
 	private String cuiCuit;
+	@Column(nullable=false)
 	private Date fechaNacimiento;
+	@Column(nullable=false)
 	private String telefono;
+	@Column(nullable=false)
 	private Boolean active;
 	@Column(nullable=true)
 	private String direccion;

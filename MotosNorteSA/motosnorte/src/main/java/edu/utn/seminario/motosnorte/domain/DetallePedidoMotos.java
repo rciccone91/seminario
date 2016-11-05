@@ -15,11 +15,12 @@ public class DetallePedidoMotos implements Serializable{
 	@Column(name="detallepedidomotos_id")
 	private Integer id;
 	@OneToOne
-	@JoinColumn(name="pedido_id")
+	@JoinColumn(name="pedido_id",nullable=false)
 	private Pedido pedido;
 	@OneToOne
-	@JoinColumn(name="moto_id")
+	@JoinColumn(name="moto_id",nullable=false)
 	private Moto moto;
+	@Column(nullable=false)
 	private Integer cantidad;
 	
 	public DetallePedidoMotos() {

@@ -13,11 +13,12 @@ public class StockRepuestos implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	@OneToOne
-	@JoinColumn(name="repuesto_id")
+	@JoinColumn(name="repuesto_id",nullable=false)
 	private Repuesto repuesto;
 	@OneToOne
-	@JoinColumn(name="sucursal_id")
+	@JoinColumn(name="sucursal_id",nullable=false)
 	private Sucursal sucursal;
+	@Column(nullable=false)
 	private Integer cantidad;
 	
 	public Integer getCantidad() {

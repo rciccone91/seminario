@@ -13,9 +13,10 @@ public class Moto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="moto_id")
 	private Integer id;
+	@Column(nullable=false)
 	private String modelo;
 	@OneToOne
-	@JoinColumn(name="marca_id")
+	@JoinColumn(name="marca_id",nullable=false)
 	private Marca marca;
 	@Column(nullable=true)
 	private Date año;
@@ -26,10 +27,12 @@ public class Moto implements Serializable{
 	private Integer color;
 	@Column(nullable=true)
 	private Integer peso;
+	@Column(nullable=false)
 	private Integer precio;
 	@OneToOne
 	@JoinColumn(name="categoriamoto_id",nullable=true)
 	private CategoriaMoto categoriaMoto;
+	@Column(nullable=false)
 	private Boolean activo;
 
 	
@@ -196,7 +199,7 @@ public class Moto implements Serializable{
 		return true;
 	}
 	
-	
-	
-	
+	public String getDescripcion(){
+		return this.marca.getMarca() + " - " + this.getModelo();
+	}
 }

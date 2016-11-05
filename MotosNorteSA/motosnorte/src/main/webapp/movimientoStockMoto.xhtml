@@ -15,22 +15,23 @@
 		<p:panel id="content">
 			<p:focus context="content" />
 			<div class="ui-grid ui-grid-responsive">
-				<h1 align="center">Nuevo Usuario</h1>
+				<h1 align="center">Movimiento de Stock - Motos</h1>
 				<BR /> <BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
-						<p:outputLabel value="Usuario: "></p:outputLabel>
+						<p:outputLabel value="Moto: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText id="usuario" value="#{nuevoUsuarioBean.usuario}"
-							required="true" maxlength="20"
-							requiredMessage="El nombre de usuario debe ser ingresado">
-							<f:validateLength minimum="4" />
-						</p:inputText>
+						<p:autoComplete id="moto" value="#{movimientoStockMotoBean.moto}"
+							minQueryLength="2" required="true"
+							requiredMessage="Se debe seleccionar la moto."
+							completeMethod="#{movimientoStockMotoBean.completeMoto}" var="m"
+							itemLabel="#{m.descripcion}" itemValue="#{m}"
+							converter="motoConverter" />
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="usuario" />
+						<p:message for="moto" />
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
@@ -38,67 +39,68 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
-						<p:outputLabel value="Password: "></p:outputLabel>
+						<p:outputLabel value="Movimiento: " />
 					</div>
 					<div class="ui-grid-col-3">
-						<p:password value="#{nuevoUsuarioBean.contrasenia}" id="password"
-							maxlength="10" required="true"
-							requiredMessage="La password debe ser ingresada">
-							<f:validateLength minimum="6" />
-						</p:password>
-					</div>
-					<div class="ui-grid-col-4">
-						<p:message for="password" />
-					</div>
-					<div class="ui-grid-col-2"></div>
-				</div>
-				<BR />
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-2"></div>
-					<div class="ui-grid-col-1">
-						<p:outputLabel value="Legajo: "></p:outputLabel>
-					</div>
-					<div class="ui-grid-col-3">
-						<pe:inputNumber value="#{nuevoUsuarioBean.legajo}" required="true"
-							maxValue="99999" id="legajo"
-							requiredMessage="El legajo debe ser ingresado"></pe:inputNumber>
-
-					</div>
-					<div class="ui-grid-col-4">
-						<p:message for="legajo" />
-					</div>
-					<div class="ui-grid-col-2"></div>
-				</div>
-				<BR />
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-2"></div>
-					<div class="ui-grid-col-1">
-						<p:outputLabel value="Rol: "></p:outputLabel>
-					</div>
-					<div class="ui-grid-col-3">
-						<p:selectOneMenu id="rolID" onstyle="width:125px"
-							value="#{nuevoUsuarioBean.rolID}" required="true" 
-							requiredMessage="Se debe seleccionar el rol del usuario a crear">
-							<f:selectItem itemLabel="Seleccionar.." />
-							<f:selectItems value="#{nuevoUsuarioBean.roles}" var="r"
-								itemLabel="#{r.rol}" itemValue="#{r.id}" />
+						<p:selectOneMenu id="movimiento" onstyle="width:125px"
+							value="#{movimientoStockMotoBean.movimiento}" required="true"
+							requiredMessage="Se debe seleccionar el tipo de movimiento">
+							<f:selectItem itemLabel="Entrada" itemValue="Entrada" />
+							<f:selectItem itemLabel="Salida" itemValue="Salida" />
 						</p:selectOneMenu>
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="rolID" />
+						<p:message for="movimiento" />
 					</div>
 				</div>
-				<div class="ui-grid-col-2"></div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Sucursal " />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectOneMenu id="sucursal" onstyle="width:125px"
+							value="#{movimientoStockMotoBean.sucursal}"
+							converter="sucursalConverter">
+							<f:selectItem itemLabel="Seleccionar..." />
+							<f:selectItems value="#{movimientoStockMotoBean.sucursales}" var="s"
+								itemLabel="#{s.descripcion}" itemValue="#{s}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="sucursal" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Cantidad: "></p:outputLabel>
+					</div>
+					<div class="ui-grid-col-3">
+						<pe:inputNumber id="cantidad"
+							value="#{movimientoStockMotoBean.cantidad}" required="true"
+							minValue="1" maxValue="99999"
+							requiredMessage="La cantidad debe ser ingresada">
+						</pe:inputNumber>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="cantidad" />
+					</div>
+					<div class="ui-grid-col-2"></div>
+				</div>
 
 				<BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-2">
 						<p:commandButton id="guardarBtn" value="Guardar"
-							action="#{nuevoUsuarioBean.guardar}" update="@parent"
-							binding="#{nuevoUsuarioBean.mensaje}"></p:commandButton>
+							action="#{movimientoStockMotoBean.guardar}" update="@parent"
+							binding="#{movimientoStockMotoBean.mensaje}" />
 					</div>
-					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-4"></div>
 				</div>
 				<BR />
 				<div class="ui-grid-row">

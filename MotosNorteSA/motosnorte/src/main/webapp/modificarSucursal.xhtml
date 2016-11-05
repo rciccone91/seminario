@@ -15,22 +15,22 @@
 		<p:panel id="content">
 			<p:focus context="content" />
 			<div class="ui-grid ui-grid-responsive">
-				<h1 align="center">Nuevo Usuario</h1>
+				<h1 align="center">Modificar Sucursal</h1>
 				<BR /> <BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
-						<p:outputLabel value="Usuario: "></p:outputLabel>
+						<p:outputLabel value="Descripción: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText id="usuario" value="#{nuevoUsuarioBean.usuario}"
-							required="true" maxlength="20"
-							requiredMessage="El nombre de usuario debe ser ingresado">
-							<f:validateLength minimum="4" />
+						<p:inputText value="#{modificarSucursalBean.descripcion}" id="descripcion"
+							maxlength="20" required="true"
+							requiredMessage="Debe ingresar una descripción para la sucursal.">
+							<f:validateLength minimum="6" />
 						</p:inputText>
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="usuario" />
+						<p:message for="descripcion" />
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
@@ -38,34 +38,16 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
-						<p:outputLabel value="Password: "></p:outputLabel>
+						<p:outputLabel value="Dirección: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:password value="#{nuevoUsuarioBean.contrasenia}" id="password"
-							maxlength="10" required="true"
-							requiredMessage="La password debe ser ingresada">
-							<f:validateLength minimum="6" />
-						</p:password>
-					</div>
-					<div class="ui-grid-col-4">
-						<p:message for="password" />
-					</div>
-					<div class="ui-grid-col-2"></div>
-				</div>
-				<BR />
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-2"></div>
-					<div class="ui-grid-col-1">
-						<p:outputLabel value="Legajo: "></p:outputLabel>
-					</div>
-					<div class="ui-grid-col-3">
-						<pe:inputNumber value="#{nuevoUsuarioBean.legajo}" required="true"
-							maxValue="99999" id="legajo"
-							requiredMessage="El legajo debe ser ingresado"></pe:inputNumber>
+						<p:inputText value="#{modificarSucursalBean.direccion}" required="true"
+							maxValue="99999" id="direccion"
+							requiredMessage="La dirección debe ser ingresada"></p:inputText>
 
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="legajo" />
+						<p:message for="direccion" />
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
@@ -73,19 +55,16 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
-						<p:outputLabel value="Rol: "></p:outputLabel>
+						<p:outputLabel value="Teléfono: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:selectOneMenu id="rolID" onstyle="width:125px"
-							value="#{nuevoUsuarioBean.rolID}" required="true" 
-							requiredMessage="Se debe seleccionar el rol del usuario a crear">
-							<f:selectItem itemLabel="Seleccionar.." />
-							<f:selectItems value="#{nuevoUsuarioBean.roles}" var="r"
-								itemLabel="#{r.rol}" itemValue="#{r.id}" />
-						</p:selectOneMenu>
+						<p:inputText id="telefono" onstyle="width:125px"
+							value="#{modificarSucursalBean.telefono}" required="true"
+							requiredMessage="Se debe ingresar un nro. de teléfono">							
+						</p:inputText>
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="rolID" />
+						<p:message for="telefono" />
 					</div>
 				</div>
 				<div class="ui-grid-col-2"></div>
@@ -95,8 +74,8 @@
 					<div class="ui-grid-col-5"></div>
 					<div class="ui-grid-col-2">
 						<p:commandButton id="guardarBtn" value="Guardar"
-							action="#{nuevoUsuarioBean.guardar}" update="@parent"
-							binding="#{nuevoUsuarioBean.mensaje}"></p:commandButton>
+							action="#{modificarSucursalBean.guardar}" update="@parent"
+							binding="#{modificarSucursalBean.mensaje}"></p:commandButton>
 					</div>
 					<div class="ui-grid-col-5"></div>
 				</div>

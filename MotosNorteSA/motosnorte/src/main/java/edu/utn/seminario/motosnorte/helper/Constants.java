@@ -43,4 +43,9 @@ public class Constants {
 		}
 		return color;
 	}
+	
+	public final static String MOVIMIENTO_STOCK_ENTRADA = "Entrada";
+	public final static String MOVIMIENTO_STOCK_SALIDA = "Salida";
+
+ 
 }

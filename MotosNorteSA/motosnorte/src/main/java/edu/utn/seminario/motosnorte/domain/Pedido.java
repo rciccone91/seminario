@@ -15,12 +15,17 @@ public class Pedido implements Serializable{
 	@Column(name="pedido_id")
 	private Integer id;
 	@OneToOne
-	@JoinColumn(name="cliente_id")
+	@JoinColumn(name="cliente_id",nullable=false)
 	private Cliente cliente;
+	@Column(nullable=false)
 	private Date fecha;
 	@OneToOne
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name="usuario_id",nullable=false)
 	private Usuario usuario;
+	@OneToOne
+	@JoinColumn(name="sucursal_id",nullable=false)
+	private Sucursal sucursal;
+	@Column(nullable=false)
 	private Integer estado;
 	
 	public Pedido() {
@@ -64,6 +69,14 @@ public class Pedido implements Serializable{
 
 	public void setEstado(Integer estado) {
 		this.estado = estado;
+	}
+
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
 	}
 
 	@Override

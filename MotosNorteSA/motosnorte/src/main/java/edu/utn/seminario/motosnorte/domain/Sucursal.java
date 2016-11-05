@@ -11,10 +11,12 @@ public class Sucursal implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="sucursal_id")
 	private Integer id;
+	@Column(nullable=false)
 	private String descripcion;
 	private String telefono;
+	@Column(nullable=false)
 	private String direccion;
-	private Boolean sucursalLocal;
+	@Column(nullable=false)
 	private Boolean activo;
 	
 	public Sucursal() {
@@ -60,14 +62,6 @@ public class Sucursal implements Serializable{
 		this.activo = activo;
 	}
 
-	public Boolean getSucursalLocal() {
-		return sucursalLocal;
-	}
-
-	public void setSucursalLocal(Boolean sucursalLocal) {
-		this.sucursalLocal = sucursalLocal;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -76,7 +70,6 @@ public class Sucursal implements Serializable{
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((sucursalLocal == null) ? 0 : sucursalLocal.hashCode());
 		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
 		return result;
 	}
@@ -110,18 +103,11 @@ public class Sucursal implements Serializable{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (sucursalLocal == null) {
-			if (other.sucursalLocal != null)
-				return false;
-		} else if (!sucursalLocal.equals(other.sucursalLocal))
-			return false;
 		if (telefono == null) {
 			if (other.telefono != null)
 				return false;
 		} else if (!telefono.equals(other.telefono))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 }

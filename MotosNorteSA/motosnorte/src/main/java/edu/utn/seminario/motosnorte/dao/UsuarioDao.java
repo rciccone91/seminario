@@ -73,7 +73,6 @@ public class UsuarioDao implements Serializable{
 		catch (Exception e) {
 			throw new Exception("Ocurrió un error, por favor comunicarse con el administrador");
 		}
-
 	}
 
 	@SuppressWarnings("unchecked")

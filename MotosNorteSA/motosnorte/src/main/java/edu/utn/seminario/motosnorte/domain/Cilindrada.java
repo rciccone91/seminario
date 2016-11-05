@@ -11,6 +11,7 @@ public class Cilindrada implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cilindrada_id")
 	private Integer id;
+	@Column(nullable=false)
 	private String cilindrada;
 	
 	public Integer getId() {

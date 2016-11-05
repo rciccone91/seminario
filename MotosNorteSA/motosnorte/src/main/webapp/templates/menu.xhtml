@@ -8,14 +8,13 @@
 	<h:form>
 		<p:menubar>
 			<p:submenu label=" Productos" icon="fa fa-cubes"
-				rendered="#{menuBean.mostrarUsuario()}">
-				<p:submenu label="  Repuestos" icon="fa fa-cogs">
+				rendered="#{menuBean.mostrarProductos()}">
+				<p:submenu label="  Repuestos" icon="fa fa-wrench">
 					<p:menuitem value="Nuevo Repuesto" url="datosRepuesto.xhtml?op=crear"/>
 					<p:menuitem value="Modificar Repuesto" url="seleccionarRepuesto.xhtml?op=modificar" />
 					<p:menuitem value="Eliminar Repuesto" url="seleccionarRepuesto.xhtml?op=eliminar"/>
 				</p:submenu>
-				<p:submenu label="  Motos" icon="fa fa-motorcycle"
-					rendered="#{menuBean.mostrarUsuario()}">
+				<p:submenu label="  Motos" icon="fa fa-motorcycle">
 					<p:menuitem value="Nueva Moto" url="datosMoto.xhtml?op=crear"/>
 					<p:menuitem value="Modificar Moto" url="seleccionarMoto.xhtml?op=modificar"/>
 					<p:menuitem value="Eliminar Moto" url="seleccionarMoto.xhtml?op=eliminar"/>
@@ -28,6 +27,22 @@
 					url="seleccionarUsuario.xhtml?op=modificar" />
 				<p:menuitem value="Eliminar Usuario"
 					url="seleccionarUsuario.xhtml?op=eliminar" />
+			</p:submenu>
+			<p:submenu label="Cliente" icon="fa fa-cliente" rendered="#{menuBean.mostrarCliente()}">
+				<p:menuitem value="Nuevo Cliente" url="nuevoCliente.xhtml"/>
+				<p:menuitem value="Modificar Cliente" url="seleccionarCliente.xhtml?op=modificar"/>
+				<p:menuitem value="Eliminar Cliente" url="seleccionarCliente.xhtml?op=eliminar"/>
+				<p:menuitem value="Listar Cliente" url="listarCliente.xhtml"/>
+			</p:submenu>
+			<p:submenu label="Stock"
+				rendered="#{menuBean.mostrarProductos()}">
+				<p:menuitem value="Mov.Stock - Moto" url="movimientoStockMoto.xhtml" />
+			</p:submenu>
+			<p:submenu label="Sucursal" icon="fa fa-users"
+			    rendered="#{menuBean.mostrarSucursal()}" >
+				<p:menuitem value="Nueva Sucursal" url="nuevaSucursal.xhtml"/>
+				<p:menuitem value="Modificar Sucursal" url="seleccionarSucursal.xhtml?op=modificar"/>
+				<p:menuitem value="Eliminar Sucursal"  url="seleccionarSucursal.xhtml?op=eliminar" />
 			</p:submenu>
 			<f:facet name="options">
 				<p:commandButton id="logout" value="Logout" icon="ui-icon-extlink"

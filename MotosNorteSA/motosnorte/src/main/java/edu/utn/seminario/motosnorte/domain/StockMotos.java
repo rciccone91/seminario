@@ -12,11 +12,12 @@ public class StockMotos implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	@OneToOne
-	@JoinColumn(name="moto_id")
+	@JoinColumn(name="moto_id",nullable=false)
 	private Moto moto;
 	@OneToOne
-	@JoinColumn(name="sucursal_id")
+	@JoinColumn(name="sucursal_id",nullable=false)
 	private Sucursal sucursal;
+	@Column(nullable=false)
 	private Integer cantidad;
 	
 	public StockMotos() {

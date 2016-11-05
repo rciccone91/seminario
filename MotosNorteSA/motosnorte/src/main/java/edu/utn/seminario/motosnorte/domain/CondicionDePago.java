@@ -11,6 +11,7 @@ public class CondicionDePago implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="condiciondepago_id")
 	private Integer id;
+	@Column(nullable=false)
 	private String condicionDePago;
 	
 	public CondicionDePago() {

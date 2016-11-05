@@ -13,19 +13,22 @@ public class Repuesto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="repuesto_id")
 	private Integer id;
+	@Column(nullable=false)
 	private String modelo;
 	@OneToOne
-	@JoinColumn(name="marca_id")
+	@JoinColumn(name="marca_id",nullable=false)
 	private Marca marca;
 	@OneToOne
-	@JoinColumn(name="moto_id")
+	@JoinColumn(name="moto_id",nullable=false)
 	private Moto motoCompatible;
 	@Column(nullable=true)
 	private String descripcion;
+	@Column(nullable=false)
 	private Integer precio;
 	@OneToOne
-	@JoinColumn(name="categoriarepuesto_id")
+	@JoinColumn(name="categoriarepuesto_id",nullable=false)
 	private CategoriaRepuesto categoriaRepuesto;
+	@Column(nullable=false)
 	private Boolean activo;
 	
 	public Repuesto() {

@@ -11,6 +11,7 @@ public class CategoriaRepuesto implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="categoriarepuesto_id")
 	private Integer id;
+	@Column(nullable=false)
 	private String categoriaRepuesto;
 	
 	public CategoriaRepuesto() {

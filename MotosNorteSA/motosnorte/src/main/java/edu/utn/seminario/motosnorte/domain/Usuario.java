@@ -11,12 +11,15 @@ import edu.utn.seminario.motosnorte.helper.Constants;
 public class Usuario implements Serializable{
 	
 	@Id
-	@Column(name="usuario_id")
+	@Column(name="usuario_id",nullable=false)
 	private String usuario;
+	@Column(nullable=false)
 	private String contrasenia;
 	@Column(nullable=true)
 	private Integer legajo;
+	@Column(nullable=false)
 	private Integer rol;
+	@Column(nullable=false)
 	private Boolean activo;
 
 	
