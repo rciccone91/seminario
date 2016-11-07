@@ -11,23 +11,23 @@
 		<p:panel id="content">
 			<p:focus context="content" />
 			<div class="ui-grid ui-grid-responsive">
-				<h1 align="center">Movimiento de Stock - Motos</h1>
+				<h1 align="center">Movimiento de Stock - Repuesto</h1>
 				<BR /> <BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
-						<p:outputLabel value="Moto: "></p:outputLabel>
+						<p:outputLabel value="Repuesto:  "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:autoComplete id="moto" value="#{movimientoStockMotoBean.moto}"
+						<p:autoComplete id="repuesto" value="#{movimientoStockRepuestoBean.repuesto}"
 							minQueryLength="2" required="true"
-							requiredMessage="Se debe seleccionar la moto."
-							completeMethod="#{movimientoStockMotoBean.completeMoto}" var="m"
-							itemLabel="#{m.descripcion}" itemValue="#{m}"
-							converter="motoConverter" />
+							requiredMessage="Se debe seleccionar el repuesto."
+							completeMethod="#{movimientoStockRepuestoBean.completeRepuesto}" var="r"
+							itemLabel="#{r.modelo}" itemValue="#{r}"
+							converter="repuestoConverter" />
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="moto" />
+						<p:message for="repuesto" />
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
@@ -39,7 +39,7 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:selectOneMenu id="movimiento" onstyle="width:125px"
-							value="#{movimientoStockMotoBean.movimiento}" required="true"
+							value="#{movimientoStockRepuestoBean.movimiento}" required="true"
 							requiredMessage="Se debe seleccionar el tipo de movimiento">
 							<f:selectItem itemLabel="Entrada" itemValue="Entrada" />
 							<f:selectItem itemLabel="Salida" itemValue="Salida" />
@@ -57,10 +57,10 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:selectOneMenu id="sucursal" onstyle="width:125px"
-							value="#{movimientoStockMotoBean.sucursal}"
+							value="#{movimientoStockRepuestoBean.sucursal}"
 							converter="sucursalConverter">
 							<f:selectItem itemLabel="Seleccionar..." />
-							<f:selectItems value="#{movimientoStockMotoBean.sucursales}" var="s"
+							<f:selectItems value="#{movimientoStockRepuestoBean.sucursales}" var="s"
 								itemLabel="#{s.descripcion}" itemValue="#{s}" />
 						</p:selectOneMenu>
 					</div>
@@ -76,7 +76,7 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<pe:inputNumber id="cantidad"
-							value="#{movimientoStockMotoBean.cantidad}" required="true"
+							value="#{movimientoStockRepuestoBean.cantidad}" required="true"
 							minValue="1" maxValue="99999"
 							requiredMessage="La cantidad debe ser ingresada">
 						</pe:inputNumber>
@@ -92,8 +92,8 @@
 					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-2">
 						<p:commandButton id="guardarBtn" value="Guardar"
-							action="#{movimientoStockMotoBean.guardar}" update="@parent"
-							binding="#{movimientoStockMotoBean.mensaje}" />
+							action="#{movimientoStockRepuestoBean.guardar}" update="@parent"
+							binding="#{movimientoStockRepuestoBean.mensaje}" />
 					</div>
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-4"></div>

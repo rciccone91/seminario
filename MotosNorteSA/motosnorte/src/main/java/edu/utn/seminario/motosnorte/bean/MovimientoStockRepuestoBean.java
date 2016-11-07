@@ -1,6 +1,5 @@
 package edu.utn.seminario.motosnorte.bean;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,36 +13,34 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import edu.utn.seminario.motosnorte.domain.Moto;
-import edu.utn.seminario.motosnorte.domain.MovimientoStockMoto;
+import edu.utn.seminario.motosnorte.domain.MovimientoStockRepuesto;
+import edu.utn.seminario.motosnorte.domain.Repuesto;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 import edu.utn.seminario.motosnorte.domain.Usuario;
 import edu.utn.seminario.motosnorte.exception.NoSePuedeRegistrarSalidaDeStockException;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
 import edu.utn.seminario.motosnorte.helper.Constants;
 import edu.utn.seminario.motosnorte.helper.SessionHelper;
-import edu.utn.seminario.motosnorte.service.CategoriaMotoBackingService;
-import edu.utn.seminario.motosnorte.service.MotoService;
-import edu.utn.seminario.motosnorte.service.MovimientoStockMotoService;
-import edu.utn.seminario.motosnorte.service.StockMotosService;
+import edu.utn.seminario.motosnorte.service.MovimientoStockRepuestoService;
+import edu.utn.seminario.motosnorte.service.RepuestosService;
+import edu.utn.seminario.motosnorte.service.StockRepuestosService;
 import edu.utn.seminario.motosnorte.service.SucursalBackingService;
 import edu.utn.seminario.motosnorte.service.UsuarioService;
 
-@SuppressWarnings("serial")
-@ManagedBean(name = "movimientoStockMotoBean")
+@ManagedBean(name = "movimientoStockRepuestoBean")
 @ViewScoped
-public class MovimientoStockMotoBean implements Serializable{
-
-	private Moto moto;
+public class MovimientoStockRepuestoBean {
+	
+	private Repuesto repuesto;
 	private String movimiento;
 	private Usuario usuario;
 	private Integer cantidad;
 	private Date fecha;
 	private Sucursal sucursal;
 	private UIComponent mensaje;
-	private MotoService motoService;
-	private MovimientoStockMotoService movimientoStockMotoService;
-	private StockMotosService stockMotosService;
+	private RepuestosService repuestosService;
+	private MovimientoStockRepuestoService movimientoStockRepuestoService;
+	private StockRepuestosService stockRepuestosService;
 	private UsuarioService usuarioService;
 
 	private List<Sucursal> sucursales;
@@ -53,45 +50,45 @@ public class MovimientoStockMotoBean implements Serializable{
 
 	@PostConstruct
 	public void init() {
-		motoService = new MotoService();
-		movimientoStockMotoService = new MovimientoStockMotoService();
-		stockMotosService = new StockMotosService();
+		repuestosService = new RepuestosService();
+		movimientoStockRepuestoService = new MovimientoStockRepuestoService();
+		stockRepuestosService = new StockRepuestosService();
 		usuarioService = new UsuarioService();
 		sucursales = sucursalBackingService.listarActivos();
 	}
+	
+	public List<Repuesto> completeRepuesto(String query){
+		List<Repuesto> repuestos = repuestosService.listar();
+		List<Repuesto> repuestosFiltrados = new ArrayList<Repuesto>();
 
-	public List<Moto> completeMoto(String query){
-		List<Moto> motos = motoService.listar();
-		List<Moto> motosFiltradas = new ArrayList<Moto>();
-
-		for (int i = 0; i < motos.size(); i++) {
-			Moto m = motos.get(i);
-			if(m.getDescripcion().toLowerCase().contains(query)) {
-				motosFiltradas.add(m);
+		for (int i = 0; i < repuestos.size(); i++) {
+			Repuesto r = repuestos.get(i);
+			if(r.getNombre().toLowerCase().contains(query)) {
+				repuestosFiltrados.add(r);
 			}
 		}
-		return motosFiltradas;
+		return repuestosFiltrados;
 	}
 
 	public String guardar(){
 		try {
 			if(movimiento.equals(Constants.MOVIMIENTO_STOCK_SALIDA)){
-				stockMotosService.validarSalida(moto, sucursal,movimiento);
+				stockRepuestosService.validarSalida(repuesto, sucursal,movimiento);
 			}
 			//guardo el movimiento
-			movimientoStockMotoService.guardar(armarMovimiento());
+			movimientoStockRepuestoService.guardar(armarMovimiento());
 			//actualizo el stock
 			if(movimiento.equals(Constants.MOVIMIENTO_STOCK_SALIDA)){
 				setCantidad(Math.abs(cantidad) * -1);
 			}
-			stockMotosService.actualizar(moto,sucursal,cantidad);
+			stockRepuestosService.actualizar(repuesto,sucursal,cantidad);
 		}catch (NoSePuedeRegistrarSalidaDeStockException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Atención",
 							e.getMessage()));
-			return "movimientoStockMoto.xhtml";
+			return "movimientoStockRepuesto.xhtml";
 		}
 		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -99,13 +96,13 @@ public class MovimientoStockMotoBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "movimientoStockMoto.xhtml";
+			return "movimientoStockRepuesto.xhtml";
 		}
 		return "index.xhtml";
 	}
 
-	private MovimientoStockMoto armarMovimiento() {
-		MovimientoStockMoto mov = new MovimientoStockMoto();
+	private MovimientoStockRepuesto armarMovimiento() {
+		MovimientoStockRepuesto mov = new MovimientoStockRepuesto();
 		try {
 			mov.setFecha(Calendar.getInstance().getTime());
 			if(movimiento.equals(Constants.MOVIMIENTO_STOCK_ENTRADA)){
@@ -114,7 +111,7 @@ public class MovimientoStockMotoBean implements Serializable{
 				mov.setCantidad(Math.abs(cantidad) * -1);
 			}
 			mov.setCantidad(cantidad);
-			mov.setMoto(moto);
+			mov.setRepuesto(repuesto);
 			mov.setSucursal(sucursal);
 			mov.setUsuario(usuarioService.getById(SessionHelper.getUserName()));
 		} catch (UsuarioNoEncontradoException e) {
@@ -124,20 +121,12 @@ public class MovimientoStockMotoBean implements Serializable{
 		return mov;		
 	}
 
-	public UIComponent getMensaje() {
-		return mensaje;
+	public Repuesto getRepuesto() {
+		return repuesto;
 	}
 
-	public void setMensaje(UIComponent mensaje) {
-		this.mensaje = mensaje;
-	}
-
-	public Moto getMoto() {
-		return moto;
-	}
-
-	public void setMoto(Moto moto) {
-		this.moto = moto;
+	public void setRepuesto(Repuesto repuesto) {
+		this.repuesto = repuesto;
 	}
 
 	public String getMovimiento() {
@@ -156,14 +145,6 @@ public class MovimientoStockMotoBean implements Serializable{
 		this.usuario = usuario;
 	}
 
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-
 	public Integer getCantidad() {
 		return cantidad;
 	}
@@ -172,12 +153,28 @@ public class MovimientoStockMotoBean implements Serializable{
 		this.cantidad = cantidad;
 	}
 
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
 	public Sucursal getSucursal() {
 		return sucursal;
 	}
 
 	public void setSucursal(Sucursal sucursal) {
 		this.sucursal = sucursal;
+	}
+
+	public UIComponent getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(UIComponent mensaje) {
+		this.mensaje = mensaje;
 	}
 
 	public List<Sucursal> getSucursales() {
@@ -195,7 +192,4 @@ public class MovimientoStockMotoBean implements Serializable{
 	public void setSucursalBackingService(SucursalBackingService sucursalBackingService) {
 		this.sucursalBackingService = sucursalBackingService;
 	}
-
-
-
 }

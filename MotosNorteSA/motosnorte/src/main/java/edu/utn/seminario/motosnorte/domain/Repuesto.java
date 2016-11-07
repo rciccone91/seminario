@@ -165,7 +165,7 @@ public class Repuesto implements Serializable{
 		return true;
 	}
 	
-	
-	
-	
+	public String getNombre(){
+		return this.marca.getMarca() + " - " + this.getModelo();
+	}
 }

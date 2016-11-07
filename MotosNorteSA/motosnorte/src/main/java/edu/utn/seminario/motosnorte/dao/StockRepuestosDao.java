@@ -10,16 +10,16 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
-import edu.utn.seminario.motosnorte.domain.Moto;
-import edu.utn.seminario.motosnorte.domain.StockMotos;
+import edu.utn.seminario.motosnorte.domain.Repuesto;
+import edu.utn.seminario.motosnorte.domain.StockRepuestos;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 
-public class StockMotosDao {
+public class StockRepuestosDao {
 
 	private SessionFactory sessionFactory;
 	private  Session session;
 
-	public StockMotosDao(){
+	public StockRepuestosDao(){
 		if(sessionFactory == null){
 			sessionFactory = new Configuration().configure()
 					.buildSessionFactory();
@@ -27,19 +27,14 @@ public class StockMotosDao {
 		}
 	}
 	
-	public void guardar(StockMotos s) throws Exception {
-		DataLayer data = new DataLayer();
-		data.guardar(s);
-	}
-	
 	@SuppressWarnings("unchecked")
-	public Boolean existe(Moto m, Sucursal s) throws Exception{
+	public boolean existe(Repuesto repuesto, Sucursal sucursal) throws Exception {
 		List<Object> lista = new ArrayList<Object>();
 		try {
-			Query query = session.createQuery("from StockMotos where moto_id = :motoId"
+			Query query = session.createQuery("from StockRepuestos where repuesto_id = :repuestoId"
 					+ " and sucursal_id =:sucursalID");
-			query.setInteger("motoId", m.getId());
-			query.setInteger("sucursalID",s.getId());
+			query.setInteger("repuestoId", repuesto.getId());
+			query.setInteger("sucursalID",sucursal.getId());
 			lista = query.list();
 			return !lista.isEmpty();
 		}
@@ -48,16 +43,15 @@ public class StockMotosDao {
 			throw new Exception("Ocurrió un error, por favor comunicarse con el administrador");
 		}
 	}
-	
-	
-	public void actualizar(Moto m, Sucursal s, int cantidad) throws Exception{
+
+	public void actualizar(Repuesto repuesto, Sucursal sucursal, Integer cantidad) throws Exception {
 		Transaction tx = session.getTransaction();
 		try {
-			Query query = session.createSQLQuery("update StockMotos set cantidad=cantidad+:cant where moto_id =:motoId"
+			Query query = session.createSQLQuery("update StockRepuestos set cantidad=cantidad+:cant where repuesto_id =:repuestoId"
 					+ " and sucursal_id =:sucursalID");
 			query.setInteger("cant", cantidad);
-			query.setInteger("motoId", m.getId());
-			query.setInteger("sucursalID",s.getId());
+			query.setInteger("repuestoId", repuesto.getId());
+			query.setInteger("sucursalID",sucursal.getId());
 			tx.begin();
 			query.executeUpdate();
 			tx.commit();
@@ -68,4 +62,10 @@ public class StockMotosDao {
 			throw new Exception("Ocurrió un error, por favor comunicarse con el administrador");
 		}
 	}
+
+	public void guardar(StockRepuestos stock) throws Exception {
+		DataLayer data = new DataLayer();
+		data.guardar(stock);
+	}
+
 }

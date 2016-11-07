@@ -7,7 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<h:form>
 		<p:menubar>
-			<p:submenu label=" Productos" icon="fa fa-cubes"
+			<p:submenu label=" Productos" icon="fa fa-cart-arrow-down"
 				rendered="#{menuBean.mostrarProductos()}">
 				<p:submenu label="  Repuestos" icon="fa fa-wrench">
 					<p:menuitem value="Nuevo Repuesto" url="datosRepuesto.xhtml?op=crear"/>
@@ -28,17 +28,18 @@
 				<p:menuitem value="Eliminar Usuario"
 					url="seleccionarUsuario.xhtml?op=eliminar" />
 			</p:submenu>
-			<p:submenu label="Cliente" icon="fa fa-cliente" rendered="#{menuBean.mostrarCliente()}">
+			<p:submenu label="Cliente" icon="fa fa-street-view" rendered="#{menuBean.mostrarCliente()}">
 				<p:menuitem value="Nuevo Cliente" url="nuevoCliente.xhtml"/>
 				<p:menuitem value="Modificar Cliente" url="seleccionarCliente.xhtml?op=modificar"/>
 				<p:menuitem value="Eliminar Cliente" url="seleccionarCliente.xhtml?op=eliminar"/>
 				<p:menuitem value="Listar Cliente" url="listarCliente.xhtml"/>
 			</p:submenu>
-			<p:submenu label="Stock"
+			<p:submenu label="Stock" icon="fa fa-cubes"
 				rendered="#{menuBean.mostrarProductos()}">
 				<p:menuitem value="Mov.Stock - Moto" url="movimientoStockMoto.xhtml" />
+				<p:menuitem value="Mov.Stock - Repuesto" url="movimientoStockRepuesto.xhtml" />
 			</p:submenu>
-			<p:submenu label="Sucursal" icon="fa fa-users"
+			<p:submenu label="Sucursal" icon="fa fa-building-o"
 			    rendered="#{menuBean.mostrarSucursal()}" >
 				<p:menuitem value="Nueva Sucursal" url="nuevaSucursal.xhtml"/>
 				<p:menuitem value="Modificar Sucursal" url="seleccionarSucursal.xhtml?op=modificar"/>

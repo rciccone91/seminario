@@ -26,6 +26,9 @@ public class MovimientoStockRepuesto implements Serializable {
 	@OneToOne
 	@JoinColumn(name="usuario_id",nullable=false)
 	private Usuario usuario;
+	@OneToOne
+	@JoinColumn(name="sucursal_id",nullable=false)
+	private Sucursal sucursal;
 	@Column(nullable=false)
 	private Date fecha;
 	
@@ -71,9 +74,12 @@ public class MovimientoStockRepuesto implements Serializable {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	
-	
 
-	
-	
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
+	}
 }
