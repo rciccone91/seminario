@@ -113,7 +113,6 @@ public class MovimientoStockMotoBean implements Serializable{
 			}else{
 				mov.setCantidad(Math.abs(cantidad) * -1);
 			}
-			mov.setCantidad(cantidad);
 			mov.setMoto(moto);
 			mov.setSucursal(sucursal);
 			mov.setUsuario(usuarioService.getById(SessionHelper.getUserName()));

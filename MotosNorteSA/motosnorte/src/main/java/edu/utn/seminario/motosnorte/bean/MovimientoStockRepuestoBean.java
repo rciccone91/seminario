@@ -77,10 +77,12 @@ public class MovimientoStockRepuestoBean {
 			}
 			//guardo el movimiento
 			movimientoStockRepuestoService.guardar(armarMovimiento());
+			
 			//actualizo el stock
 			if(movimiento.equals(Constants.MOVIMIENTO_STOCK_SALIDA)){
 				setCantidad(Math.abs(cantidad) * -1);
 			}
+			
 			stockRepuestosService.actualizar(repuesto,sucursal,cantidad);
 		}catch (NoSePuedeRegistrarSalidaDeStockException e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -110,7 +112,6 @@ public class MovimientoStockRepuestoBean {
 			}else{
 				mov.setCantidad(Math.abs(cantidad) * -1);
 			}
-			mov.setCantidad(cantidad);
 			mov.setRepuesto(repuesto);
 			mov.setSucursal(sucursal);
 			mov.setUsuario(usuarioService.getById(SessionHelper.getUserName()));
@@ -121,6 +122,7 @@ public class MovimientoStockRepuestoBean {
 		return mov;		
 	}
 
+	
 	public Repuesto getRepuesto() {
 		return repuesto;
 	}
