@@ -1,6 +1,7 @@
 package edu.utn.seminario.motosnorte.converter;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -14,8 +15,8 @@ import edu.utn.seminario.motosnorte.service.MarcaBackingService;
 
 @FacesConverter("categoriaRepuestoConverter")
 public class CategoriaRepuestoConverter implements Converter {
- 
-    public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
+	
+	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if(value != null && value.trim().length() > 0) {
             try {
             	CategoriaRepuestoBackingService service = (CategoriaRepuestoBackingService) fc.getExternalContext().getApplicationMap().get("categoriaRepuestoBackingService");

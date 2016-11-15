@@ -1,0 +1,136 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<f:metadata>
+		</f:metadata>
+		<p:panel id="content">
+			<p:focus context="content" />
+			<div class="ui-grid ui-grid-responsive">
+				<h1 align="center">Nota de Pedido</h1>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Cliente " />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectOneMenu id="cliente" onstyle="width:125px"
+							value="#{notaDePedidoBean.cliente}" required="true"
+							requiredMessage="Se debe seleccionar el cliente"
+							converter="clienteConverter">
+							<f:selectItem itemLabel="Seleccionar.." />
+							<f:selectItems value="#{notaDePedidoBean.clientes}" var="c"
+								itemLabel="#{c.descripcion}" itemValue="#{c}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="cliente" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Sucursal " />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectOneMenu id="sucursal" onstyle="width:125px"
+							value="#{notaDePedidoBean.sucursal}" required="true"
+							requiredMessage="Se debe seleccionar la sucursal"
+							converter="sucursalConverter">
+							<f:selectItem itemLabel="Seleccionar.." />
+							<f:selectItems value="#{notaDePedidoBean.sucursales}" var="s"
+								itemLabel="#{s.descripcion}" itemValue="#{s}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="sucursal" />
+					</div>
+				</div>
+				<BR />
+				<p:tabView>
+				<p:growl id="msgs"/>
+					<p:tab title="Repuestos">
+						<p:panel header="Agregar Repuesto" style="margin-bottom:20px">
+							<h:panelGrid columns="2" cellpadding="5">
+								<h:outputLabel value="Repuesto : " for="repuesto"></h:outputLabel>
+								<p:autoComplete id="repuesto"
+									value="#{notaDePedidoBean.detalleRepuesto.repuesto}" minQueryLength="2"
+									required="true"
+									requiredMessage="Se debe seleccionar el repuesto."
+									completeMethod="#{notaDePedidoBean.completeRepuesto}" var="r"
+									itemLabel="#{r.modelo}" itemValue="#{r}"
+									converter="repuestoConverter" />
+
+								<h:outputLabel value="Cantidad" for="cantidad"></h:outputLabel>
+								<pe:inputNumber id="cantidad"
+									value="#{notaDePedidoBean.detalleRepuesto.cantidad}" required="true" />
+
+								<p:commandButton id="btn_reset" value="Limpiar" type="reset" />
+								<p:commandButton id="btn_add" value="Agregar"
+									update="repuestos msgs @parent"
+									action="#{notaDePedidoBean.reinit}">
+									<p:collector value="#{notaDePedidoBean.detalleRepuesto}"
+										addTo="#{notaDePedidoBean.detalleRepuestos}" unique="true" />
+								</p:commandButton>
+							</h:panelGrid>
+						</p:panel>
+
+						<p:outputPanel id="repuestos">
+							<p:dataTable value="#{detalleRepuestos}" var="detRep"
+								id="detalleRepTable">
+
+								<p:column headerText="Repuesto">
+									<h:outputText value="#{detRep.repuesto.modelo}" />
+								</p:column>
+
+								<p:column headerText="Cantidad">
+									<f:facet name="Cantidad">
+										<h:outputText value="Cantidad" />
+									</f:facet>
+									<h:outputText value="#{detRep.cantidad}" />
+								</p:column>
+
+								<p:column headerText="Action">
+									<p:commandLink value="Remove" update=":mainForm:repuestos"
+										process=":mainForm:repuestos">
+										<p:collector value="#{detRep}"
+											removeFrom="#{notaDePedidoBean.detalleRepuestos}"
+											unique="true" />
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</p:tab>
+				</p:tabView>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-2">
+						<p:commandButton id="guardarBtn" value="Guardar"
+							action="#{notaDePedidoBean.guardar}" update="@parent"
+							binding="#{notaDePedidoBean.mensaje}" />
+					</div>
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-4"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-5">
+						<p:messages for="guardarBtn" showDetail="true" closable="true"></p:messages>
+					</div>
+					<div class="ui-grid-col-3"></div>
+				</div>
+			</div>
+			<BR />
+			<p:blockUI block="content" trigger="guardarBtn">
+				<p:graphicImage library="images" name="ajax-loader.gif" />
+			</p:blockUI>
+		</p:panel>
+	</ui:define>
+</ui:composition>

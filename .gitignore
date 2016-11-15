@@ -4,6 +4,8 @@
 /RemoteSystemsTempFiles/*
 /Servers/*
 /TpWebLaboratorioCarlosCruz/*
+/MotosNorteSA/motosnorte/target/*
+/motosnorte/target/*
 
 # Compiled source #
 ###################

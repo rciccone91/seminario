@@ -68,4 +68,10 @@ public class StockRepuestosDao {
 		data.guardar(stock);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<StockRepuestos> listar() {
+		DataLayer data = new DataLayer();
+		return (List<StockRepuestos>)(List<?>)data.list(StockRepuestos.class);
+	}
+
 }

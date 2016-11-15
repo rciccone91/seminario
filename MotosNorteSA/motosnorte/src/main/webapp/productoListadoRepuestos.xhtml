@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<script
+			src="http://maps.google.com/maps/api/js?key=AIzaSyCx4dm20kpJe8m93gltqH5RIUtL4dWAbKA"
+			type="text/javascript"></script>
+		<h:outputScript library="js" name="common.js" />
+		<f:metadata>
+		</f:metadata>
+		<p:panel id="content">
+			<p:focus context="content" />
+			<div class="ui-grid ui-grid-responsive">
+				<h1 align="center">Listar Repuestos</h1>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1"></div>
+					<div class="ui-grid-col-10">
+						<p:dataTable var="rep" value="#{productosRepuestosBean.repuestos}"
+							scrollable="true" scrollHeight="220" style="float: right"
+							resizableColumns="true"
+							emptyMessage="No se encontraron registros para la búsqueda">
+							<p:column headerText="ID Repuesto">
+								<h:outputText value="#{rep.id}" style="text-align: center" />
+							</p:column>
+							<p:column headerText="Modelo" filterBy="#{rep.modelo}"
+								filterMatchMode="contains">
+								<h:outputText value="#{rep.modelo}" style="text-align: center" />
+							</p:column>
+							<p:column headerText="Precio" sortBy="#{rep.precio}">
+								<h:outputText value="#{rep.precio}" />
+							</p:column>
+							<p:column headerText="Categoria" sortBy="#{rep.categoriaRepuesto.categoriaRepuesto}">
+								<h:outputText value="#{rep.categoriaRepuesto.categoriaRepuesto}" />
+							</p:column>
+							<p:column headerText="Marca" filterBy="#{rep.marca.marca}"
+								filterMatchMode="contains">
+								<h:outputText value="#{rep.marca.marca}" />
+							</p:column>
+							<p:column headerText="Moto Compatible"  filterBy="#{rep.motoCompatible.modelo}"
+								filterMatchMode="contains">
+								<h:outputText value="#{rep.motoCompatible.modelo}" />
+							</p:column>
+							<p:column headerText="Activo">
+								<p:selectBooleanCheckbox value="#{rep.activo}" disabled="true" />
+							</p:column>
+						</p:dataTable>
+					</div>
+					<div class="ui-grid-col-1"></div>
+				</div>
+			</div>
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -16,7 +16,7 @@
 			<p:focus context="content" />
 			<div class="ui-grid ui-grid-responsive">
 				<h1 align="center">Modificar Cliente</h1>
-				<BR /> <BR />
+				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
@@ -72,7 +72,8 @@
 						<p:outputLabel value="DNI "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText id="dni" value="#{modificarClienteBean.dni}" required="true"
+						<p:inputText id="dni" value="#{modificarClienteBean.dni}"
+							required="true" maxlength="12"
 							requiredMessage="El DNI debe ser ingresado"></p:inputText>
 					</div>
 					<div class="ui-grid-col-4">
@@ -80,29 +81,37 @@
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
-				
+
 				<BR />
-				
+
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
-						<p:outputLabel for="button" value="Fecha Nacimiento "></p:outputLabel>
+						<p:outputLabel value="Fecha Nacimiento "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-				 		<p:calendar id="button" value="#{modificarClienteBean.fechaNacimiento}" showOn="button"/>   
+						<p:calendar id="fecha"
+							value="#{modificarClienteBean.fechaNacimiento}" showOn="button"
+							required="true" navigator="true"
+							requiredMessage="La fecha de nacimiento debe ser ingresada" />
 					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="fecha" />
+					</div>
+					<div class="ui-grid-col-2"></div>
 				</div>
-				
+
 				<BR />
-				
+
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
 						<p:outputLabel value="Dirección: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText id="domicilio" value="#{modificarClienteBean.direccion}"
-							maxlength="20" required="true"
+						<p:inputText id="domicilio"
+							value="#{modificarClienteBean.direccion}" maxlength="40"
+							required="true"
 							requiredMessage="La dirección del cliente debe ser ingresado">
 							<f:validateLength minimum="4" />
 						</p:inputText>
@@ -113,7 +122,7 @@
 					<div class="ui-grid-col-2"></div>
 				</div>
 				<BR />
-				
+
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
@@ -121,7 +130,7 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:inputText id="correo" value="#{modificarClienteBean.mail}"
-							maxlength="20" required="true"
+							maxlength="40" required="true"
 							requiredMessage="La dirrección de correo del cliente debe ser ingresado">
 							<f:validateLength minimum="4" />
 						</p:inputText>
@@ -132,15 +141,16 @@
 					<div class="ui-grid-col-2"></div>
 				</div>
 				<BR />
-			
+
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
 						<p:outputLabel value="Telefono "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText value="#{modificarClienteBean.telefono}" required="true" id="tel"
-							requiredMessage="El Telefono debe ser ingresado"></p:inputText>
+						<p:inputText value="#{modificarClienteBean.telefono}"
+							required="true" id="tel"
+							requiredMessage="El Telefono debe ser ingresado" maxlength="20"></p:inputText>
 
 					</div>
 					<div class="ui-grid-col-4">
@@ -148,17 +158,17 @@
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
-				
+
 				<BR />
-				
+
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
 						<p:outputLabel value="Cuil/Cuit "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText value="#{modificarClienteBean.cuiCuit}" required="true"
-							maxValue="99999999999" id="anses"
+						<p:inputText value="#{modificarClienteBean.cuiCuit}"
+							required="true" maxValue="99999999999" id="anses" maxlength="20"
 							requiredMessage="El Cuil/cuit debe ser ingresado sin guiones"></p:inputText>
 
 					</div>
@@ -167,8 +177,7 @@
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
-				<BR />
-				<BR />
+				<BR /> <BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-5"></div>
 					<div class="ui-grid-col-2">

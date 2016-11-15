@@ -7,18 +7,67 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<h:form>
 		<p:menubar>
-			<p:submenu label=" Propiedad" icon="fa fa-home">
-				<p:menuitem value="Alta" url="altaPropiedad.xhtml" />
-				<p:menuitem value="Propiedades en Alquiler"
-					url="listadoDePropiedades.xhtml?op=2" />
-				<p:menuitem value="Propiedades en Venta"
-					url="listadoDePropiedades.xhtml?op=1" />
+			<p:submenu label=" Productos" icon="fa fa-cart-arrow-down"
+				rendered="#{menuBean.mostrarProductos()}">
+				<p:submenu label="  Repuestos" icon="fa fa-wrench">
+					<p:menuitem value="Nuevo Repuesto"
+						url="datosRepuesto.xhtml?op=crear" />
+					<p:menuitem value="Modificar Repuesto"
+						url="seleccionarRepuesto.xhtml?op=modificar" />
+					<p:menuitem value="Eliminar Repuesto"
+						url="seleccionarRepuesto.xhtml?op=eliminar" />
+				</p:submenu>
+				<p:submenu label="  Motos" icon="fa fa-motorcycle">
+					<p:menuitem value="Nueva Moto" url="datosMoto.xhtml?op=crear" />
+					<p:menuitem value="Modificar Moto"
+						url="seleccionarMoto.xhtml?op=modificar" />
+					<p:menuitem value="Eliminar Moto"
+						url="seleccionarMoto.xhtml?op=eliminar" />
+				</p:submenu>
 			</p:submenu>
-			<p:submenu label="Ciudad" icon="fa fa-map-marker">
-				<p:menuitem value="Alta"  url="altaCiudad.xhtml"/>
+			<p:submenu label="Usuario" icon="fa fa-users"
+				rendered="#{menuBean.mostrarUsuario()}">
+				<p:menuitem value="Nuevo Usuario" url="nuevoUsuario.xhtml" />
+				<p:menuitem value="Modificar Usuario"
+					url="seleccionarUsuario.xhtml?op=modificar" />
+				<p:menuitem value="Eliminar Usuario"
+					url="seleccionarUsuario.xhtml?op=eliminar" />
 			</p:submenu>
-			<p:submenu label="Usuario" icon="fa fa-users">
-				<p:menuitem value="Alta" url="altaUsuario.xhtml"/>
+			<p:submenu label="Cliente" icon="fa fa-street-view"
+				rendered="#{menuBean.mostrarCliente()}">
+				<p:menuitem value="Nuevo Cliente" url="nuevoCliente.xhtml" />
+				<p:menuitem value="Modificar Cliente"
+					url="seleccionarCliente.xhtml?op=modificar" />
+				<p:menuitem value="Eliminar Cliente"
+					url="seleccionarCliente.xhtml?op=eliminar" />
+				<p:menuitem value="Listar Cliente" url="listarCliente.xhtml" />
+			</p:submenu>
+			<p:submenu label="Stock" icon="fa fa-cubes"
+				rendered="#{menuBean.mostrarProductos()}">
+				<p:menuitem value="Mov.Stock - Moto" url="movimientoStockMoto.xhtml" />
+				<p:menuitem value="Mov.Stock - Repuesto"
+					url="movimientoStockRepuesto.xhtml" />
+			</p:submenu>
+			<p:submenu label="Listados" icon="fa fa-file-text">
+				<p:submenu label="Listar productos" icon="fa fa-file-text-o">
+					<p:menuitem value="Listar Motos" url="productoListadoMotos.xhtml" />
+					<p:menuitem value="Listar Repuestos"
+						url="productoListadoRepuestos.xhtml" />
+				</p:submenu>
+				<p:submenu label="Listar Stock" icon="fa fa-file-text-o">
+					<p:menuitem value="Listar Stock de Motos"
+						url="listarStockMoto.xhtml" />
+					<p:menuitem value="Listar Stock de Repuestos"
+						url="listarStockRepuesto.xhtml" />
+				</p:submenu>
+			</p:submenu>
+			<p:submenu label="Sucursal" icon="fa fa-building-o"
+				rendered="#{menuBean.mostrarSucursal()}">
+				<p:menuitem value="Nueva Sucursal" url="nuevaSucursal.xhtml" />
+				<p:menuitem value="Modificar Sucursal"
+					url="seleccionarSucursal.xhtml?op=modificar" />
+				<p:menuitem value="Eliminar Sucursal"
+					url="seleccionarSucursal.xhtml?op=eliminar" />
 			</p:submenu>
 			<f:facet name="options">
 				<p:commandButton id="logout" value="Logout" icon="ui-icon-extlink"

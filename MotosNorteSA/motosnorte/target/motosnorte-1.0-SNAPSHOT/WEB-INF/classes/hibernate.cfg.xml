@@ -24,9 +24,8 @@
 		<mapping class="edu.utn.seminario.motosnorte.domain.Marca"></mapping>
 		<mapping class="edu.utn.seminario.motosnorte.domain.Moto"></mapping>
 		<mapping class="edu.utn.seminario.motosnorte.domain.MovimientoStockMoto"></mapping>
-		<mapping class="edu.utn.seminario.motosnorte.domain.NotaPedido"></mapping>
+		<mapping class="edu.utn.seminario.motosnorte.domain.Pedido"></mapping>
 		<mapping class="edu.utn.seminario.motosnorte.domain.Repuesto"></mapping>
-		<mapping class="edu.utn.seminario.motosnorte.domain.Rol"></mapping>
 		<mapping class="edu.utn.seminario.motosnorte.domain.StockMotos"></mapping>
 		<mapping class="edu.utn.seminario.motosnorte.domain.CondicionDePago"></mapping>
 		<mapping class="edu.utn.seminario.motosnorte.domain.MovimientoStockRepuesto"></mapping>

@@ -30,7 +30,7 @@ private ClienteDao dao;
 		return dao.listar();
 	}
 	
-	public Cliente getById(String id) throws ClienteNoEncontradoException {
+	public Cliente getById(Integer id) throws ClienteNoEncontradoException {
 		return dao.getById(id);
 	}
 

@@ -1,5 +1,7 @@
 package edu.utn.seminario.motosnorte.service;
 
+import java.util.List;
+
 import edu.utn.seminario.motosnorte.dao.StockMotosDao;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.StockMotos;
@@ -28,6 +30,10 @@ public class StockMotosService {
 			stock.setSucursal(sucursal);
 			dao.guardar(stock);
 		}
+	}
+	
+	public List<StockMotos> listar() {
+		return dao.listar();
 	}
 	
 	public Boolean validarSalida(Moto moto, Sucursal sucursal,String tipoMovimiento) throws NoSePuedeRegistrarSalidaDeStockException, Exception{

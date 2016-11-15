@@ -56,11 +56,11 @@ public class ClienteDao implements Serializable{
 	}
 
 	@SuppressWarnings("unchecked")
-	public Cliente getById(String id) throws ClienteNoEncontradoException {
+	public Cliente getById(Integer id) throws ClienteNoEncontradoException {
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Cliente as c where c.id = :id");
-			query.setInteger("id",Integer.parseInt(id));
+			query.setInteger("id",id);
 			lista = query.list();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,11 +79,12 @@ public class ClienteDao implements Serializable{
 		data.modificar(cliente);
 	}
 
+	
 	public void eliminar(Cliente c) throws Exception {
 		Transaction tx = session.getTransaction();
 		try {
-			Query query = session.createQuery("update Cliente as c set active =:false "
-					+ "where c.cliente_id = :clienteId");
+			Query query = session.createQuery("update Cliente set active =:false "
+					+ "where id = :clienteId");
 			query.setBoolean("false", Boolean.FALSE);
 			query.setString("clienteId", c.getId().toString());
 			tx.begin();
@@ -91,6 +92,7 @@ public class ClienteDao implements Serializable{
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
+			e.printStackTrace();
 			throw new Exception(e.getMessage());
 		}
 	}

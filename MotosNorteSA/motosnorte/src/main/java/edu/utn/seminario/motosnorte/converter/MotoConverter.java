@@ -10,6 +10,7 @@ import javax.faces.convert.FacesConverter;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.Rol;
 import edu.utn.seminario.motosnorte.service.MotoBackingService;
+import edu.utn.seminario.motosnorte.service.MotoService;
 
 @FacesConverter("motoConverter")
 public class MotoConverter implements Converter {
@@ -17,7 +18,7 @@ public class MotoConverter implements Converter {
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if(value != null && value.trim().length() > 0) {
             try {
-            	MotoBackingService service = (MotoBackingService) fc.getExternalContext().getApplicationMap().get("motoBackingService");
+            	MotoService service = new MotoService();
                 return service.getById(Integer.parseInt(value));
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de conversión", "No es una moto válida"));

@@ -114,6 +114,10 @@ public class Cliente implements Serializable{
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	
+	public String getDescripcion(){
+		return this.nombre + " " +this.apellido + " " +this.dni;
+	}
 
 	@Override
 	public int hashCode() {

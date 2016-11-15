@@ -18,21 +18,26 @@
 				<h1 align="center">Listar Clientes</h1>
 				<BR /> <BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-3"></div>
-					<div class="ui-grid-col-6">
+					<div class="ui-grid-col-12">
 						<p:dataTable var="cli" value="#{listarClienteBean.clientes}"
-							scrollable="true" scrollHeight="220" style="float: right">
-							<p:column headerText="Apellido">
+							scrollable="true" scrollHeight="220" style="float: right"
+							resizableColumns="true"
+							widgetVar="clientesTable"
+							emptyMessage="No se encontraron registros para la búsqueda">
+							<p:column headerText="Apellido" filterBy="#{cli.apellido}"
+								filterMatchMode="contains">
 								<h:outputText value="#{cli.apellido}" style="text-align: center" />
 							</p:column>
-							<p:column headerText="Nombre">
+							<p:column headerText="Nombre" filterBy="#{cli.nombre}"
+								filterMatchMode="contains">
 								<h:outputText value="#{cli.nombre}" style="text-align: center" />
 							</p:column>
-							<p:column headerText="DNI">
+							<p:column headerText="DNI" filterBy="#{cli.dni}"
+								filterMatchMode="contains">
 								<h:outputText value="#{cli.dni}" />
 							</p:column>
-							<p:column headerText="Fecha Nacimiento">
-								<h:outputText value="#{cli.fechaNacimiento}" />
+							<p:column headerText="Fecha Nac.">
+								<p:calendar value="#{cli.fechaNacimiento}" disabled="true"></p:calendar>
 							</p:column>
 							<p:column headerText="Dirección">
 								<h:outputText value="#{cli.direccion}" />
@@ -50,8 +55,8 @@
 								<p:selectBooleanCheckbox value="#{cli.active}" disabled="true" />
 							</p:column>
 						</p:dataTable>
-					</div>	
-				</div>	
+					</div>
+				</div>
 			</div>
 		</p:panel>
 	</ui:define>

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import edu.utn.seminario.motosnorte.helper.Constants;
+
 @Entity
 @Table(name="motos")
 public class Moto implements Serializable{
@@ -201,5 +203,9 @@ public class Moto implements Serializable{
 	
 	public String getDescripcion(){
 		return this.marca.getMarca() + " - " + this.getModelo();
+	}
+	
+	public String getColorDescripcion(){
+		return Constants.getColorDescription(this.color);
 	}
 }

@@ -41,7 +41,7 @@ public class ModificarClienteBean implements Serializable{
 		String par = paramMap.get("cliente_id");
 		try {
 			
-			Cliente clienteById = service.getById(par);
+			Cliente clienteById = service.getById(Integer.parseInt(par));
 			id = clienteById.getId();
 			nombre = clienteById.getNombre();
 			apellido = clienteById.getApellido();

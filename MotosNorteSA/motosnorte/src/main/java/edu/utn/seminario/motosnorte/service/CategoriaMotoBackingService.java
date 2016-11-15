@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import edu.utn.seminario.motosnorte.dao.CategoriaMotoDao;
 import edu.utn.seminario.motosnorte.domain.CategoriaMoto;

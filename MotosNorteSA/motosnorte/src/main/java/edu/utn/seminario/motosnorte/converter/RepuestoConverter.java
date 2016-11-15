@@ -9,6 +9,7 @@ import javax.faces.convert.FacesConverter;
 
 import edu.utn.seminario.motosnorte.domain.Repuesto;
 import edu.utn.seminario.motosnorte.service.RepuestoBackingService;
+import edu.utn.seminario.motosnorte.service.RepuestosService;
 
 @FacesConverter("repuestoConverter")
 public class RepuestoConverter implements Converter {
@@ -16,7 +17,7 @@ public class RepuestoConverter implements Converter {
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if(value != null && value.trim().length() > 0) {
             try {
-            	RepuestoBackingService service = (RepuestoBackingService) fc.getExternalContext().getApplicationMap().get("repuestoBackingService");
+            	RepuestosService service = new RepuestosService();
                 return service.getById(Integer.parseInt(value));
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de conversión", "No es un repuesto válido"));

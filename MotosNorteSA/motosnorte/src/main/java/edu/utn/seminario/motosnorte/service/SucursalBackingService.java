@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import edu.utn.seminario.motosnorte.dao.SucursalDao;
 import edu.utn.seminario.motosnorte.domain.Sucursal;

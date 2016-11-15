@@ -1,5 +1,7 @@
 package edu.utn.seminario.motosnorte.service;
 
+import java.util.List;
+
 import edu.utn.seminario.motosnorte.dao.StockMotosDao;
 import edu.utn.seminario.motosnorte.dao.StockRepuestosDao;
 import edu.utn.seminario.motosnorte.domain.Repuesto;
@@ -37,6 +39,10 @@ public class StockRepuestosService {
 			stock.setSucursal(sucursal);
 			dao.guardar(stock);
 		}
+	}
+	
+	public List<StockRepuestos> listar() {
+		return dao.listar();
 	}
 
 }

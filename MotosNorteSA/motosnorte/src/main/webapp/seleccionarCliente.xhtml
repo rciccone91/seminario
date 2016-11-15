@@ -18,8 +18,7 @@
 				<h1 align="center">Seleccionar Cliente</h1>
 				<BR /> <BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-3"></div>
-					<div class="ui-grid-col-6">
+					<div class="ui-grid-col-12">
 						<p:dataTable var="cli" value="#{seleccionarClienteBean.clientes}"
 							scrollable="true" scrollHeight="220" style="float: right">
 							<p:column headerText="Apellido">
@@ -31,8 +30,8 @@
 							<p:column headerText="DNI">
 								<h:outputText value="#{cli.dni}" />
 							</p:column>
-							<p:column headerText="Fecha Nacimiento">
-								<h:outputText value="#{cli.fechaNacimiento}" />
+							<p:column headerText="Fecha Nac.">
+								<p:calendar value="#{cli.fechaNacimiento}" disabled="true"></p:calendar>
 							</p:column>
 							<p:column headerText="Dirección">
 								<h:outputText value="#{cli.direccion}" />
@@ -46,7 +45,7 @@
 							<p:column headerText="Cuil/Cuit">
 								<h:outputText value="#{cli.cuiCuit}" />
 							</p:column>
-							<p:column headerText="Activo">
+							<p:column headerText="Activo" width="30px">
 								<p:selectBooleanCheckbox value="#{cli.active}" disabled="true" />
 							</p:column>
 							<p:column headerText="Acción"
@@ -56,10 +55,11 @@
 							</p:column>
 							<p:column headerText="Acción"
 								rendered="#{seleccionarClienteBean.mostrarEliminar()}">
-								<p:commandButton value="Eliminar" 
-								actionListener="#{seleccionarClienteBean.eliminarCliente(cli)}">
-									<p:confirm header="Confirmación" 
-									message="¿Realmente desea dar de baja al cliente?"
+								<p:commandButton value="Eliminar"
+									actionListener="#{seleccionarClienteBean.eliminarCliente(cli)}"
+									oncomplete="redirect()">
+									<p:confirm header="Confirmación"
+										message="¿Realmente desea dar de baja al cliente?"
 										icon="ui-icon-alert" />
 								</p:commandButton>
 							</p:column>
@@ -71,9 +71,13 @@
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</p:confirmDialog>
 					</div>
-					<div class="ui-grid-col-3"></div>
 				</div>
 			</div>
 		</p:panel>
+		<script type="text/javascript">
+			redirect = function() {
+				window.location.href = '/motosnorte/index.xhtml';
+			}
+		</script>
 	</ui:define>
 </ui:composition>

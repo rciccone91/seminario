@@ -68,4 +68,10 @@ public class StockMotosDao {
 			throw new Exception("Ocurrió un error, por favor comunicarse con el administrador");
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<StockMotos> listar() {
+		DataLayer data = new DataLayer();
+		return (List<StockMotos>)(List<?>) data.list(StockMotos.class);
+	}
 }

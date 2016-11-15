@@ -40,6 +40,8 @@ public class Constants {
 			color = "Amarillo";
 		case  6:
 			color = "Verde";
+		default:
+			color = "No informado";
 		}
 		return color;
 	}
@@ -47,5 +49,8 @@ public class Constants {
 	public final static String MOVIMIENTO_STOCK_ENTRADA = "Entrada";
 	public final static String MOVIMIENTO_STOCK_SALIDA = "Salida";
 
- 
+	public final static Integer ESTADO_PEND_FACT = 1;
+	public final static Integer ESTADO_FACTURADO = 2;
+	public final static Integer ESTADO_CANCELADO = 3;
+	public final static Integer ESTADO_REINTEGRADO = 4;
 }
