@@ -26,12 +26,35 @@ public class MotoDao {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Moto> listar(){
-		DataLayer data = new DataLayer();
-		return (List<Moto>)(List<?>)data.list(Moto.class);
+		List<Object> lista = new ArrayList<>();
+		try {
+			Query query = session.createQuery("from Moto as m order by m.modelo");
+			lista = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			return (List<Moto>)(List<?>)lista;
+		}
 	}
 
+	@SuppressWarnings({ "unchecked", "finally" })
+	public List<Moto> listarActivos(){
+		List<Object> lista = new ArrayList<>();
+		try {
+			Query query = session.createQuery("from Moto as m where m.activo =:true order by m.modelo");
+			query.setBoolean("true", Boolean.TRUE);
+			lista = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			return (List<Moto>)(List<?>)lista;
+		}
+	}
+	
 	@SuppressWarnings({ "unchecked", "finally" })
 	public Moto getById(Integer id) {
 		List<Object> lista = new ArrayList<>();

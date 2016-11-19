@@ -29,4 +29,8 @@ public class ClienteBackingService {
 	public List<Cliente> listar() {
 		return dao.listar();
 	}
+	
+	public List<Cliente> listarActivos() {
+		return dao.listarActivos();
+	}
 }

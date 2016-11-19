@@ -30,6 +30,10 @@ private ClienteDao dao;
 		return dao.listar();
 	}
 	
+	public List<Cliente> listarActivos() {
+		return dao.listarActivos();
+	}
+	
 	public Cliente getById(Integer id) throws ClienteNoEncontradoException {
 		return dao.getById(id);
 	}

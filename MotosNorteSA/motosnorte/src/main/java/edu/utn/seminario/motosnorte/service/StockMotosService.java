@@ -6,6 +6,7 @@ import edu.utn.seminario.motosnorte.dao.StockMotosDao;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.StockMotos;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
+import edu.utn.seminario.motosnorte.exception.NoHayStockSuficienteException;
 import edu.utn.seminario.motosnorte.exception.NoSePuedeRegistrarSalidaDeStockException;
 import edu.utn.seminario.motosnorte.helper.Constants;
 
@@ -42,6 +43,10 @@ public class StockMotosService {
 			throw new NoSePuedeRegistrarSalidaDeStockException();
 		}
 		return true;
+	}
+
+	public boolean validarStockMoto(Integer cantidadMoto, Moto moto, Sucursal sucursal) throws NoHayStockSuficienteException,Exception  {
+		return dao.validarStockMoto(cantidadMoto,moto,sucursal);
 	}
 
 }

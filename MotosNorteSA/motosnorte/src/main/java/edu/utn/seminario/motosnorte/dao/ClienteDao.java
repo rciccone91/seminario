@@ -12,6 +12,7 @@ import org.hibernate.cfg.Configuration;
 
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Cliente;
+import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.exception.ClienteNoEncontradoException;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
 
@@ -49,10 +50,33 @@ public class ClienteDao implements Serializable{
 
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Cliente> listar(){
-		DataLayer data = new DataLayer();
-		return (List<Cliente>)(List<?>)data.list(Cliente.class);
+		List<Object> lista = new ArrayList<>();
+		try {
+			Query query = session.createQuery("from Cliente as c order by c.apellido");
+			lista = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			return (List<Cliente>)(List<?>)lista;
+		}
+	}
+	
+	@SuppressWarnings({ "unchecked", "finally" })
+	public List<Cliente> listarActivos(){
+		List<Object> lista = new ArrayList<>();
+		try {
+			Query query = session.createQuery("from Cliente as c where c.active=:true order by c.apellido");
+			query.setBoolean("true", Boolean.TRUE);
+			lista = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			return (List<Cliente>)(List<?>)lista;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

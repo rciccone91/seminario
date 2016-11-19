@@ -61,7 +61,7 @@ public class MovimientoStockMotoBean implements Serializable{
 	}
 
 	public List<Moto> completeMoto(String query){
-		List<Moto> motos = motoService.listar();
+		List<Moto> motos = motoService.listarActivos();
 		List<Moto> motosFiltradas = new ArrayList<Moto>();
 
 		for (int i = 0; i < motos.size(); i++) {

@@ -8,6 +8,7 @@ import edu.utn.seminario.motosnorte.domain.Repuesto;
 import edu.utn.seminario.motosnorte.domain.StockMotos;
 import edu.utn.seminario.motosnorte.domain.StockRepuestos;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
+import edu.utn.seminario.motosnorte.exception.NoHayStockSuficienteException;
 import edu.utn.seminario.motosnorte.exception.NoSePuedeRegistrarSalidaDeStockException;
 import edu.utn.seminario.motosnorte.helper.Constants;
 
@@ -43,6 +44,9 @@ public class StockRepuestosService {
 	
 	public List<StockRepuestos> listar() {
 		return dao.listar();
+	}
+	public Boolean validarStockRepuesto(Integer cantidadRepuesto, Repuesto repuesto, Sucursal sucursal) throws NoHayStockSuficienteException, Exception {
+		return dao.validarStockRepuesto(cantidadRepuesto,repuesto,sucursal);
 	}
 
 }

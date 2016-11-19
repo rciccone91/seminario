@@ -19,6 +19,11 @@ public class MenuBean {
 				|| SessionHelper.getRolId().equals(Constants.EMPLEADO_DE_DEPOSITO_ID);
 	}
 	
+	public Boolean mostrarStock(){
+		return SessionHelper.getRolId().equals(Constants.ADMINISTRADOR_ID)
+				|| SessionHelper.getRolId().equals(Constants.EMPLEADO_DE_DEPOSITO_ID);
+	}
+	
 	public Boolean mostrarCliente(){
 		return SessionHelper.getRolId().equals(Constants.ADMINISTRADOR_ID)
 				|| SessionHelper.getRolId().equals(Constants.VENDEDOR_ID);
@@ -28,4 +33,7 @@ public class MenuBean {
 		return SessionHelper.getRolId().equals(Constants.ADMINISTRADOR_ID);
 	}
 
+	public Boolean mostrarNotaDePedido(){
+		return SessionHelper.getRolId().equals(Constants.VENDEDOR_ID);
+	}
 }

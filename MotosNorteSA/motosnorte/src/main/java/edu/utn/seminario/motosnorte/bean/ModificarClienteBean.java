@@ -11,6 +11,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import edu.utn.seminario.motosnorte.domain.Cliente;
 import edu.utn.seminario.motosnorte.exception.ClienteNoEncontradoException;
+import edu.utn.seminario.motosnorte.helper.Constants;
 import edu.utn.seminario.motosnorte.service.ClienteService;
 
 
@@ -31,28 +32,30 @@ public class ModificarClienteBean implements Serializable{
 	private String direccion;
 	private String mail;
 	private UIComponent mensaje;
+	private String operacion;
 
 	@PostConstruct
 	public void init() {
-		
+
 		service = new ClienteService();
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
 		String par = paramMap.get("cliente_id");
+		operacion = paramMap.get("op");
 		try {
-			
-			Cliente clienteById = service.getById(Integer.parseInt(par));
-			id = clienteById.getId();
-			nombre = clienteById.getNombre();
-			apellido = clienteById.getApellido();
-			dni = clienteById.getDni();
-			cuiCuit = clienteById.getCuiCuit();
-			fechaNacimiento = clienteById.getFechaNacimiento();
-			telefono = clienteById.getTelefono();
-			direccion = clienteById.getDireccion();
-			mail = clienteById.getMail();
-			active = clienteById.getActive();
-			
+			if(par!=null){
+				Cliente clienteById = service.getById(Integer.parseInt(par));
+				id = clienteById.getId();
+				nombre = clienteById.getNombre();
+				apellido = clienteById.getApellido();
+				dni = clienteById.getDni();
+				cuiCuit = clienteById.getCuiCuit();
+				fechaNacimiento = clienteById.getFechaNacimiento();
+				telefono = clienteById.getTelefono();
+				direccion = clienteById.getDireccion();
+				mail = clienteById.getMail();
+				active = clienteById.getActive();
+			}
 		} catch (ClienteNoEncontradoException e) {
 			redirectError(e);
 		}
@@ -104,7 +107,7 @@ public class ModificarClienteBean implements Serializable{
 	public void setService(ClienteService service) {
 		this.service = service;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}

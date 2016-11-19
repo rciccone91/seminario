@@ -7,7 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<h:form>
 		<p:menubar>
-			<p:submenu label=" Productos" icon="fa fa-cart-arrow-down"
+			<p:submenu label=" Productos" icon="fa fa-gear"
 				rendered="#{menuBean.mostrarProductos()}">
 				<p:submenu label="  Repuestos" icon="fa fa-wrench">
 					<p:menuitem value="Nuevo Repuesto"
@@ -24,6 +24,10 @@
 					<p:menuitem value="Eliminar Moto"
 						url="seleccionarMoto.xhtml?op=eliminar" />
 				</p:submenu>
+			</p:submenu>
+			<p:submenu label="Pedido" icon="fa fa-shopping-cart"
+				rendered="#{menuBean.mostrarNotaDePedido()}">				
+				<p:menuitem value="Cargar Nota de Ped." url="notaDePedido.xhtml" />
 			</p:submenu>
 			<p:submenu label="Usuario" icon="fa fa-users"
 				rendered="#{menuBean.mostrarUsuario()}">
@@ -43,7 +47,7 @@
 				<p:menuitem value="Listar Cliente" url="listarCliente.xhtml" />
 			</p:submenu>
 			<p:submenu label="Stock" icon="fa fa-cubes"
-				rendered="#{menuBean.mostrarProductos()}">
+				rendered="#{menuBean.mostrarStock()}">
 				<p:menuitem value="Mov.Stock - Moto" url="movimientoStockMoto.xhtml" />
 				<p:menuitem value="Mov.Stock - Repuesto"
 					url="movimientoStockRepuesto.xhtml" />

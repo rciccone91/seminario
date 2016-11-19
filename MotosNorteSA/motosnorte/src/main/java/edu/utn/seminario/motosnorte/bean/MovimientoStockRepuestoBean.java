@@ -58,7 +58,7 @@ public class MovimientoStockRepuestoBean {
 	}
 	
 	public List<Repuesto> completeRepuesto(String query){
-		List<Repuesto> repuestos = repuestosService.listar();
+		List<Repuesto> repuestos = repuestosService.listarActivos();
 		List<Repuesto> repuestosFiltrados = new ArrayList<Repuesto>();
 
 		for (int i = 0; i < repuestos.size(); i++) {

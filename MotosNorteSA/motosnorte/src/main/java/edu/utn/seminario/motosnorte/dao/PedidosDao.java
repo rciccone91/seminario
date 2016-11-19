@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.CategoriaMoto;
 import edu.utn.seminario.motosnorte.domain.Pedido;
 
@@ -37,5 +38,10 @@ public class PedidosDao {
 		finally{
 			return lista;
 		}
+	}
+
+	public void guardar(Pedido ped) throws Exception {
+		DataLayer data = new DataLayer();
+		data.guardar(ped);
 	}
 }

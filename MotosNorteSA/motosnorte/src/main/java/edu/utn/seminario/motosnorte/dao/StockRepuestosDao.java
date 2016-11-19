@@ -13,6 +13,8 @@ import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Repuesto;
 import edu.utn.seminario.motosnorte.domain.StockRepuestos;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
+import edu.utn.seminario.motosnorte.exception.NoHayStockSuficienteException;
+import edu.utn.seminario.motosnorte.exception.UsuarioOContraseñaIncorrectoException;
 
 public class StockRepuestosDao {
 
@@ -26,7 +28,7 @@ public class StockRepuestosDao {
 			session = sessionFactory.openSession();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public boolean existe(Repuesto repuesto, Sucursal sucursal) throws Exception {
 		List<Object> lista = new ArrayList<Object>();
@@ -74,4 +76,24 @@ public class StockRepuestosDao {
 		return (List<StockRepuestos>)(List<?>)data.list(StockRepuestos.class);
 	}
 
+	public Boolean validarStockRepuesto(Integer cantidadRepuesto, Repuesto repuesto, Sucursal sucursal) throws NoHayStockSuficienteException,Exception {
+		try {
+			Query query = session.createQuery("from StockRepuestos as sr where sr.repuesto.id = :repuesto "
+					+ "and sr.sucursal.id = :sucursal");
+			query.setInteger("repuesto", repuesto.getId());
+			query.setInteger("sucursal", sucursal.getId());
+			StockRepuestos stock = (StockRepuestos) query.uniqueResult();
+
+			if(stock == null || stock.getCantidad() < cantidadRepuesto){
+				throw new NoHayStockSuficienteException();
+			}
+		}catch (NoHayStockSuficienteException e) {
+			throw new NoHayStockSuficienteException("No hay stock suficiente del repuesto en la sucursal para cubrir la cantidad requerida.");
+		} 
+		catch (Exception e) {
+			throw new Exception("Ocurrió un error al intentar ingresar, por favor comunicarse con el administrador");
+		}
+		
+		return true;
+	}
 }

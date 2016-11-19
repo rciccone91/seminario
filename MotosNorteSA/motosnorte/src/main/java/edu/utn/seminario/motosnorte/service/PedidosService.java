@@ -28,5 +28,9 @@ public class PedidosService {
 		dao2.login(user, pass);
 		return dao.getPedidosRemotosByEstado(estado);
 	}
+	
+	public void guardar(Pedido ped) throws Exception{
+		dao.guardar(ped);
+	}
 
 }

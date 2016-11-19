@@ -36,4 +36,8 @@ public class MotoService {
 		dao.eliminar(m);
 	}
 
+	public List<Moto> listarActivos() {
+		return dao.listarActivos();
+	}
+
 }

@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Marca;
+import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.Repuesto;
 import edu.utn.seminario.motosnorte.domain.Usuario;
 
@@ -52,10 +53,33 @@ public class RepuestosDao {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Repuesto> listar() {
-		DataLayer data = new DataLayer();
-		return (List<Repuesto>)(List<?>)data.list(Repuesto.class);
+		List<Object> lista = new ArrayList<>();
+		try {
+			Query query = session.createQuery("from Repuesto as r order by r.modelo");
+			lista = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			return (List<Repuesto>)(List<?>)lista;
+		}
+	}
+	
+	@SuppressWarnings({ "unchecked", "finally" })
+	public List<Repuesto> listarActivos() {
+		List<Object> lista = new ArrayList<>();
+		try {
+			Query query = session.createQuery("from Repuesto as r where r.activo=:true order by r.modelo");
+			query.setBoolean("true", Boolean.TRUE);
+			lista = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			return (List<Repuesto>)(List<?>)lista;
+		}
 	}
 
 	public void eliminar(Integer id) throws Exception {

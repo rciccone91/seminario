@@ -12,7 +12,9 @@ import org.hibernate.cfg.Configuration;
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.StockMotos;
+import edu.utn.seminario.motosnorte.domain.StockRepuestos;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
+import edu.utn.seminario.motosnorte.exception.NoHayStockSuficienteException;
 
 public class StockMotosDao {
 
@@ -26,12 +28,12 @@ public class StockMotosDao {
 			session = sessionFactory.openSession();
 		}
 	}
-	
+
 	public void guardar(StockMotos s) throws Exception {
 		DataLayer data = new DataLayer();
 		data.guardar(s);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public Boolean existe(Moto m, Sucursal s) throws Exception{
 		List<Object> lista = new ArrayList<Object>();
@@ -48,8 +50,8 @@ public class StockMotosDao {
 			throw new Exception("Ocurrió un error, por favor comunicarse con el administrador");
 		}
 	}
-	
-	
+
+
 	public void actualizar(Moto m, Sucursal s, int cantidad) throws Exception{
 		Transaction tx = session.getTransaction();
 		try {
@@ -73,5 +75,26 @@ public class StockMotosDao {
 	public List<StockMotos> listar() {
 		DataLayer data = new DataLayer();
 		return (List<StockMotos>)(List<?>) data.list(StockMotos.class);
+	}
+
+	public boolean validarStockMoto(Integer cantidadMoto, Moto moto, Sucursal sucursal) throws NoHayStockSuficienteException,Exception {
+		try {
+			Query query = session.createQuery("from StockMotos as sm where sm.moto.id = :moto "
+					+ "and sm.sucursal.id = :sucursal");
+			query.setInteger("moto", moto.getId());
+			query.setInteger("sucursal", sucursal.getId());
+			StockMotos stock = (StockMotos) query.uniqueResult();
+
+			if(stock == null || stock.getCantidad() < cantidadMoto){
+				throw new NoHayStockSuficienteException();
+			}
+		}catch (NoHayStockSuficienteException e) {
+			throw new NoHayStockSuficienteException("No hay stock suficiente de la moto en la sucursal para cubrir la cantidad requerida.");
+		} 
+		catch (Exception e) {
+			throw new Exception("Ocurrió un error al intentar ingresar, por favor comunicarse con el administrador");
+		}
+
+		return true;
 	}
 }

@@ -43,4 +43,8 @@ public class RepuestosService {
 	public void eliminar(Repuesto r) throws Exception {
 		dao.eliminar(r.getId());
 	}
+
+	public List<Repuesto> listarActivos() {
+		return dao.listarActivos();
+	}
 }

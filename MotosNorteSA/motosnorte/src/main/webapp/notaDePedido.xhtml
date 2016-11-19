@@ -20,16 +20,14 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:selectOneMenu id="cliente" onstyle="width:125px"
-							value="#{notaDePedidoBean.cliente}" required="true"
-							requiredMessage="Se debe seleccionar el cliente"
-							converter="clienteConverter">
+							value="#{notaDePedidoBean.cliente}" converter="clienteConverter">
 							<f:selectItem itemLabel="Seleccionar.." />
 							<f:selectItems value="#{notaDePedidoBean.clientes}" var="c"
 								itemLabel="#{c.descripcion}" itemValue="#{c}" />
 						</p:selectOneMenu>
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="cliente" />
+						<p:message id="clienteMessage" for="cliente" />
 					</div>
 				</div>
 				<BR />
@@ -40,8 +38,7 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:selectOneMenu id="sucursal" onstyle="width:125px"
-							value="#{notaDePedidoBean.sucursal}" required="true"
-							requiredMessage="Se debe seleccionar la sucursal"
+							value="#{notaDePedidoBean.sucursal}"
 							converter="sucursalConverter">
 							<f:selectItem itemLabel="Seleccionar.." />
 							<f:selectItems value="#{notaDePedidoBean.sucursales}" var="s"
@@ -49,70 +46,122 @@
 						</p:selectOneMenu>
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="sucursal" />
+						<p:message id="sucursalMessage" for="sucursal" />
 					</div>
 				</div>
 				<BR />
-				<p:tabView>
-				<p:growl id="msgs"/>
-					<p:tab title="Repuestos">
-						<p:panel header="Agregar Repuesto" style="margin-bottom:20px">
-							<h:panelGrid columns="2" cellpadding="5">
-								<h:outputLabel value="Repuesto : " for="repuesto"></h:outputLabel>
-								<p:autoComplete id="repuesto"
-									value="#{notaDePedidoBean.detalleRepuesto.repuesto}" minQueryLength="2"
-									required="true"
-									requiredMessage="Se debe seleccionar el repuesto."
-									completeMethod="#{notaDePedidoBean.completeRepuesto}" var="r"
-									itemLabel="#{r.modelo}" itemValue="#{r}"
-									converter="repuestoConverter" />
+				<p:growl id="messages" showDetail="true" />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-8">
+						<p:tabView>
+							<p:tab id="tabRepuestos" title="Repuestos">
+								<p:panel id="panelDetalle" header="Repuestos de Pedido"
+									style="width: 800px;">
+									<p:panelGrid columns="2">
+										<h:outputLabel for="repuesto" value="Repuesto: " />
+										<p:selectOneMenu id="repuesto" onstyle="width:125px"
+											value="#{notaDePedidoBean.repuesto}"
+											converter="repuestoConverter">
+											<f:selectItem itemLabel="Seleccionar.." />
+											<f:selectItems value="#{notaDePedidoBean.repuestos}" var="r"
+												itemLabel="#{r.modelo}" itemValue="#{r}" />
+										</p:selectOneMenu>
+										<h:outputLabel for="cant" value="Cantidad: " />
+										<pe:inputNumber id="cant"
+											value="#{notaDePedidoBean.cantidadRepuesto}" required="true"
+											requiredMessage="La cantidad es requerida" />
+										<f:facet name="footer">
+											<p:commandButton value="Agregar Repuesto"
+												process="@parent mainForm:sucursal mainForm:cliente mainForm:guardarBtn repuesto cant"
+												update="@form" action="#{notaDePedidoBean.addAction}" />
+										</f:facet>
+									</p:panelGrid>
+									<p:spacer height="30px;" />
+									<p:dataTable id="repuestosTable"
+										value="#{notaDePedidoBean.detalleRepuestosList}"
+										scrollable="true" scrollHeight="100px" var="o" widgetVar="50"
+										style="width: 700px;" editable="true" 
+										emptyMessage="No se agregaron repuestos" >
+										<f:facet name="header">  
+                        Repuestos  
+                    </f:facet>
+										<p:column headerText="Repuesto">
+											<h:outputText value="#{o.repuesto.modelo}"
+												style="text-align: center" />
+										</p:column>
+										<p:column headerText="Cantidad">
+											<pe:inputNumber value="#{o.cantidad}" style="width:100%"
+												disabled="true" />
+										</p:column>
+										<p:column headerText="Acción" style="width:100px">
+											<p:commandLink value="Eliminar" process="@this"
+												update="repuestosTable mainForm:guardarBtn"
+												action="#{notaDePedidoBean.eliminarFila(o)}" />
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+							</p:tab>
+							<p:tab title="Motos">
+								<p:panel id="panelDetalleMoto" header="Motos de Pedido"
+									style="width: 800px;">
+									<p:panelGrid columns="2">
+										<h:outputLabel for="moto" value="Moto " />
+										<p:selectOneMenu id="moto" onstyle="width:125px"
+											value="#{notaDePedidoBean.moto}" converter="motoConverter">
+											<f:selectItem itemLabel="Seleccionar.." />
+											<f:selectItems value="#{notaDePedidoBean.motos}" var="m"
+												itemLabel="#{m.modelo}" itemValue="#{m}" />
+										</p:selectOneMenu>
+										<h:outputLabel for="cantMoto" value="Cantidad: " />
+										<pe:inputNumber id="cantMoto"
+											value="#{notaDePedidoBean.cantidadMoto}" />
+										<f:facet name="footer">
+											<p:commandButton value="Agregar Moto"
+												process="@parent mainForm:sucursal mainForm:cliente mainForm:guardarBtn moto cantMoto"
+												update="@form" action="#{notaDePedidoBean.addActionMoto}" />
+										</f:facet>
+									</p:panelGrid>
+									<p:spacer height="30px;" />
+									<p:dataTable id="motosTable"
+										value="#{notaDePedidoBean.detalleMotosList}" scrollable="true"
+										scrollHeight="100px" var="o" widgetVar="50"
+										style="width: 700px;" editable="true" editMode="cell"
+										emptyMessage="No se agregaron motos">
+										<f:facet name="header">  
+                        Motos  
+                    </f:facet>
+										<p:column headerText="Moto">
+											<h:outputText value="#{o.moto.modelo}"
+												style="text-align: center" />
+										</p:column>
+										<p:column headerText="Cantidad">
+											<pe:inputNumber value="#{o.cantidad}" style="width:100%"
+												disabled="true" />
+										</p:column>
+										<p:column headerText="Acción" style="width:100px">
+											<p:commandLink value="Eliminar" process="@this"
+												update="motosTable mainForm:guardarBtn"
+												action="#{notaDePedidoBean.eliminarFilaMoto(o)}" />
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+							</p:tab>
+						</p:tabView>
+					</div>
+					<div class="ui-grid-col-2"></div>
 
-								<h:outputLabel value="Cantidad" for="cantidad"></h:outputLabel>
-								<pe:inputNumber id="cantidad"
-									value="#{notaDePedidoBean.detalleRepuesto.cantidad}" required="true" />
-
-								<p:commandButton id="btn_reset" value="Limpiar" type="reset" />
-								<p:commandButton id="btn_add" value="Agregar"
-									update="repuestos msgs @parent"
-									action="#{notaDePedidoBean.reinit}">
-									<p:collector value="#{notaDePedidoBean.detalleRepuesto}"
-										addTo="#{notaDePedidoBean.detalleRepuestos}" unique="true" />
-								</p:commandButton>
-							</h:panelGrid>
-						</p:panel>
-
-						<p:outputPanel id="repuestos">
-							<p:dataTable value="#{detalleRepuestos}" var="detRep"
-								id="detalleRepTable">
-
-								<p:column headerText="Repuesto">
-									<h:outputText value="#{detRep.repuesto.modelo}" />
-								</p:column>
-
-								<p:column headerText="Cantidad">
-									<f:facet name="Cantidad">
-										<h:outputText value="Cantidad" />
-									</f:facet>
-									<h:outputText value="#{detRep.cantidad}" />
-								</p:column>
-
-								<p:column headerText="Action">
-									<p:commandLink value="Remove" update=":mainForm:repuestos"
-										process=":mainForm:repuestos">
-										<p:collector value="#{detRep}"
-											removeFrom="#{notaDePedidoBean.detalleRepuestos}"
-											unique="true" />
-									</p:commandLink>
-								</p:column>
-							</p:dataTable>
-						</p:outputPanel>
-					</p:tab>
-				</p:tabView>
+				</div>
+				<div class="ui-grid-col-2"></div>
+				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-2">
 						<p:commandButton id="guardarBtn" value="Guardar"
-							action="#{notaDePedidoBean.guardar}" update="@parent"
+							disabled="#{notaDePedidoBean.desactivar}"
+							process="@this mainForm:sucursal mainForm:cliente"
+							action="#{notaDePedidoBean.guardar}"
+							update="mainForm:sucursal mainForm:cliente mainForm:clienteMessage mainForm:sucursalMessage"
 							binding="#{notaDePedidoBean.mensaje}" />
 					</div>
 					<div class="ui-grid-col-2"></div>
