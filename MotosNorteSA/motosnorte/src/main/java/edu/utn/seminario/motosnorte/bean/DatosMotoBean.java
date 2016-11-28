@@ -11,11 +11,15 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
+
 import edu.utn.seminario.motosnorte.domain.CategoriaMoto;
 import edu.utn.seminario.motosnorte.domain.Cilindrada;
 import edu.utn.seminario.motosnorte.domain.Color;
 import edu.utn.seminario.motosnorte.domain.Marca;
 import edu.utn.seminario.motosnorte.domain.Moto;
+import edu.utn.seminario.motosnorte.exception.MotoYaExistenteException;
 import edu.utn.seminario.motosnorte.helper.CommonHelper;
 import edu.utn.seminario.motosnorte.helper.Constants;
 import edu.utn.seminario.motosnorte.service.CategoriaMotoBackingService;
@@ -85,7 +89,7 @@ public class DatosMotoBean {
 		activo = moto.getActivo();
 	}
 
-	public String guardar(){
+	public void guardar(){
 		try {
 			if(operacion.equals(Constants.PARAMETRO_CREAR)){
 				service.guardar(armarMoto());
@@ -93,19 +97,21 @@ public class DatosMotoBean {
 			if(operacion.equals(Constants.PARAMETRO_MODIFICAR)){
 				service.modificar(armarMoto());
 			}
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('successDialog').show();");
+		}catch (MotoYaExistenteException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"",
-							"Moto persistida correctamente"));
-			return "index.xhtml";
-		}catch (Exception e) {
+							"Atención",
+							e.getMessage()));
+		}
+		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "datosMoto.xhtml";
 		}
 	}
 	

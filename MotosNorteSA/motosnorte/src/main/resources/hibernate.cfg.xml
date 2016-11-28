@@ -10,7 +10,7 @@
 		<property name="connection.url">jdbc:mysql://localhost:3306/MOTOSNORTE?createDatabaseIfNotExist=true</property>
 		 <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="show_sql">true</property>
-		
+
 		<!-- ESTO CREA LA BASE A PARTIR DE LAS ENTIDADES -->
 		<!--  <property name="hibernate.hbm2ddl.auto">update</property>-->
 		<property name="hibernate.hbm2ddl.auto">update</property>

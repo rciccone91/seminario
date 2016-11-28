@@ -5,6 +5,8 @@ import java.util.List;
 import edu.utn.seminario.motosnorte.dao.MotoDao;
 import edu.utn.seminario.motosnorte.domain.DetallePedidoMotos;
 import edu.utn.seminario.motosnorte.domain.Moto;
+import edu.utn.seminario.motosnorte.exception.MotoYaExistenteException;
+import edu.utn.seminario.motosnorte.helper.Constants;
 
 public class MotoService {
 
@@ -21,11 +23,13 @@ public class MotoService {
 		return dao.getById(id);
 	}
 
-	public void guardar(Moto moto) throws Exception {
+	public void guardar(Moto moto) throws MotoYaExistenteException, Exception {
+		dao.existeMoto(moto, Constants.PARAMETRO_CREAR);
 		dao.guardar(moto);
 	}
 
-	public void modificar(Moto moto) throws Exception {
+	public void modificar(Moto moto) throws MotoYaExistenteException, Exception {
+		dao.existeMoto(moto, Constants.PARAMETRO_MODIFICAR);
 		dao.modificar(moto);
 	}
 

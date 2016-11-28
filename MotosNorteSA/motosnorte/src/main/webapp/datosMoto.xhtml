@@ -14,13 +14,14 @@
 		</f:metadata>
 		<p:panel id="content">
 			<p:focus context="content" />
+			<p:growl id="messages" showDetail="true"/>
 			<div class="ui-grid ui-grid-responsive">
 				<h1 align="center">Moto</h1>
 				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
-						<p:outputLabel value="Modelo: "/>
+						<p:outputLabel value="Modelo: " />
 					</div>
 					<div class="ui-grid-col-3">
 						<p:inputText id="modelo" value="#{datosMotoBean.modelo}"
@@ -30,7 +31,7 @@
 						</p:inputText>
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="modelo" />
+						<p:message for="modelo" showDetail="false"/>
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
@@ -41,11 +42,10 @@
 						<p:outputLabel value="Año: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:calendar id="año"  maxdate="#{datosMotoBean.max}" 
-						navigator="true" value="#{datosMotoBean.anio}" /> 
+						<p:calendar id="año" maxdate="#{datosMotoBean.max}"
+							navigator="true" value="#{datosMotoBean.anio}" />
 					</div>
-					<div class="ui-grid-col-4">
-					</div>
+					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-2"></div>
 				</div>
 				<BR />
@@ -56,15 +56,14 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:selectOneMenu id="cilindrada" onstyle="width:125px"
-							value="#{datosMotoBean.cilindrada}" 
+							value="#{datosMotoBean.cilindrada}"
 							converter="cilindradaConverter">
-							<f:selectItem itemValue="" itemLabel="Seleccionar..."/>
+							<f:selectItem itemValue="" itemLabel="Seleccionar..." />
 							<f:selectItems value="#{datosMotoBean.cilindradas}" var="c"
 								itemLabel="#{c.cilindrada}" itemValue="#{c}" />
 						</p:selectOneMenu>
 					</div>
-					<div class="ui-grid-col-4">
-					</div>
+					<div class="ui-grid-col-4"></div>
 				</div>
 				<BR />
 				<div class="ui-grid-row">
@@ -74,27 +73,25 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:selectOneMenu id="color" onstyle="width:125px"
-							value="#{datosMotoBean.color}" >
+							value="#{datosMotoBean.color}">
 							<f:selectItem itemLabel="Seleccionar.." />
 							<f:selectItems value="#{datosMotoBean.colores}" var="c"
 								itemLabel="#{c.color}" itemValue="#{c.id}" />
 						</p:selectOneMenu>
 					</div>
-					<div class="ui-grid-col-4">
-					</div>
+					<div class="ui-grid-col-4"></div>
 				</div>
-				<BR/>
+				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-1">
 						<p:outputLabel value="Peso: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<pe:inputNumber value="#{datosMotoBean.peso}"
-							maxValue="9999" id="peso"/>
+						<pe:inputNumber value="#{datosMotoBean.peso}" maxValue="9999"
+							id="peso" />
 					</div>
-					<div class="ui-grid-col-4">
-					</div>
+					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-2"></div>
 				</div>
 				<BR />
@@ -104,8 +101,8 @@
 						<p:outputLabel value="Precio: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<pe:inputNumber value="#{datosMotoBean.precio}"
-							required="true" maxValue="999999" id="precio"
+						<pe:inputNumber value="#{datosMotoBean.precio}" required="true"
+							maxValue="999999" id="precio"
 							requiredMessage="El precio debe ser ingresado"></pe:inputNumber>
 
 					</div>
@@ -122,15 +119,14 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:selectOneMenu id="categoria" onstyle="width:125px"
-							value="#{datosMotoBean.categoriaMoto}" 
+							value="#{datosMotoBean.categoriaMoto}"
 							converter="categoriaMotoConverter">
-							<f:selectItem  itemValue="" itemLabel="Seleccionar..."/>
+							<f:selectItem itemValue="" itemLabel="Seleccionar..." />
 							<f:selectItems value="#{datosMotoBean.categorias}" var="c"
 								itemLabel="#{c.categoriaMoto}" itemValue="#{c}" />
 						</p:selectOneMenu>
 					</div>
-					<div class="ui-grid-col-4">
-					</div>
+					<div class="ui-grid-col-4"></div>
 				</div>
 				<BR />
 				<div class="ui-grid-row">
@@ -158,16 +154,24 @@
 					<div class="ui-grid-col-2">
 						<p:commandButton id="guardarBtn" value="Guardar"
 							rendered="#{datosMotoBean.mostrarBotonGuardar()}"
-							action="#{datosMotoBean.guardar}" update="@parent"
-							binding="#{datosMotoBean.mensaje}" />
+							update="mainForm:content" binding="#{datosMotoBean.mensaje}"
+							action="#{datosMotoBean.guardar()}">
+						</p:commandButton>
 						<p:commandButton id="modificarBtn" value="Modificar"
 							rendered="#{datosMotoBean.mostrarBotonModificar()}"
-							action="#{datosMotoBean.guardar}" update="@parent" />
+							action="#{datosMotoBean.guardar()}" update="mainForm:content" />
+
 					</div>
-					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-2">
+						<p:button id="volverBtn" value="Volver"
+							outcome="seleccionarMoto.xhtml" />
+
+					</div>
 					<div class="ui-grid-col-4"></div>
 				</div>
 				<BR />
+				<BR />
+				<BR /> <BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-5">
@@ -184,6 +188,29 @@
 			<p:blockUI block="content" trigger="modificarBtn">
 				<p:graphicImage library="images" name="ajax-loader.gif" />
 			</p:blockUI>
+			<p:dialog id="successDialog" widgetVar="successDialog" modal="true"
+				resizable="false" appendTo="@(body)" header="Mensaje" width="600"
+				closable="false">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:outputLabel
+							value="Los datos de la moto han sido guardados correctamente" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:button value="Continuar" icon="fa fa-check"
+							outcome="seleccionarMoto.xhtml" />
+					</div>
+				</div>
+
+			</p:dialog>
 		</p:panel>
+		<script type="text/javascript">
+			redirect = function() {
+				window.location.href = '/motosnorte/seleccionarMoto.xhtml';
+			}
+		</script>
 	</ui:define>
 </ui:composition>

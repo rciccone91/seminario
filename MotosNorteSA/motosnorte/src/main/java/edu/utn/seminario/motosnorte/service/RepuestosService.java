@@ -11,7 +11,9 @@ import edu.utn.seminario.motosnorte.dao.RepuestosDao;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.Repuesto;
 import edu.utn.seminario.motosnorte.domain.Usuario;
+import edu.utn.seminario.motosnorte.exception.RepuestoYaExistenteException;
 import edu.utn.seminario.motosnorte.exception.UsuarioYaExistenteException;
+import edu.utn.seminario.motosnorte.helper.Constants;
 
 public class RepuestosService {
 	
@@ -24,11 +26,13 @@ public class RepuestosService {
 		}
 	}
 
-	public void modificar(Repuesto repuesto) throws Exception{
+	public void modificar(Repuesto repuesto) throws RepuestoYaExistenteException, Exception{
+		dao.existeMoto(repuesto, Constants.PARAMETRO_MODIFICAR);
 		dao.modificar(repuesto);
 	} 
 	
-	public void guardar(Repuesto repuesto) throws Exception{
+	public void guardar(Repuesto repuesto) throws RepuestoYaExistenteException, Exception{
+		dao.existeMoto(repuesto, Constants.PARAMETRO_CREAR);
 		dao.guardar(repuesto);
 	}
 

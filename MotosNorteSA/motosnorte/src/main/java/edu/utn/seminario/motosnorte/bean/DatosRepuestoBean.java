@@ -12,10 +12,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import edu.utn.seminario.motosnorte.domain.CategoriaRepuesto;
 import edu.utn.seminario.motosnorte.domain.Marca;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.Repuesto;
+import edu.utn.seminario.motosnorte.exception.RepuestoYaExistenteException;
 import edu.utn.seminario.motosnorte.helper.Constants;
 import edu.utn.seminario.motosnorte.service.CategoriaRepuestoBackingService;
 import edu.utn.seminario.motosnorte.service.MarcaBackingService;
@@ -75,7 +78,7 @@ public class DatosRepuestoBean implements Serializable{
 		categoriaRepuesto = rep.getCategoriaRepuesto();
 	}
 
-	public String guardar(){
+	public void guardar(){
 		try {
 			if(operacion.equals(Constants.PARAMETRO_CREAR)){
 				service.guardar(armarRepuesto());
@@ -83,19 +86,28 @@ public class DatosRepuestoBean implements Serializable{
 			if(operacion.equals(Constants.PARAMETRO_MODIFICAR)){
 				service.modificar(armarRepuesto());
 			}
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('successDialog').show();");
+			//			FacesContext.getCurrentInstance().addMessage(
+			//					mensaje.getClientId(),
+			//					new FacesMessage(FacesMessage.SEVERITY_INFO,
+			//							"",
+			//							"Repuesto persistido correctamente"));
+			//			return "index.xhtml";
+		}catch (RepuestoYaExistenteException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"",
-							"Repuesto persistido correctamente"));
-			return "index.xhtml";
-		}catch (Exception e) {
+							"Atención",
+							e.getMessage()));
+		}
+		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "datosRepuesto.xhtml";
+			//			return "datosRepuesto.xhtml";
 		}
 	}
 

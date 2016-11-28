@@ -15,28 +15,30 @@
 		<p:panel id="content">
 			<p:focus context="content" />
 			<div class="ui-grid ui-grid-responsive">
-				<h1 align="center">Seleccionar Moto</h1>
+				<h1 align="center">Administrar Motos</h1>
 				<BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-2"></div>
-					<div class="ui-grid-col-8">
-						<p:dataTable var="moto"
+					<div class="ui-grid-col-12">
+						<p:dataTable var="moto" resizableColumns="true"
 							value="#{seleccionarMotoBean.motos}" scrollable="true"
 							scrollHeight="290" style="float: right">
 							<p:column headerText="ID" rendered="false">
 								<h:outputText value="#{moto.id}" style="text-align: center" />
 							</p:column>
-							<p:column headerText="Modelo" sortBy="#{moto.modelo}">
+							<p:column headerText="Modelo" sortBy="#{moto.modelo}" filterBy="#{moto.modelo}"
+								filterMatchMode="contains">
 								<h:outputText value="#{moto.modelo}" style="text-align: center" />
 							</p:column>
 
 							<p:column headerText="Precio">
 								<h:outputText value="#{moto.precio}" />
 							</p:column>
-							<p:column headerText="Categoria">
+							<p:column headerText="Categoria" filterBy="#{moto.categoriaMoto}"
+								filterMatchMode="contains">
 								<h:outputText value="#{moto.categoriaMoto}" />
 							</p:column>
-							<p:column headerText="Marca">
+							<p:column headerText="Marca" filterBy="#{moto.marca}"
+								filterMatchMode="contains">
 								<h:outputText value="#{moto.marca}" />
 							</p:column>
 							<p:column headerText="Cilindrada">
@@ -45,14 +47,12 @@
 							<p:column headerText="Activo">
 								<p:selectBooleanCheckbox value="#{moto.activo}" disabled="true" />
 							</p:column>
-							<p:column headerText="Acción"
-								rendered="#{seleccionarMotoBean.mostrarModificar()}">
-								<p:button value="Modificar"
+							<p:column>
+								<p:button value="Modificar" icon="fa fa-edit" 
 									outcome="datosMoto.xhtml?op=modificar&amp;id=#{moto.id}" />
 							</p:column>
-							<p:column headerText="Acción"
-								rendered="#{seleccionarMotoBean.mostrarEliminar()}">
-								<p:commandButton value="Eliminar"
+							<p:column>
+								<p:commandButton value="Eliminar" icon="fa fa-remove"
 									actionListener="#{seleccionarMotoBean.eliminarMoto(moto)}"
 									oncomplete="redirect()">
 									<p:confirm header="Confirmación"
@@ -68,13 +68,29 @@
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</p:confirmDialog>
 					</div>
-					<div class="ui-grid-col-2"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-10"></div>
+					<div class="ui-grid-col-2">
+						<p:button value="Agregar Moto" icon="fa fa-plus"
+							outcome="datosMoto.xhtml?op=crear" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-2">
+						<p:button value="Volver" 
+							outcome="index.xhtml" />
+					</div>
+					<div class="ui-grid-col-5"></div>
 				</div>
 			</div>
 		</p:panel>
 		<script type="text/javascript">
 			redirect = function() {
-				window.location.href = '/motosnorte/index.xhtml';
+				window.location.href = '/motosnorte/seleccionarMoto.xhtml';
 			}
 		</script>
 	</ui:define>

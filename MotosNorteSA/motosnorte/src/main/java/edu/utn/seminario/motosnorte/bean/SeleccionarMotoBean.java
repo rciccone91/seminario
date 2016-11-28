@@ -19,14 +19,14 @@ public class SeleccionarMotoBean implements Serializable{
 	
 	private MotoService service;
 	private List<Moto> motos;
-	private String operacion;
+//	private String operacion;
 
 	@PostConstruct
 	public void init() {
 		service = new MotoService();
 		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
-		operacion = paramMap.get("op");
+//		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+//		operacion = paramMap.get("op");
 		motos = service.listar();
 	}
 
@@ -38,22 +38,22 @@ public class SeleccionarMotoBean implements Serializable{
 		this.motos = motos;
 	}
 
-	public String getOperacion() {
-		return operacion;
-	}
-
-	public void setOperacion(String operacion) {
-		this.operacion = operacion;
-	}
+//	public String getOperacion() {
+//		return operacion;
+//	}
+//
+//	public void setOperacion(String operacion) {
+//		this.operacion = operacion;
+//	}
 	
-	
-	public Boolean mostrarModificar(){
-		return operacion.equals(Constants.PARAMETRO_MODIFICAR);
-	}
-
-	public Boolean mostrarEliminar(){
-		return operacion.equals(Constants.PARAMETRO_ELIMINAR);
-	}
+//	
+//	public Boolean mostrarModificar(){
+//		return operacion.equals(Constants.PARAMETRO_MODIFICAR);
+//	}
+//
+//	public Boolean mostrarEliminar(){
+//		return operacion.equals(Constants.PARAMETRO_ELIMINAR);
+//	}
 	
 	public String eliminarMoto(Moto m){
 		try {

@@ -9,21 +9,10 @@
 		<p:menubar>
 			<p:submenu label=" Productos" icon="fa fa-gear"
 				rendered="#{menuBean.mostrarProductos()}">
-				<p:submenu label="  Repuestos" icon="fa fa-wrench">
-					<p:menuitem value="Nuevo Repuesto"
-						url="datosRepuesto.xhtml?op=crear" />
-					<p:menuitem value="Modificar Repuesto"
-						url="seleccionarRepuesto.xhtml?op=modificar" />
-					<p:menuitem value="Eliminar Repuesto"
-						url="seleccionarRepuesto.xhtml?op=eliminar" />
-				</p:submenu>
-				<p:submenu label="  Motos" icon="fa fa-motorcycle">
-					<p:menuitem value="Nueva Moto" url="datosMoto.xhtml?op=crear" />
-					<p:menuitem value="Modificar Moto"
-						url="seleccionarMoto.xhtml?op=modificar" />
-					<p:menuitem value="Eliminar Moto"
-						url="seleccionarMoto.xhtml?op=eliminar" />
-				</p:submenu>
+				<p:menuitem value="Administrar Repuestos" icon="fa fa-wrench"
+						url="seleccionarRepuesto.xhtml" />
+				<p:menuitem value="Administrar Motos" icon="fa fa-motorcycle"
+						url="seleccionarMoto.xhtml" />
 			</p:submenu>
 			<p:submenu label="Pedido" icon="fa fa-shopping-cart"
 				rendered="#{menuBean.mostrarNotaDePedido()}">
