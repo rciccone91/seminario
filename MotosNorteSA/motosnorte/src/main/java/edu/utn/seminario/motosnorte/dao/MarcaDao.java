@@ -33,15 +33,20 @@ public class MarcaDao {
 
 	@SuppressWarnings({ "finally", "unchecked" })
 	public Marca getById(int id) {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Marca where marca_id = :marcaID");
 			query.setInteger("marcaID", id);
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return (Marca)lista.get(0);
 		}
 	}

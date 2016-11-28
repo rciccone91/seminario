@@ -49,4 +49,8 @@ public class StockMotosService {
 		return dao.validarStockMoto(cantidadMoto,moto,sucursal);
 	}
 
+	public boolean validarCantidadSalida(Moto moto, Sucursal sucursal, Integer cantidad) throws NoHayStockSuficienteException, Exception {
+		return dao.validarCantidadSalida(moto,sucursal,cantidad);
+	}
+
 }

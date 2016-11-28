@@ -26,7 +26,7 @@
 				</p:submenu>
 			</p:submenu>
 			<p:submenu label="Pedido" icon="fa fa-shopping-cart"
-				rendered="#{menuBean.mostrarNotaDePedido()}">				
+				rendered="#{menuBean.mostrarNotaDePedido()}">
 				<p:menuitem value="Cargar Nota de Ped." url="notaDePedido.xhtml" />
 			</p:submenu>
 			<p:submenu label="Usuario" icon="fa fa-users"
@@ -53,6 +53,9 @@
 					url="movimientoStockRepuesto.xhtml" />
 			</p:submenu>
 			<p:submenu label="Listados" icon="fa fa-file-text">
+				<p:submenu label="Listar pedidos" icon="fa fa-file-text-o">
+					<p:menuitem value="Listar todos los pedidos" url="pedidosListado.xhtml" />
+				</p:submenu>
 				<p:submenu label="Listar productos" icon="fa fa-file-text-o">
 					<p:menuitem value="Listar Motos" url="productoListadoMotos.xhtml" />
 					<p:menuitem value="Listar Repuestos"

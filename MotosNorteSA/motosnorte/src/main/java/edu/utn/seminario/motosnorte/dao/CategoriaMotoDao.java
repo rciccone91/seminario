@@ -34,15 +34,20 @@ public class CategoriaMotoDao {
 
 	@SuppressWarnings({ "finally", "unchecked" })
 	public CategoriaMoto getById(Integer id) {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from CategoriaMoto where categoriamoto_id = :id");
 			query.setInteger("id", id);
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return (CategoriaMoto)lista.get(0);
 		}
 	}

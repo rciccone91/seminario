@@ -14,6 +14,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 
 import edu.utn.seminario.motosnorte.domain.Sucursal;
+import edu.utn.seminario.motosnorte.exception.DescripcionDeSucursalYaExistenteException;
+import edu.utn.seminario.motosnorte.exception.DireccionDeSucursalYaExistenteException;
 import edu.utn.seminario.motosnorte.exception.SucursalYaExistenteException;
 import edu.utn.seminario.motosnorte.service.SucursalService;
 
@@ -49,14 +51,21 @@ public class NuevaSucursalBean implements Serializable{
 							"",
 							"Sucursal registrada correctamente"));
 			return "index.xhtml";
-		}catch (SucursalYaExistenteException e) {
+		}catch (DescripcionDeSucursalYaExistenteException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Atención",
 							e.getMessage()));
 			return "nuevaSucursal.xhtml";
-		} 
+		}catch (DireccionDeSucursalYaExistenteException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					mensaje.getClientId(),
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Atención",
+							e.getMessage()));
+			return "nuevaSucursal.xhtml";
+		}
 		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),

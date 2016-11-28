@@ -15,6 +15,7 @@ import edu.utn.seminario.motosnorte.domain.StockMotos;
 import edu.utn.seminario.motosnorte.domain.StockRepuestos;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 import edu.utn.seminario.motosnorte.exception.NoHayStockSuficienteException;
+import edu.utn.seminario.motosnorte.exception.NoSePuedeRegistrarSalidaDeStockException;
 
 public class StockMotosDao {
 
@@ -36,6 +37,9 @@ public class StockMotosDao {
 
 	@SuppressWarnings("unchecked")
 	public Boolean existe(Moto m, Sucursal s) throws Exception{
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<Object>();
 		try {
 			Query query = session.createQuery("from StockMotos where moto_id = :motoId"
@@ -43,16 +47,21 @@ public class StockMotosDao {
 			query.setInteger("motoId", m.getId());
 			query.setInteger("sucursalID",s.getId());
 			lista = query.list();
+			session.close();
 			return !lista.isEmpty();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+			session.close();
 			throw new Exception("Ocurrió un error, por favor comunicarse con el administrador");
 		}
 	}
 
 
 	public void actualizar(Moto m, Sucursal s, int cantidad) throws Exception{
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		Transaction tx = session.getTransaction();
 		try {
 			Query query = session.createSQLQuery("update StockMotos set cantidad=cantidad+:cant where moto_id =:motoId"
@@ -67,8 +76,10 @@ public class StockMotosDao {
 		catch (Exception e) {
 			tx.rollback();
 			e.printStackTrace();
+			session.close();
 			throw new Exception("Ocurrió un error, por favor comunicarse con el administrador");
 		}
+		session.close();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -79,6 +90,9 @@ public class StockMotosDao {
 
 	public boolean validarStockMoto(Integer cantidadMoto, Moto moto, Sucursal sucursal) throws NoHayStockSuficienteException,Exception {
 		try {
+			if(!session.isOpen()){
+				session = sessionFactory.openSession();
+			}
 			Query query = session.createQuery("from StockMotos as sm where sm.moto.id = :moto "
 					+ "and sm.sucursal.id = :sucursal");
 			query.setInteger("moto", moto.getId());
@@ -89,12 +103,40 @@ public class StockMotosDao {
 				throw new NoHayStockSuficienteException();
 			}
 		}catch (NoHayStockSuficienteException e) {
+			session.close();
 			throw new NoHayStockSuficienteException("No hay stock suficiente de la moto en la sucursal para cubrir la cantidad requerida.");
 		} 
 		catch (Exception e) {
+			session.close();
 			throw new Exception("Ocurrió un error al intentar ingresar, por favor comunicarse con el administrador");
 		}
+		session.close();
+		return true;
+	}
 
+	public boolean validarCantidadSalida(Moto moto, Sucursal sucursal, Integer cantidad) throws NoSePuedeRegistrarSalidaDeStockException, Exception {
+		try {
+			if(!session.isOpen()){
+				session = sessionFactory.openSession();
+			}
+			Query query = session.createQuery("from StockMotos as sm where sm.moto.id = :moto "
+					+ "and sm.sucursal.id = :sucursal");
+			query.setInteger("moto", moto.getId());
+			query.setInteger("sucursal", sucursal.getId());
+			StockMotos stock = (StockMotos) query.uniqueResult();
+
+			if(stock.getCantidad() < cantidad){
+				throw new NoHayStockSuficienteException();
+			}
+		}catch (NoHayStockSuficienteException e) {
+			session.close();
+			throw new NoSePuedeRegistrarSalidaDeStockException("La cantidad requerida a salir es mayor a la cantidad que hay en stock");
+		} 
+		catch (Exception e) {
+			session.close();
+			throw new Exception("Ocurrió un error al intentar ingresar, por favor comunicarse con el administrador");
+		}
+		session.close();
 		return true;
 	}
 }

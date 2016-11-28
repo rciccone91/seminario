@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.CategoriaMoto;
+import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.Pedido;
 
 public class PedidosDao {
@@ -27,15 +28,20 @@ public class PedidosDao {
 
 	@SuppressWarnings({ "finally", "unchecked" })
 	public List<Pedido> getPedidosRemotosByEstado(Integer estado) {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Pedido> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Pedido where estado =:estado");
 			query.setInteger("estado", estado);
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return lista;
 		}
 	}
@@ -43,5 +49,44 @@ public class PedidosDao {
 	public void guardar(Pedido ped) throws Exception {
 		DataLayer data = new DataLayer();
 		data.guardar(ped);
+	}
+
+	@SuppressWarnings({ "unchecked", "finally" })
+	public List<Pedido> listar() {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
+		List<Object> lista = new ArrayList<>();
+		try {
+			Query query = session.createQuery("from Pedido order by pedido_id");
+			lista = query.list();
+		} catch (Exception e) {
+			session.close();
+			e.printStackTrace();
+		}
+		finally{
+			session.close();
+			return (List<Pedido>)(List<?>)lista;
+		}
+	}
+
+	@SuppressWarnings({ "finally", "unchecked" })
+	public List<Pedido> listarFilterById(Integer idPed) {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
+		List<Pedido> lista = new ArrayList<>();
+		try {
+			Query query = session.createQuery("from Pedido where pedido_id =:id");
+			query.setInteger("id", idPed);
+			lista = query.list();
+		} catch (Exception e) {
+			session.close();
+			e.printStackTrace();
+		}
+		finally{
+			session.close();
+			return lista;
+		}
 	}
 }

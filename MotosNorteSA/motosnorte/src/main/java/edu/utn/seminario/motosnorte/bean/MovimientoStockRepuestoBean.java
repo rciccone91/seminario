@@ -79,7 +79,7 @@ public class MovimientoStockRepuestoBean {
 			movimientoStockRepuestoService.guardar(armarMovimiento());
 			
 			//actualizo el stock
-			if(movimiento.equals(Constants.MOVIMIENTO_STOCK_SALIDA)){
+			if(movimiento.equals(Constants.MOVIMIENTO_STOCK_SALIDA) && stockRepuestosService.validarCantidadSalida(repuesto,sucursal,cantidad) ){
 				setCantidad(Math.abs(cantidad) * -1);
 			}
 			

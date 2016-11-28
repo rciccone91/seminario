@@ -48,5 +48,8 @@ public class StockRepuestosService {
 	public Boolean validarStockRepuesto(Integer cantidadRepuesto, Repuesto repuesto, Sucursal sucursal) throws NoHayStockSuficienteException, Exception {
 		return dao.validarStockRepuesto(cantidadRepuesto,repuesto,sucursal);
 	}
+	public boolean validarCantidadSalida(Repuesto repuesto, Sucursal sucursal, Integer cantidad) throws NoSePuedeRegistrarSalidaDeStockException, Exception {
+		return dao.validarCantidadSalida(cantidad, repuesto, sucursal);
+	}
 
 }

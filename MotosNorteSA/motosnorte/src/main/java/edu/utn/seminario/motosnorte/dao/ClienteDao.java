@@ -36,15 +36,19 @@ public class ClienteDao implements Serializable{
 
 	@SuppressWarnings("unchecked")
 	public Boolean existe(Cliente cliente) throws Exception{
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<Object>();
 		try {
 			Query query = session.createQuery("from Cliente as c where c.dni = :doc");
 			query.setString("doc",cliente.getDni());
 			lista = query.list();
-
+			session.close();
 			return !lista.isEmpty();
 		}
 		catch (Exception e) {
+			session.close();
 			throw new Exception("Ocurrió un error, por favor comunicarse con el administrador");
 		}
 
@@ -52,47 +56,63 @@ public class ClienteDao implements Serializable{
 
 	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Cliente> listar(){
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Cliente as c order by c.apellido");
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return (List<Cliente>)(List<?>)lista;
 		}
 	}
 	
 	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Cliente> listarActivos(){
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Cliente as c where c.active=:true order by c.apellido");
 			query.setBoolean("true", Boolean.TRUE);
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return (List<Cliente>)(List<?>)lista;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	public Cliente getById(Integer id) throws ClienteNoEncontradoException {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Cliente as c where c.id = :id");
 			query.setInteger("id",id);
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		if(!lista.isEmpty()){
+			session.close();
 			return (Cliente)lista.get(0);
 		}
 		else{
+			session.close();
 			throw new ClienteNoEncontradoException("El Cliente requerido no existe.");
 		}
 
@@ -105,6 +125,9 @@ public class ClienteDao implements Serializable{
 
 	
 	public void eliminar(Cliente c) throws Exception {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		Transaction tx = session.getTransaction();
 		try {
 			Query query = session.createQuery("update Cliente set active =:false "
@@ -116,8 +139,10 @@ public class ClienteDao implements Serializable{
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
+			session.close();
 			e.printStackTrace();
 			throw new Exception(e.getMessage());
 		}
+		session.close();
 	}
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import edu.utn.seminario.motosnorte.helper.Constants;
+
 @Entity
 @Table(name="pedidos")
 public class Pedido implements Serializable{
@@ -126,6 +128,10 @@ public class Pedido implements Serializable{
 		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
+	}
+	
+	public String getEstadoString(){
+		return Constants.getEstadoDescription(this.getEstado());
 	}
 	
 	

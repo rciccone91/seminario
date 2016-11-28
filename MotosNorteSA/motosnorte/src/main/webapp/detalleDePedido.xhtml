@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<script
+			src="http://maps.google.com/maps/api/js?key=AIzaSyCx4dm20kpJe8m93gltqH5RIUtL4dWAbKA"
+			type="text/javascript"></script>
+		<h:outputScript library="js" name="common.js" />
+		<f:metadata>
+		</f:metadata>
+		<p:panel id="content">
+			<p:focus context="content" />
+			<div class="ui-grid ui-grid-responsive">
+				<h1 align="center">Detalle de Pedido</h1>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1"></div>
+					<div class="ui-grid-col-10">
+					<h3 align="left">Datos del Pedido</h3>
+						<p:dataTable id="pedidosTable" var="ped" widgetVar="pedidosTable"
+						resizableColumns="true"
+							value="#{detalleDePedidoBean.pedido}" style="float: right"
+							emptyMessage="No se encontraron registros para la búsqueda">
+
+							<p:column headerText="Número" width="120">
+								<h:outputText value="#{ped.id}" />
+							</p:column>
+							<p:column headerText="Estado" width="200">
+					            <h:outputText value="#{ped.estadoString}" />
+					        </p:column>
+							<p:column headerText="Fecha" width="120">
+								<p:calendar value="#{ped.fecha}" disabled="true" />
+							</p:column>
+							<p:column headerText="Cliente" >
+								<h:outputText value="#{ped.cliente.descripcion}" />
+							</p:column>
+							<p:column headerText="Sucursal" width="150">
+								<h:outputText value="#{ped.sucursal.descripcion}" />
+							</p:column>
+							<p:column headerText="Usuario" width="120">
+								<h:outputText value="#{ped.usuario.usuario}" />
+							</p:column>
+						</p:dataTable>
+					</div>
+
+					<div class="ui-grid-col-1"></div>
+				</div>
+				
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1"></div>
+					<div class="ui-grid-col-10">
+					<h3 align="left">Detalle de las Motos del pedido</h3>
+						<p:dataTable id="detallePedidoMotosTable" var="detPedMot" widgetVar="detallePedidoMotosTable"
+						resizableColumns="true"
+							value="#{detalleDePedidoBean.detallePedidoMotos}" scrollable="true"
+							scrollHeight="150" style="float: right"
+							emptyMessage="No se encontraron registros para la búsqueda">
+
+							<p:column headerText="Cantidad" width="120">
+								<h:outputText value="#{detPedMot.cantidad}" />
+							</p:column>
+							
+							<p:column headerText="Modelo" sortBy="#{detPedMot.moto.modelo}">
+								<h:outputText value="#{detPedMot.moto.modelo}" style="text-align: center" />
+							</p:column>
+							<p:column headerText="Categoria">
+								<h:outputText value="#{detPedMot.moto.categoriaMoto}" />
+							</p:column>
+							<p:column headerText="Marca">
+								<h:outputText value="#{detPedMot.moto.marca}" />
+							</p:column>
+							<p:column headerText="Cilindrada">
+								<h:outputText value="#{detPedMot.moto.cilindrada}" />
+							</p:column>
+							<p:column headerText="Precio">
+								<h:outputText value="#{detPedMot.moto.precio}" />
+							</p:column>
+							
+						</p:dataTable>
+					</div>
+					<div class="ui-grid-col-1"></div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1"></div>
+					<div class="ui-grid-col-10">
+					<h3 align="left">Detalle de los Repuestos del pedido</h3>
+						<p:dataTable id="detallePedidoRepuestosTable" var="detPedRep" widgetVar="detallePedidoRepuestosTable"
+						resizableColumns="true"
+							value="#{detalleDePedidoBean.detallePedidoRepuestos}" scrollable="true"
+							scrollHeight="150" style="float: right"
+							emptyMessage="No se encontraron registros para la búsqueda">
+
+							<p:column headerText="Cantidad" width="120">
+								<h:outputText value="#{detPedRep.cantidad}" />
+							</p:column>
+							
+							<p:column headerText="Modelo" sortBy="#{rep.modelo}">
+								<h:outputText value="#{detPedRep.repuesto.modelo}" style="text-align: center" />
+							</p:column>
+							<p:column headerText="Categoria">
+								<h:outputText value="#{detPedRep.repuesto.categoriaRepuesto}" />
+							</p:column>
+							<p:column headerText="Marca">
+								<h:outputText value="#{detPedRep.repuesto.marca}" />
+							</p:column>
+							<p:column headerText="Precio">
+								<h:outputText value="#{detPedRep.repuesto.precio}" />
+							</p:column>
+							
+						</p:dataTable>
+					</div>
+					<div class="ui-grid-col-1"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1"></div>
+					<div class="ui-grid-col-10" align="center">
+					<p:button value="Volver al Listado de pedidos" outcome="pedidosListado.xhtml"/>
+					</div>
+					<div class="ui-grid-col-1"></div>
+				</div>
+			</div>
+		</p:panel>
+	</ui:define>
+</ui:composition>

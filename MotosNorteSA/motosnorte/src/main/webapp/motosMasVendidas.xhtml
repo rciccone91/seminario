@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<f:metadata>
+		</f:metadata>
+		<p:panel id="content">
+			<p:focus context="content" />
+			<p:growl id="messages" showDetail="true" />
+			<div class="ui-grid ui-grid-responsive">
+				<h1 align="center">Motos más vendidas</h1>
+				<BR /> <BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2">
+						<h:outputText value="Fecha Desde" />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:calendar id="fechaDesde"
+							value="#{motosMasVendidasBean.fechaDesde}" showOn="button"
+							required="true" navigator="true"
+							requiredMessage="La fecha desde debe ser ingresada" />
+					</div>
+					<div class="ui-grid-col-2">
+						<h:outputText value="Fecha Hasta" />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:calendar id="fechaHasta"
+							value="#{motosMasVendidasBean.fechaHasta}" showOn="button"
+							required="true" navigator="true"
+							requiredMessage="La fecha hasta debe ser ingresada" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2">
+						<h:outputText value="Categoria:" />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectOneMenu id="categoria" onstyle="width:125px"
+							value="#{motosMasVendidasBean.categoriaMoto}"
+							converter="categoriaMotoConverter">
+							<f:selectItem itemValue="" itemLabel="Seleccionar..." />
+							<f:selectItems value="#{motosMasVendidasBean.categorias}" var="c"
+								itemLabel="#{c.categoriaMoto}" itemValue="#{c}" />
+						</p:selectOneMenu>
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-2">
+						<p:commandButton value="Buscar"
+							process="@parent mainForm:fechaDesde mainForm:fechaHasta"
+							update="@form mainForm:fechaDesde mainForm:fechaHasta mainForm:fechaDesde mainForm:estadisticasTable"
+							action="#{motosMasVendidasBean.buscar}" oncomplete="" />
+					</div>
+					<div class="ui-grid-col-5"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:dataTable id="estadisticasTable" name="estadisticasTable"
+							var="est" value="#{motosMasVendidasBean.lista}" scrollable="true"
+							scrollHeight="220" style="float: right" resizableColumns="true"
+							widgetVar="estadisticasTable"
+							emptyMessage="No se encontraron registros para la búsqueda">
+							<p:column headerText="Modelo">
+								<h:outputText value="#{est.moto.modelo}"
+									style="text-align: center" />
+							</p:column>
+							<p:column headerText="Cantidad">
+								<h:outputText value="#{est.cantidad}" style="text-align: center" />
+							</p:column>
+							<p:column headerText="Precio">
+								<h:outputText value="#{est.moto.precio}" />
+							</p:column>
+							<p:column headerText="Entre Fehas">
+								<h:outputText value="#{est.fechas}" />
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</p:panel>
+	</ui:define>
+</ui:composition>

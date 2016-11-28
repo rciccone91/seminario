@@ -81,7 +81,7 @@ public class MovimientoStockMotoBean implements Serializable{
 			//guardo el movimiento
 			movimientoStockMotoService.guardar(armarMovimiento());
 			//actualizo el stock
-			if(movimiento.equals(Constants.MOVIMIENTO_STOCK_SALIDA)){
+			if(movimiento.equals(Constants.MOVIMIENTO_STOCK_SALIDA) && stockMotosService.validarCantidadSalida(moto,sucursal,cantidad)){
 				setCantidad(Math.abs(cantidad) * -1);
 			}
 			stockMotosService.actualizar(moto,sucursal,cantidad);

@@ -25,6 +25,9 @@ public class DataLayer {
 	}
 
 	public void guardar(Object t) throws Exception {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		Transaction tx = session.getTransaction();
 		try {
 			tx.begin();
@@ -32,11 +35,18 @@ public class DataLayer {
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
+			session.close();
 			throw new Exception(e.getMessage());
 		} 
+		finally {
+			session.close();
+		}
 	}
 
 	public void modificar(Object t) throws Exception {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		Transaction tx = session.getTransaction();
 		try {
 			tx.begin();
@@ -44,11 +54,18 @@ public class DataLayer {
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
+			session.close();
 			throw new Exception(e.getMessage());
 		} 
+		finally {
+			session.close();
+		}
 	}
 
 	public void eliminar(Object t) throws Exception {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		Transaction tx = session.getTransaction();
 		try {
 			tx.begin();
@@ -56,19 +73,28 @@ public class DataLayer {
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
+			session.close();
 			throw new Exception(e.getMessage());
 		} 
+		finally {
+			session.close();
+		}
 	}
 	
 	@SuppressWarnings({ "finally", "unchecked" })
 	public List<Object> list(Class clazz){
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<Object>();
 		try {
 			lista = session.createQuery("from edu.utn.seminario.motosnorte.domain."+clazz.getSimpleName()).list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return lista;
 		}
 	}

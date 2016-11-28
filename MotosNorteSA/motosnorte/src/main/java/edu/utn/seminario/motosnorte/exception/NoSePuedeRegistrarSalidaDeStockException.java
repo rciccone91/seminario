@@ -6,4 +6,8 @@ public class NoSePuedeRegistrarSalidaDeStockException extends Exception {
 		super("No se puede registrar la salida de stock debido a que el producto"
 				+ " no posee stock previo registrado.");
 	}
+	
+	public NoSePuedeRegistrarSalidaDeStockException(String msg){
+		super(msg);
+	}
 }

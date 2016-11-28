@@ -12,6 +12,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
+import edu.utn.seminario.motosnorte.exception.DescripcionDeSucursalYaExistenteException;
+import edu.utn.seminario.motosnorte.exception.DireccionDeSucursalYaExistenteException;
 import edu.utn.seminario.motosnorte.exception.SucursalNoEncontradaException;
 
 import edu.utn.seminario.motosnorte.service.SucursalService;
@@ -74,6 +76,13 @@ public class ModificarSucursalBean implements Serializable{
 							"",
 							"Sucursal modificada correctamente"));
 			return "index.xhtml";
+		}catch (DescripcionDeSucursalYaExistenteException|DireccionDeSucursalYaExistenteException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					mensaje.getClientId(),
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Atención",
+							e.getMessage()));
+			return "modificarSucursal.xhtml?id=#{id}";
 		}
 		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -81,7 +90,7 @@ public class ModificarSucursalBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "nuevaSucursal.xhtml";
+			return "modificarSucursal.xhtml";
 		}
 	}
 

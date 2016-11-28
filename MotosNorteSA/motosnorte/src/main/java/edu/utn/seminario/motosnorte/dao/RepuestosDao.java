@@ -40,49 +40,67 @@ public class RepuestosDao {
 
 	@SuppressWarnings({ "unchecked", "finally" })
 	public Repuesto getById(Integer id) {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Repuesto where repuesto_id = :id");
 			query.setInteger("id", id);
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return (Repuesto)lista.get(0);
 		}
 	}
 
 	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Repuesto> listar() {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Repuesto as r order by r.modelo");
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return (List<Repuesto>)(List<?>)lista;
 		}
 	}
 	
 	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Repuesto> listarActivos() {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Repuesto as r where r.activo=:true order by r.modelo");
 			query.setBoolean("true", Boolean.TRUE);
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return (List<Repuesto>)(List<?>)lista;
 		}
 	}
 
 	public void eliminar(Integer id) throws Exception {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		Transaction tx = session.getTransaction();
 		try {
 			Query query = session.createQuery("update Repuesto set activo =:false "
@@ -94,8 +112,10 @@ public class RepuestosDao {
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
+			session.close();
 			throw new Exception(e.getMessage());
 		}
+		session.close();
 	}
 
 }

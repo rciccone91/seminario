@@ -9,6 +9,8 @@ import edu.utn.seminario.motosnorte.dao.UsuarioDao;
 import edu.utn.seminario.motosnorte.domain.Rol;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 import edu.utn.seminario.motosnorte.domain.Usuario;
+import edu.utn.seminario.motosnorte.exception.DescripcionDeSucursalYaExistenteException;
+import edu.utn.seminario.motosnorte.exception.DireccionDeSucursalYaExistenteException;
 import edu.utn.seminario.motosnorte.exception.SucursalNoEncontradaException;
 import edu.utn.seminario.motosnorte.exception.SucursalYaExistenteException;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
@@ -31,9 +33,13 @@ public class SucursalService implements Serializable{
 //		return dao.login(user, pass);
 //	}
 	
-	public void guardar(Sucursal sucursal) throws SucursalYaExistenteException,Exception{
+	public void guardar(Sucursal sucursal) throws Exception{
 //		if(dao.existe(sucursal))
 //			throw new SucursalYaExistenteException("La sucursal ya existe, por favor ingrese otra.");
+		if(dao.existeOtraSucursalConMismaDescripcion(sucursal))
+			throw new DescripcionDeSucursalYaExistenteException("Ya existe otra sucursal con la descripción: "+sucursal.getDescripcion()+", por favor ingrese otra.");
+		if(dao.existeOtraSucursalConMismaDireccion(sucursal))
+			throw new DireccionDeSucursalYaExistenteException("Ya existe otra sucursal con la dirección: "+sucursal.getDireccion()+", por favor ingrese otra.");
 		dao.guardar(sucursal);
 	}
 	
@@ -53,6 +59,10 @@ public class SucursalService implements Serializable{
 	}
 
 	public void modificar(Sucursal sucursal) throws Exception{
+		if(dao.existeOtraSucursalConMismaDescripcion(sucursal))
+			throw new DescripcionDeSucursalYaExistenteException("Ya existe otra sucursal con la descripción: "+sucursal.getDescripcion()+", por favor ingrese otra.");
+		if(dao.existeOtraSucursalConMismaDireccion(sucursal))
+			throw new DireccionDeSucursalYaExistenteException("Ya existe otra sucursal con la dirección: "+sucursal.getDireccion()+", por favor ingrese otra.");
 		dao.modificar(sucursal);
 	}
 

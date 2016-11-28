@@ -30,18 +30,25 @@ public class Constants {
 		switch(id){
 		case  1:
 			color = "Rojo";
+			break;
 		case  2:
 			color = "Blanco";
+			break;
 		case  3:
 			color = "Azul";
+			break;
 		case  4:
 			color = "Negro";
+			break;
 		case  5:
 			color = "Amarillo";
+			break;
 		case  6:
 			color = "Verde";
+			break;
 		default:
 			color = "No informado";
+			break;
 		}
 		return color;
 	}
@@ -53,4 +60,28 @@ public class Constants {
 	public final static Integer ESTADO_FACTURADO = 2;
 	public final static Integer ESTADO_CANCELADO = 3;
 	public final static Integer ESTADO_REINTEGRADO = 4;
+	
+	public static String getEstadoDescription(Integer id){
+		String estado ="N/A";
+		switch(id){
+		case 1:
+			estado = "Pendiente Facturación";
+			break;
+		case 2:
+			estado = "Facturado";
+			break;
+		case 3:
+			estado = "Cancelado";
+			break;
+		case 4:
+			estado = "Reintegrado";
+			break;
+		default:
+			estado = "No informado";
+			break;
+		}
+		return estado;
+	}
+	
+
 }

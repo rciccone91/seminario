@@ -33,4 +33,12 @@ public class PedidosService {
 		dao.guardar(ped);
 	}
 
+	public List<Pedido> listar() {
+		return dao.listar();
+	}
+
+	public List<Pedido> listarFilterById(Integer idPed) {
+		return dao.listarFilterById(idPed);
+	}
+
 }

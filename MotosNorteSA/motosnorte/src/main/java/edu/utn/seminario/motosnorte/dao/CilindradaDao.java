@@ -28,15 +28,20 @@ public class CilindradaDao {
 	
 	@SuppressWarnings({ "unchecked", "finally" })
 	public Cilindrada getById(Integer id) {
+		if(!session.isOpen()){
+			session = sessionFactory.openSession();
+		}
 		List<Object> lista = new ArrayList<>();
 		try {
 			Query query = session.createQuery("from Cilindrada where cilindrada_id = :id");
 			query.setInteger("id", id);
 			lista = query.list();
 		} catch (Exception e) {
+			session.close();
 			e.printStackTrace();
 		}
 		finally{
+			session.close();
 			return (Cilindrada)lista.get(0);
 		}
 	}

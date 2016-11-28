@@ -3,6 +3,7 @@ package edu.utn.seminario.motosnorte.service;
 import java.util.List;
 
 import edu.utn.seminario.motosnorte.dao.MotoDao;
+import edu.utn.seminario.motosnorte.domain.DetallePedidoMotos;
 import edu.utn.seminario.motosnorte.domain.Moto;
 
 public class MotoService {
@@ -39,5 +40,19 @@ public class MotoService {
 	public List<Moto> listarActivos() {
 		return dao.listarActivos();
 	}
+	
+	public List<Moto> listarMotosFiltro(Integer marcaID, Integer cilindradaID,
+			Integer categoriaID, Integer colorID) {
+		return dao.listarMotosFiltro(marcaID, cilindradaID, categoriaID, colorID);
+	}
+
+	public List<Moto> buscarProductoMotos(Integer marca, String modelo, Integer precio) {
+		return dao.buscarProductoMotos(marca,modelo,precio);
+	}
+
+	public List<Moto> mostrarEstadisticas(List<DetallePedidoMotos> dpm) {
+		return dao.mostrarEstadisticas(dpm);
+	}
+
 
 }

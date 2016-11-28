@@ -48,6 +48,40 @@ public class SucursalDao implements Serializable{
 		}
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Boolean existeOtraSucursalConMismaDescripcion(Sucursal unaSucursal) throws Exception {
+		List<Object> lista = new ArrayList<Object>();
+		try {
+			Query query = session
+					.createQuery("from Sucursal where descripcion = :desc and sucursal_id != :idSuc");
+			query.setString("desc", unaSucursal.getDescripcion());
+			query.setInteger("idSuc", unaSucursal.getId());
+			lista = query.list();
+			return !lista.isEmpty();
+		} catch (Exception e) {
+			throw new Exception(
+					"Ocurrió un error, por favor comunicarse con el administrador");
+		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Boolean existeOtraSucursalConMismaDireccion(Sucursal unaSucursal) throws Exception {
+		List<Object> lista = new ArrayList<Object>();
+		try {
+			Query query = session
+					.createQuery("from Sucursal where direccion = :dir and sucursal_id != :idSuc");
+			query.setString("dir", unaSucursal.getDireccion());
+			query.setInteger("idSuc", unaSucursal.getId());
+			lista = query.list();
+			return !lista.isEmpty();
+		} catch (Exception e) {
+			throw new Exception(
+					"Ocurrió un error, por favor comunicarse con el administrador");
+		}
+
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Sucursal> listar() {
@@ -102,7 +136,7 @@ public class SucursalDao implements Serializable{
 	public List<Sucursal> listarActivos() {
 		List<Object> lista = new ArrayList<Object>();
 		try {
-			Query query = session.createQuery("from Sucursal where activo =:true");
+			Query query = session.createQuery("from Sucursal where activo =:true order by descripcion");
 			query.setBoolean("true", Boolean.TRUE);
 			lista = query.list();
 		} catch (Exception e) {

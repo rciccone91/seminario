@@ -58,10 +58,13 @@
 						<p:outputLabel value="Teléfono: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText id="telefono" onstyle="width:125px"
+						<p:inputMask id="telefono" onstyle="width:125px"
 							value="#{nuevaSucursalBean.telefono}" required="true"
-							requiredMessage="Se debe ingresar un nro. de teléfono">							
-						</p:inputText>
+							requiredMessage="Se debe ingresar un nro. de teléfono"
+							maxlength="15"
+							>
+							<pe:keyFilter regEx="/[\d]/" />							
+						</p:inputMask>
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="telefono" />
