@@ -15,11 +15,11 @@
 		<p:panel id="content">
 			<p:focus context="content" />
 			<div class="ui-grid ui-grid-responsive">
-				<h1 align="center">Seleccionar Usuario</h1>
+				<h1 align="center">Administrar Usuarios</h1>
 				<BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-3"></div>
-					<div class="ui-grid-col-6">
+					<div class="ui-grid-col-1"></div>
+					<div class="ui-grid-col-10">
 						<p:dataTable var="us" value="#{seleccionarUsuarioBean.usuarios}"
 							scrollable="true" scrollHeight="220" style="float: right">
 							<p:column headerText="ID" rendered="false">
@@ -39,18 +39,16 @@
 							<p:column headerText="Activo">
 								<p:selectBooleanCheckbox value="#{us.activo}" disabled="true" />
 							</p:column>
-							<p:column headerText="Acción"
-								rendered="#{seleccionarUsuarioBean.mostrarModificar()}">
+							<p:column>
 								<p:button value="Modificar"
 									outcome="modificarUsuario.xhtml?usuario=#{us.usuario}" />
 							</p:column>
-							<p:column headerText="Acción"
-								rendered="#{seleccionarUsuarioBean.mostrarEliminar()}">
-								<p:commandButton value="Eliminar" 
-								actionListener="#{seleccionarUsuarioBean.eliminarUsuario(us)}"
-								oncomplete="redirect()">
-									<p:confirm header="Confirmación" 
-									message="¿Realmente desea dar de baja al usuario?"
+							<p:column>
+								<p:commandButton value="Eliminar"
+									actionListener="#{seleccionarUsuarioBean.eliminarUsuario(us)}"
+									oncomplete="redirect()">
+									<p:confirm header="Confirmación"
+										message="¿Realmente desea dar de baja al usuario?"
 										icon="ui-icon-alert" />
 								</p:commandButton>
 							</p:column>
@@ -62,13 +60,29 @@
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</p:confirmDialog>
 					</div>
-					<div class="ui-grid-col-3"></div>
+					<div class="ui-grid-col-1"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-9"></div>
+					<div class="ui-grid-col-2">
+						<p:button value="Agregar Usuario" icon="fa fa-plus"
+							outcome="nuevoUsuario.xhtml" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-2">
+						<p:button value="Volver" outcome="seleccionarUsuario.xhtml" />
+					</div>
+					<div class="ui-grid-col-5"></div>
 				</div>
 			</div>
 		</p:panel>
 		<script type="text/javascript">
 			redirect = function() {
-				window.location.href = '/motosnorte/index.xhtml';
+				window.location.href = '/motosnorte/seleccionarUsuario.xhtml';
 			}
 		</script>
 	</ui:define>

@@ -46,9 +46,10 @@ public class PedidosDao {
 		}
 	}
 
-	public void guardar(Pedido ped) throws Exception {
+	public Pedido guardar(Pedido ped) throws Exception {
 		DataLayer data = new DataLayer();
-		data.guardar(ped);
+		Pedido p = (Pedido)data.guardar(ped);
+		return p;
 	}
 
 	@SuppressWarnings({ "unchecked", "finally" })

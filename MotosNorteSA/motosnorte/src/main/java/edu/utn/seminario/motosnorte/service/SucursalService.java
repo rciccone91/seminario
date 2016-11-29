@@ -16,6 +16,7 @@ import edu.utn.seminario.motosnorte.exception.SucursalYaExistenteException;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
 import edu.utn.seminario.motosnorte.exception.UsuarioOContraseñaIncorrectoException;
 import edu.utn.seminario.motosnorte.exception.UsuarioYaExistenteException;
+import edu.utn.seminario.motosnorte.helper.Constants;
 
 public class SucursalService implements Serializable{
 	
@@ -33,12 +34,12 @@ public class SucursalService implements Serializable{
 //		return dao.login(user, pass);
 //	}
 	
-	public void guardar(Sucursal sucursal) throws Exception{
+	public void guardar(Sucursal sucursal) throws DescripcionDeSucursalYaExistenteException,DireccionDeSucursalYaExistenteException, Exception{
 //		if(dao.existe(sucursal))
 //			throw new SucursalYaExistenteException("La sucursal ya existe, por favor ingrese otra.");
-		if(dao.existeOtraSucursalConMismaDescripcion(sucursal))
+		if(dao.existeOtraSucursalConMismaDescripcion(sucursal,Constants.PARAMETRO_CREAR))
 			throw new DescripcionDeSucursalYaExistenteException("Ya existe otra sucursal con la descripción: "+sucursal.getDescripcion()+", por favor ingrese otra.");
-		if(dao.existeOtraSucursalConMismaDireccion(sucursal))
+		if(dao.existeOtraSucursalConMismaDireccion(sucursal,Constants.PARAMETRO_CREAR))
 			throw new DireccionDeSucursalYaExistenteException("Ya existe otra sucursal con la dirección: "+sucursal.getDireccion()+", por favor ingrese otra.");
 		dao.guardar(sucursal);
 	}
@@ -58,10 +59,10 @@ public class SucursalService implements Serializable{
 		}
 	}
 
-	public void modificar(Sucursal sucursal) throws Exception{
-		if(dao.existeOtraSucursalConMismaDescripcion(sucursal))
+	public void modificar(Sucursal sucursal) throws DescripcionDeSucursalYaExistenteException,DireccionDeSucursalYaExistenteException, Exception{
+		if(dao.existeOtraSucursalConMismaDescripcion(sucursal,Constants.PARAMETRO_MODIFICAR))
 			throw new DescripcionDeSucursalYaExistenteException("Ya existe otra sucursal con la descripción: "+sucursal.getDescripcion()+", por favor ingrese otra.");
-		if(dao.existeOtraSucursalConMismaDireccion(sucursal))
+		if(dao.existeOtraSucursalConMismaDireccion(sucursal,Constants.PARAMETRO_MODIFICAR))
 			throw new DireccionDeSucursalYaExistenteException("Ya existe otra sucursal con la dirección: "+sucursal.getDireccion()+", por favor ingrese otra.");
 		dao.modificar(sucursal);
 	}

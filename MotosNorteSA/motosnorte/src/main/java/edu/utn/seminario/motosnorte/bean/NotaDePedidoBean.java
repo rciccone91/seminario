@@ -13,6 +13,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 import edu.utn.seminario.motosnorte.domain.Cliente;
@@ -65,6 +66,7 @@ public class NotaDePedidoBean implements Serializable{
 	private static List<DetalleMoto> detalleMotosList;
 
 	private UIComponent mensaje;
+	private Integer idPedido;
 
 
 	@ManagedProperty("#{clienteBackingService}")
@@ -103,7 +105,7 @@ public class NotaDePedidoBean implements Serializable{
 		}
 	}
 
-	public String guardar(){
+	public void guardar(){
 		pedidoService = new PedidosService();
 
 		detallePedidoRepuestosService = new DetallePedidoRepuestosService();
@@ -116,8 +118,8 @@ public class NotaDePedidoBean implements Serializable{
 
 		try {
 			Pedido pedido = armarPedido();
-			pedidoService.guardar(pedido);
-
+			Pedido p = pedidoService.guardar(pedido);
+			
 			if(!detalleRepuestosList.isEmpty()){
 				List<DetallePedidoRepuestos> detalleRepuestos = armarDetallePedidoRepuestos(pedido);
 				for (DetallePedidoRepuestos det : detalleRepuestos) {
@@ -149,6 +151,9 @@ public class NotaDePedidoBean implements Serializable{
 					stockMotosService.actualizar(det.getMoto(), sucursal, det.getCantidad()*-1);
 				}
 			}	
+			idPedido = p.getId();
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('successDialog').show();");
 		} catch (UsuarioNoEncontradoException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
@@ -163,7 +168,7 @@ public class NotaDePedidoBean implements Serializable{
 							"Error",
 							"Ha ocurrido un error al guardar la nota de pedido. Por favor contactarse con el Administrador"));
 		}
-		return "index.xhtml";
+//		/return "index.xhtml";
 	}
 
 
@@ -503,5 +508,13 @@ public class NotaDePedidoBean implements Serializable{
 
 	public void setClienteService(ClienteService clienteService) {
 		this.clienteService = clienteService;
+	}
+
+	public Integer getIdPedido() {
+		return idPedido;
+	}
+
+	public void setIdPedido(Integer idPedido) {
+		this.idPedido = idPedido;
 	}
 }

@@ -14,6 +14,7 @@ import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 import edu.utn.seminario.motosnorte.exception.SucursalNoEncontradaException;
+import edu.utn.seminario.motosnorte.helper.Constants;
 
 public class SucursalDao implements Serializable{
 	private SessionFactory sessionFactory;
@@ -43,6 +44,7 @@ public class SucursalDao implements Serializable{
 			lista = query.list();
 			return !lista.isEmpty();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception(
 					"Ocurrió un error, por favor comunicarse con el administrador");
 		}
@@ -50,16 +52,23 @@ public class SucursalDao implements Serializable{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Boolean existeOtraSucursalConMismaDescripcion(Sucursal unaSucursal) throws Exception {
+	public Boolean existeOtraSucursalConMismaDescripcion(Sucursal unaSucursal, String accion) throws Exception {
 		List<Object> lista = new ArrayList<Object>();
 		try {
-			Query query = session
-					.createQuery("from Sucursal where descripcion = :desc and sucursal_id != :idSuc");
-			query.setString("desc", unaSucursal.getDescripcion());
-			query.setInteger("idSuc", unaSucursal.getId());
+			Query query = null;
+			if(accion.equals(Constants.PARAMETRO_CREAR)){
+				query = session
+						.createQuery("from Sucursal where upper(descripcion) = :desc");
+			}else{
+				query = session
+						.createQuery("from Sucursal where upper(descripcion) = :desc and sucursal_id != :idSuc");
+				query.setInteger("idSuc", unaSucursal.getId());
+			}
+			query.setString("desc", unaSucursal.getDescripcion().toUpperCase().trim());
 			lista = query.list();
 			return !lista.isEmpty();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception(
 					"Ocurrió un error, por favor comunicarse con el administrador");
 		}
@@ -67,16 +76,27 @@ public class SucursalDao implements Serializable{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Boolean existeOtraSucursalConMismaDireccion(Sucursal unaSucursal) throws Exception {
+	public Boolean existeOtraSucursalConMismaDireccion(Sucursal unaSucursal, String accion) throws Exception {
 		List<Object> lista = new ArrayList<Object>();
 		try {
-			Query query = session
-					.createQuery("from Sucursal where direccion = :dir and sucursal_id != :idSuc");
-			query.setString("dir", unaSucursal.getDireccion());
-			query.setInteger("idSuc", unaSucursal.getId());
+			Query query = null;
+			if(accion.equals(Constants.PARAMETRO_CREAR)){
+				query = session
+						.createQuery("from Sucursal where upper(direccion) = :dir");
+			}else{
+				query = session
+						.createQuery("from Sucursal where upper(direccion) = :dir and sucursal_id != :idSuc");
+				query.setInteger("idSuc", unaSucursal.getId());
+			}
+			
+//			Query query = session
+//					.createQuery("from Sucursal where direccion = :dir and sucursal_id != :idSuc");
+			query.setString("dir", unaSucursal.getDireccion().toUpperCase().trim());
+//			query.setInteger("idSuc", unaSucursal.getId());
 			lista = query.list();
 			return !lista.isEmpty();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception(
 					"Ocurrió un error, por favor comunicarse con el administrador");
 		}

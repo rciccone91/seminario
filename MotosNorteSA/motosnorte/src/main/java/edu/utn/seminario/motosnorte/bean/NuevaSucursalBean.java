@@ -13,6 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 
+import org.primefaces.context.RequestContext;
+
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 import edu.utn.seminario.motosnorte.exception.DescripcionDeSucursalYaExistenteException;
 import edu.utn.seminario.motosnorte.exception.DireccionDeSucursalYaExistenteException;
@@ -42,29 +44,26 @@ public class NuevaSucursalBean implements Serializable{
 	}
 
 
-	public String guardar(){
+	public void guardar(){
 		try {
 			service.guardar(armarSucursal());
-			FacesContext.getCurrentInstance().addMessage(
-					mensaje.getClientId(),
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"",
-							"Sucursal registrada correctamente"));
-			return "index.xhtml";
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('successDialog').show();");
+//			return "index.xhtml";
 		}catch (DescripcionDeSucursalYaExistenteException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Atención",
 							e.getMessage()));
-			return "nuevaSucursal.xhtml";
+//			return "nuevaSucursal.xhtml";
 		}catch (DireccionDeSucursalYaExistenteException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Atención",
 							e.getMessage()));
-			return "nuevaSucursal.xhtml";
+//			return "nuevaSucursal.xhtml";
 		}
 		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -72,7 +71,7 @@ public class NuevaSucursalBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "nuevaSucursal.xhtml";
+//			return "nuevaSucursal.xhtml";
 		}
 	}
 

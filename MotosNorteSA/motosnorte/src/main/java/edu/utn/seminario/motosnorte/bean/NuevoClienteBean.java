@@ -60,7 +60,7 @@ public class NuevoClienteBean implements Serializable{
 			service = new ClienteService();
 	}
 	
-	public String guardar(){
+	public void guardar(){
 		
 		try {
 			service.guardar(armarCliente());
@@ -69,14 +69,16 @@ public class NuevoClienteBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"",
 							"Cliente registrado correctamente"));
-			return "index.xhtml";
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('successDialog').show();");
+//			return "index.xhtml";
 		}catch (ClienteYaExistenteException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Atención",
 							e.getMessage()));
-			return "nuevoCliente.xhtml";
+//			return "nuevoCliente.xhtml";
 		} 
 		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -84,7 +86,7 @@ public class NuevoClienteBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "nuevoCliente.xhtml";
+//			return "nuevoCliente.xhtml";
 		}
 	}
 

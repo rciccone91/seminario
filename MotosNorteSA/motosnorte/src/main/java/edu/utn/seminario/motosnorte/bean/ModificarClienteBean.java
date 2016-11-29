@@ -9,6 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
+
 import edu.utn.seminario.motosnorte.domain.Cliente;
 import edu.utn.seminario.motosnorte.exception.ClienteNoEncontradoException;
 import edu.utn.seminario.motosnorte.helper.Constants;
@@ -65,7 +68,7 @@ public class ModificarClienteBean implements Serializable{
 		return "error.xhtml?msg="+e.getMessage();
 	}
 
-	public String guardar(){
+	public void guardar(){
 		try {
 			service.modificar(armarCliente());
 			FacesContext.getCurrentInstance().addMessage(
@@ -73,7 +76,9 @@ public class ModificarClienteBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"",
 							"Cliente modificado correctamente"));
-			return "index.xhtml";
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('successDialog').show();");
+//			return "index.xhtml";
 		}
 		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -81,7 +86,7 @@ public class ModificarClienteBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "nuevoCliente.xhtml";
+//			return "nuevoCliente.xhtml";
 		}
 	}
 

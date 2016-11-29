@@ -10,9 +10,9 @@
 			<p:submenu label=" Productos" icon="fa fa-gear"
 				rendered="#{menuBean.mostrarProductos()}">
 				<p:menuitem value="Administrar Repuestos" icon="fa fa-wrench"
-						url="seleccionarRepuesto.xhtml" />
+					url="seleccionarRepuesto.xhtml" />
 				<p:menuitem value="Administrar Motos" icon="fa fa-motorcycle"
-						url="seleccionarMoto.xhtml" />
+					url="seleccionarMoto.xhtml" />
 			</p:submenu>
 			<p:submenu label="Pedido" icon="fa fa-shopping-cart"
 				rendered="#{menuBean.mostrarNotaDePedido()}">
@@ -20,20 +20,15 @@
 			</p:submenu>
 			<p:submenu label="Usuario" icon="fa fa-users"
 				rendered="#{menuBean.mostrarUsuario()}">
-				<p:menuitem value="Nuevo Usuario" url="nuevoUsuario.xhtml" />
-				<p:menuitem value="Modificar Usuario"
-					url="seleccionarUsuario.xhtml?op=modificar" />
-				<p:menuitem value="Eliminar Usuario"
-					url="seleccionarUsuario.xhtml?op=eliminar" />
+				<p:menuitem value="Administrar Usuario" icon="fa fa-users"
+					url="seleccionarUsuario.xhtml" />
 			</p:submenu>
 			<p:submenu label="Cliente" icon="fa fa-street-view"
 				rendered="#{menuBean.mostrarCliente()}">
-				<p:menuitem value="Nuevo Cliente" url="nuevoCliente.xhtml" />
-				<p:menuitem value="Modificar Cliente"
-					url="seleccionarCliente.xhtml?op=modificar" />
-				<p:menuitem value="Eliminar Cliente"
-					url="seleccionarCliente.xhtml?op=eliminar" />
-				<p:menuitem value="Listar Cliente" url="listarCliente.xhtml" />
+				<p:menuitem value="Administrar Clientes" icon="fa fa-street-view"
+					url="seleccionarCliente.xhtml" />
+				<p:menuitem value="Listar Clientes" icon="fa fa-street-view"
+					url="listarCliente.xhtml" />
 			</p:submenu>
 			<p:submenu label="Stock" icon="fa fa-cubes"
 				rendered="#{menuBean.mostrarStock()}">
@@ -43,7 +38,8 @@
 			</p:submenu>
 			<p:submenu label="Listados" icon="fa fa-file-text">
 				<p:submenu label="Listar pedidos" icon="fa fa-file-text-o">
-					<p:menuitem value="Listar todos los pedidos" url="pedidosListado.xhtml" />
+					<p:menuitem value="Listar todos los pedidos"
+						url="pedidosListado.xhtml" />
 				</p:submenu>
 				<p:submenu label="Listar productos" icon="fa fa-file-text-o">
 					<p:menuitem value="Listar Motos" url="productoListadoMotos.xhtml" />
@@ -59,11 +55,8 @@
 			</p:submenu>
 			<p:submenu label="Sucursal" icon="fa fa-building-o"
 				rendered="#{menuBean.mostrarSucursal()}">
-				<p:menuitem value="Nueva Sucursal" url="nuevaSucursal.xhtml" />
-				<p:menuitem value="Modificar Sucursal"
-					url="seleccionarSucursal.xhtml?op=modificar" />
-				<p:menuitem value="Eliminar Sucursal"
-					url="seleccionarSucursal.xhtml?op=eliminar" />
+				<p:menuitem value="Administrar Sucursales" icon="fa fa-building-o"
+					url="seleccionarSucursal.xhtml" />
 			</p:submenu>
 			<f:facet name="options">
 				<p:commandButton id="logout" value="Logout" icon="ui-icon-extlink"

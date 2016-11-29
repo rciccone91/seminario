@@ -21,22 +21,26 @@
 					<div class="ui-grid-col-12">
 						<p:dataTable var="rep"
 							value="#{seleccionarRepuestoBean.repuestos}" scrollable="true"
-							scrollHeight="290" style="float: right">
+							scrollHeight="290" style="float: right"
+							emptyMessage="No se encontraron repuestos para la búsqueda">
 							<p:column headerText="ID" rendered="false">
 								<h:outputText value="#{rep.id}" style="text-align: center" />
 							</p:column>
-							<p:column headerText="Modelo" sortBy="#{rep.modelo}">
+							<p:column headerText="Modelo" sortBy="#{rep.modelo}" filterBy="#{rep.modelo}"
+								filterMatchMode="contains">
 								<h:outputText value="#{rep.modelo}" style="text-align: center" />
 							</p:column>
 
-							<p:column headerText="Precio">
+							<p:column headerText="Precio" sortBy="#{rep.precio}">
 								<h:outputText value="#{rep.precio}" />
 							</p:column>
-							<p:column headerText="Categoria">
-								<h:outputText value="#{rep.categoriaRepuesto}" />
+							<p:column headerText="Categoria" filterBy="#{rep.categoriaRepuesto.categoriaRepuesto}"
+								filterMatchMode="contains" sortBy="#{rep.categoriaRepuesto.categoriaRepuesto}">
+								<h:outputText value="#{rep.categoriaRepuesto.categoriaRepuesto}" />
 							</p:column>
-							<p:column headerText="Marca">
-								<h:outputText value="#{rep.marca}" />
+							<p:column headerText="Marca" filterBy="#{rep.marca.marca}"
+								filterMatchMode="contains" sortBy="#{rep.marca.marca}">
+								<h:outputText value="#{rep.marca.marca}" />
 							</p:column>
 							<p:column headerText="Activo">
 								<p:selectBooleanCheckbox value="#{rep.activo}" disabled="true" />

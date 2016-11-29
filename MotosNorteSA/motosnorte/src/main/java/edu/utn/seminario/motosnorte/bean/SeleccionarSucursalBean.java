@@ -21,14 +21,11 @@ public class SeleccionarSucursalBean implements Serializable{
 
 	private SucursalService service;
 	private List<Sucursal> sucursales;
-	private String operacion;
 
 	@PostConstruct
 	public void init() {
 		service = new SucursalService();
 		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
-		operacion = paramMap.get("op");
 		sucursales = service.listar();
 	}
 
@@ -40,21 +37,21 @@ public class SeleccionarSucursalBean implements Serializable{
 		this.sucursales = sucursales;
 	}
 
-	public String getOperacion() {
-		return operacion;
-	}
-
-	public void setOperacion(String operacion) {
-		this.operacion = operacion;
-	}
-
-	public Boolean mostrarModificar(){
-		return operacion.equals(Constants.PARAMETRO_MODIFICAR);
-	}
-
-	public Boolean mostrarEliminar(){
-		return operacion.equals(Constants.PARAMETRO_ELIMINAR);
-	}
+//	public String getOperacion() {
+//		return operacion;
+//	}
+//
+//	public void setOperacion(String operacion) {
+//		this.operacion = operacion;
+//	}
+//
+//	public Boolean mostrarModificar(){
+//		return operacion.equals(Constants.PARAMETRO_MODIFICAR);
+//	}
+//
+//	public Boolean mostrarEliminar(){
+//		return operacion.equals(Constants.PARAMETRO_ELIMINAR);
+//	}
 	
 	public String eliminarSucursal(Sucursal s){
 		try {

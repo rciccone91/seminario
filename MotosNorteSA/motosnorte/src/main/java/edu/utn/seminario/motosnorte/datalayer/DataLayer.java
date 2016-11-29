@@ -1,5 +1,6 @@
 package edu.utn.seminario.motosnorte.datalayer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class DataLayer {
 		}
 	}
 
-	public void guardar(Object t) throws Exception {
+	public Object guardar(Object t) throws Exception {
 		if(!session.isOpen()){
 			session = sessionFactory.openSession();
 		}
@@ -36,11 +37,13 @@ public class DataLayer {
 		} catch (Exception e) {
 			tx.rollback();
 			session.close();
+			e.printStackTrace();
 			throw new Exception(e.getMessage());
 		} 
 		finally {
 			session.close();
 		}
+		return t;
 	}
 
 	public void modificar(Object t) throws Exception {

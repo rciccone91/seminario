@@ -13,6 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 
+import org.primefaces.context.RequestContext;
+
 import edu.utn.seminario.motosnorte.domain.Rol;
 import edu.utn.seminario.motosnorte.domain.Usuario;
 import edu.utn.seminario.motosnorte.exception.UsuarioYaExistenteException;
@@ -45,7 +47,7 @@ public class NuevoUsuarioBean implements Serializable{
 		this.roles = roles;
 	}
 	
-	public String guardar(){
+	public void guardar(){
 		try {
 			service.guardar(armarUsuario());
 			FacesContext.getCurrentInstance().addMessage(
@@ -53,14 +55,16 @@ public class NuevoUsuarioBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"",
 							"Usuario registrado correctamente"));
-			return "index.xhtml";
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('successDialog').show();");
+//			return "index.xhtml";
 		}catch (UsuarioYaExistenteException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Atención",
 							e.getMessage()));
-			return "nuevoUsuario.xhtml";
+//			return "nuevoUsuario.xhtml";
 		} 
 		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -68,7 +72,7 @@ public class NuevoUsuarioBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "nuevoUsuario.xhtml";
+//			return "nuevoUsuario.xhtml";
 		}
 	}
 

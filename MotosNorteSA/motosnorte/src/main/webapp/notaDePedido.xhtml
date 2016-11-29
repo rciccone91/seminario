@@ -180,6 +180,24 @@
 			<p:blockUI block="content" trigger="guardarBtn">
 				<p:graphicImage library="images" name="ajax-loader.gif" />
 			</p:blockUI>
+						<p:dialog id="successDialog" widgetVar="successDialog" modal="true"
+				resizable="false" appendTo="@(body)" header="Mensaje" width="600"
+				closable="false">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:outputLabel
+							value="La nota de pedido se guardó correctamente" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:button value="Continuar" icon="fa fa-check"
+							outcome="pedidosListado.xhtml" />
+					</div>
+				</div>
+
+			</p:dialog>
 		</p:panel>
 	</ui:define>
 </ui:composition>

@@ -12,6 +12,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import edu.utn.seminario.motosnorte.domain.Rol;
 import edu.utn.seminario.motosnorte.domain.Usuario;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
@@ -62,7 +64,7 @@ public class ModificarUsuarioBean implements Serializable{
 		this.roles = roles;
 	}
 
-	public String guardar(){
+	public void guardar(){
 		try {
 			service.modificar(armarUsuario());
 			FacesContext.getCurrentInstance().addMessage(
@@ -70,7 +72,9 @@ public class ModificarUsuarioBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"",
 							"Usuario modificado correctamente"));
-			return "index.xhtml";
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('successDialog').show();");
+//			return "index.xhtml";
 		}
 		catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -78,7 +82,7 @@ public class ModificarUsuarioBean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error",
 							e.getMessage()));
-			return "nuevoUsuario.xhtml";
+//			return "nuevoUsuario.xhtml";
 		}
 	}
 

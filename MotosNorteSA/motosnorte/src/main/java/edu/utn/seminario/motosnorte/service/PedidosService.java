@@ -29,8 +29,8 @@ public class PedidosService {
 		return dao.getPedidosRemotosByEstado(estado);
 	}
 	
-	public void guardar(Pedido ped) throws Exception{
-		dao.guardar(ped);
+	public Pedido guardar(Pedido ped) throws Exception{
+		return dao.guardar(ped);
 	}
 
 	public List<Pedido> listar() {

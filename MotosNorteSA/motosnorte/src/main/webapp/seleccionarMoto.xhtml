@@ -21,25 +21,26 @@
 					<div class="ui-grid-col-12">
 						<p:dataTable var="moto" resizableColumns="true"
 							value="#{seleccionarMotoBean.motos}" scrollable="true"
-							scrollHeight="290" style="float: right">
+							scrollHeight="290" style="float: right"
+							emptyMessage="No se encontraron motos para la búsqueda">
 							<p:column headerText="ID" rendered="false">
 								<h:outputText value="#{moto.id}" style="text-align: center" />
 							</p:column>
-							<p:column headerText="Modelo" sortBy="#{moto.modelo}" filterBy="#{moto.modelo}"
-								filterMatchMode="contains">
+							<p:column headerText="Modelo" sortBy="#{moto.modelo}"
+								filterBy="#{moto.modelo}" filterMatchMode="contains">
 								<h:outputText value="#{moto.modelo}" style="text-align: center" />
 							</p:column>
 
-							<p:column headerText="Precio">
+							<p:column headerText="Precio" sortBy="#{moto.precio}">
 								<h:outputText value="#{moto.precio}" />
 							</p:column>
-							<p:column headerText="Categoria" filterBy="#{moto.categoriaMoto}"
-								filterMatchMode="contains">
-								<h:outputText value="#{moto.categoriaMoto}" />
+							<p:column headerText="Categoria" sortBy="#{moto.categoriaMoto.categoriaMoto}"
+								filterBy="#{moto.categoriaMoto.categoriaMoto}" filterMatchMode="contains">
+								<h:outputText value="#{moto.categoriaMoto.categoriaMoto}" />
 							</p:column>
-							<p:column headerText="Marca" filterBy="#{moto.marca}"
-								filterMatchMode="contains">
-								<h:outputText value="#{moto.marca}" />
+							<p:column headerText="Marca" filterBy="#{moto.marca.marca}"
+								filterMatchMode="contains" sortBy="#{moto.marca.marca}">
+								<h:outputText value="#{moto.marca.marca}" />
 							</p:column>
 							<p:column headerText="Cilindrada">
 								<h:outputText value="#{moto.cilindrada}" />
@@ -48,7 +49,7 @@
 								<p:selectBooleanCheckbox value="#{moto.activo}" disabled="true" />
 							</p:column>
 							<p:column>
-								<p:button value="Modificar" icon="fa fa-edit" 
+								<p:button value="Modificar" icon="fa fa-edit"
 									outcome="datosMoto.xhtml?op=modificar&amp;id=#{moto.id}" />
 							</p:column>
 							<p:column>
@@ -81,8 +82,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-5"></div>
 					<div class="ui-grid-col-2">
-						<p:button value="Volver" 
-							outcome="index.xhtml" />
+						<p:button value="Volver" outcome="index.xhtml" />
 					</div>
 					<div class="ui-grid-col-5"></div>
 				</div>

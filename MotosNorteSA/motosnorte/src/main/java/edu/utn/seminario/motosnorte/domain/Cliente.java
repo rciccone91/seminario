@@ -116,7 +116,7 @@ public class Cliente implements Serializable{
 	}
 	
 	public String getDescripcion(){
-		return this.nombre + " " +this.apellido + " " +this.dni;
+		return this.nombre + " " +this.apellido + " (" +this.dni+ ")";
 	}
 
 	@Override
