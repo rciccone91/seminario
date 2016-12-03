@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -25,7 +26,9 @@ import edu.utn.seminario.motosnorte.domain.MovimientoStockRepuesto;
 import edu.utn.seminario.motosnorte.domain.Pedido;
 import edu.utn.seminario.motosnorte.domain.Repuesto;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
+import edu.utn.seminario.motosnorte.exception.ClienteNoEncontradoException;
 import edu.utn.seminario.motosnorte.exception.NoHayStockSuficienteException;
+import edu.utn.seminario.motosnorte.exception.SucursalNoEncontradaException;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
 import edu.utn.seminario.motosnorte.helper.Constants;
 import edu.utn.seminario.motosnorte.helper.SessionHelper;
@@ -42,6 +45,7 @@ import edu.utn.seminario.motosnorte.service.StockMotosService;
 import edu.utn.seminario.motosnorte.service.StockRepuestosService;
 import edu.utn.seminario.motosnorte.service.SucursalBackingService;
 import edu.utn.seminario.motosnorte.service.UsuarioService;
+import edu.utn.seminario.motosnorte.transferobject.RepuestoForNota;
 
 @ManagedBean(name = "notaDePedidoBean")
 @ViewScoped
@@ -53,6 +57,11 @@ public class NotaDePedidoBean implements Serializable{
 	private Sucursal sucursal;
 	private List<Repuesto> repuestos;
 	private List<Moto> motos;
+	private Integer stockActualRep;
+	private Integer stockActualMoto;
+	private Integer precioActualRep;
+	private Integer precioActualMoto;
+	private Sucursal sucursalPrevia;
 
 	private Boolean desactivar;
 	// Detalle repuesto
@@ -67,6 +76,8 @@ public class NotaDePedidoBean implements Serializable{
 
 	private UIComponent mensaje;
 	private Integer idPedido;
+	private Integer clienteId;
+	private Integer sucursalId;
 
 
 	@ManagedProperty("#{clienteBackingService}")
@@ -91,6 +102,8 @@ public class NotaDePedidoBean implements Serializable{
 	@PostConstruct
 	public void init() {
 		if(!FacesContext.getCurrentInstance().isPostback()){
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
 			repuestoService = new RepuestosService();
 			usuarioService = new UsuarioService();
 			motoService = new MotoService();
@@ -101,10 +114,116 @@ public class NotaDePedidoBean implements Serializable{
 			motos = motoService.listarActivos();
 			detalleMotosList = new ArrayList<DetalleMoto>();
 			detalleRepuestosList = new ArrayList<DetalleRepuesto>();
+			sucursalPrevia = null;
 			desactivar = true;
+			
+			if(paramMap.get("cli")!= null && paramMap.get("suc")!=null){
+				try {
+					cliente = clienteService.getById(Integer.parseInt(paramMap.get("cliente")));
+					sucursal = (Sucursal) sucursalBackingService.getById(Integer.parseInt(paramMap.get("sucursal")));
+				} catch (Exception e) {
+					e.printStackTrace();
+					FacesContext.getCurrentInstance().addMessage(
+							mensaje.getClientId(),
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Error",
+									"Ha ocurrido un error al consultar los datos. Por favor contactarse con el Administrador"));
+				}
+			}
+		}
+	}
+	
+	public void cambioDeSucursal(){
+		if(detalleRepuestosList != null && !detalleRepuestosList.isEmpty() && sucursal!=null){
+			for (DetalleRepuesto dr : detalleRepuestosList) {
+				if(dr.getSucursal() != sucursal){
+					updateActualesrepuestps();
+					RequestContext.getCurrentInstance().execute("PF('sucursalDialog').show();");
+				}
+			}
+		}
+		else{
+			repuesto=null;
+			updateActualesrepuestps();
+		}
+		if(detalleMotosList != null && !detalleMotosList.isEmpty() && sucursal!=null){
+			for (DetalleMoto dm : detalleMotosList) {
+				if(dm.getSucursal() != sucursal){
+					updateActualesMotos();
+					RequestContext.getCurrentInstance().execute("PF('sucursalDialog').show();");
+				}
+			}
+		}
+		else{
+			moto=null;
+			updateActualesMotos();
 		}
 	}
 
+	private void updateActualesrepuestps() {
+		stockActualRep = null;
+		precioActualRep = null;
+		RequestContext.getCurrentInstance().update("mainForm:tabPedido:cantAct");
+		RequestContext.getCurrentInstance().update("mainForm:tabPedido:precioAct");
+	}
+	
+	private void updateActualesMotos() {
+		stockActualMoto = null;
+		precioActualMoto = null;
+		RequestContext.getCurrentInstance().update("mainForm:tabPedido:cantActMoto");
+		RequestContext.getCurrentInstance().update("mainForm:tabPedido:precioActMoto");
+	}
+
+	public Boolean sucursalSeleccionada(){
+		if(sucursal == null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void cambioDeRepuesto(Repuesto r){
+		stockRepuestosService = new StockRepuestosService();
+		if(repuesto!=null){
+			try {
+				precioActualRep = r.getPrecio();
+				stockActualRep = stockRepuestosService.getStockByRepuestoAndSucursal(r, sucursal);
+			} catch (Exception e) {
+				e.printStackTrace();
+				FacesContext.getCurrentInstance().addMessage(
+						mensaje.getClientId(),
+						new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"Error",
+								"Ha ocurrido un error al consultar el stock. Por favor contactarse con el Administrador"));
+			}
+		}else{
+			precioActualRep = null;
+			stockActualRep = null;
+		}
+
+	}
+	
+	public void cambioDeMoto(Moto m){
+		stockMotosService = new StockMotosService();
+		if(moto!=null){
+			try {
+				precioActualMoto = m.getPrecio();
+				stockActualMoto = stockMotosService.getStockByMotoAndSucursal(m, sucursal);
+			} catch (Exception e) {
+				e.printStackTrace();
+				FacesContext.getCurrentInstance().addMessage(
+						mensaje.getClientId(),
+						new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"Error",
+								"Ha ocurrido un error al consultar el stock. Por favor contactarse con el Administrador"));
+			}
+		}else{
+			precioActualMoto = null;
+			stockActualMoto = null;
+		}
+
+	}
+	
 	public void guardar(){
 		pedidoService = new PedidosService();
 
@@ -119,7 +238,7 @@ public class NotaDePedidoBean implements Serializable{
 		try {
 			Pedido pedido = armarPedido();
 			Pedido p = pedidoService.guardar(pedido);
-			
+
 			if(!detalleRepuestosList.isEmpty()){
 				List<DetallePedidoRepuestos> detalleRepuestos = armarDetallePedidoRepuestos(pedido);
 				for (DetallePedidoRepuestos det : detalleRepuestos) {
@@ -168,7 +287,7 @@ public class NotaDePedidoBean implements Serializable{
 							"Error",
 							"Ha ocurrido un error al guardar la nota de pedido. Por favor contactarse con el Administrador"));
 		}
-//		/return "index.xhtml";
+		//		/return "index.xhtml";
 	}
 
 
@@ -226,7 +345,7 @@ public class NotaDePedidoBean implements Serializable{
 		try {
 			if(!repuestoYaExistente(repuesto.getId())){
 				if(stockRepuestosService.validarStockRepuesto(cantidadRepuesto,repuesto,sucursal)){
-					DetalleRepuesto detRep = new DetalleRepuesto(cantidadRepuesto,repuesto);
+					DetalleRepuesto detRep = new DetalleRepuesto(cantidadRepuesto,repuesto,sucursal);
 					detalleRepuestosList.add(detRep);
 				}
 			}else{
@@ -261,7 +380,7 @@ public class NotaDePedidoBean implements Serializable{
 		try {
 			if(!motoYaExistente(moto.getId())){
 				if(stockMotosService.validarStockMoto(cantidadMoto,moto,sucursal)){
-					DetalleMoto detMot = new DetalleMoto(cantidadMoto,moto);
+					DetalleMoto detMot = new DetalleMoto(cantidadMoto,moto,sucursal);
 					detalleMotosList.add(detMot);
 				}
 			}else{
@@ -314,47 +433,47 @@ public class NotaDePedidoBean implements Serializable{
 		chequearHabilitado();
 		return null;
 	}
-	
+
 	public String eliminarFilaMoto(DetalleMoto det) {
 		detalleMotosList.remove(det);
 		chequearHabilitado();
 		return null;
 	}
-//    public void onEdit(RowEditEvent event) {  
-//		try {
-//			if(stockMotosService.validarStockMoto(cantidadMoto,moto,sucursal)){
-//				DetalleMoto detMot = new DetalleMoto(cantidadRepuesto,moto);
-//				detalleMotosList.add(detMot);
-//			}
-//		} catch (NoHayStockSuficienteException e) {
-//			e.printStackTrace();
-//			FacesContext.getCurrentInstance().addMessage(
-//					mensaje.getClientId(),
-//					new FacesMessage(FacesMessage.SEVERITY_INFO,
-//							"Atención",
-//							e.getMessage()));
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			FacesContext.getCurrentInstance().addMessage(
-//					mensaje.getClientId(),
-//					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-//							"Error",
-//							"Ha ocurrido un error al agregar el producto. Por favor comunicarse con el administrador"));
-//		}
-//    }  
-//    
-//	public void onCancel(RowEditEvent event) {  
-//		FacesMessage msg = new FacesMessage("Repuesto eliminado del pedido");   
-//		FacesContext.getCurrentInstance().addMessage(null, msg); 
-//		detalleRepuestosList.remove((DetalleRepuesto) event.getObject());
-//	}
-//
-//	public void onCancelMoto(RowEditEvent event) {  
-//		FacesMessage msg = new FacesMessage("Moto eliminada del pedido");   
-//		FacesContext.getCurrentInstance().addMessage(null, msg); 
-//		detalleMotosList.remove((DetalleMoto) event.getObject());
-//	}
+	//    public void onEdit(RowEditEvent event) {  
+	//		try {
+	//			if(stockMotosService.validarStockMoto(cantidadMoto,moto,sucursal)){
+	//				DetalleMoto detMot = new DetalleMoto(cantidadRepuesto,moto);
+	//				detalleMotosList.add(detMot);
+	//			}
+	//		} catch (NoHayStockSuficienteException e) {
+	//			e.printStackTrace();
+	//			FacesContext.getCurrentInstance().addMessage(
+	//					mensaje.getClientId(),
+	//					new FacesMessage(FacesMessage.SEVERITY_INFO,
+	//							"Atención",
+	//							e.getMessage()));
+	//
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//			FacesContext.getCurrentInstance().addMessage(
+	//					mensaje.getClientId(),
+	//					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	//							"Error",
+	//							"Ha ocurrido un error al agregar el producto. Por favor comunicarse con el administrador"));
+	//		}
+	//    }  
+	//    
+	//	public void onCancel(RowEditEvent event) {  
+	//		FacesMessage msg = new FacesMessage("Repuesto eliminado del pedido");   
+	//		FacesContext.getCurrentInstance().addMessage(null, msg); 
+	//		detalleRepuestosList.remove((DetalleRepuesto) event.getObject());
+	//	}
+	//
+	//	public void onCancelMoto(RowEditEvent event) {  
+	//		FacesMessage msg = new FacesMessage("Moto eliminada del pedido");   
+	//		FacesContext.getCurrentInstance().addMessage(null, msg); 
+	//		detalleMotosList.remove((DetalleMoto) event.getObject());
+	//	}
 
 	public List<Cliente> getClientes() {
 		return clientes;
@@ -517,4 +636,61 @@ public class NotaDePedidoBean implements Serializable{
 	public void setIdPedido(Integer idPedido) {
 		this.idPedido = idPedido;
 	}
+
+	public Integer getStockActualRep() {
+		return stockActualRep;
+	}
+
+	public void setStockActualRep(Integer stockActualRep) {
+		this.stockActualRep = stockActualRep;
+	}
+
+	public Integer getStockActualMoto() {
+		return stockActualMoto;
+	}
+
+	public void setStockActualMoto(Integer stockActualMoto) {
+		this.stockActualMoto = stockActualMoto;
+	}
+
+	public Integer getPrecioActualRep() {
+		return precioActualRep;
+	}
+
+	public void setPrecioActualRep(Integer precioActualRep) {
+		this.precioActualRep = precioActualRep;
+	}
+
+	public Integer getPrecioActualMoto() {
+		return precioActualMoto;
+	}
+
+	public void setPrecioActualMoto(Integer precioActualMoto) {
+		this.precioActualMoto = precioActualMoto;
+	}
+
+	public Sucursal getSucursalPrevia() {
+		return sucursalPrevia;
+	}
+
+	public void setSucursalPrevia(Sucursal sucursalPrevia) {
+		this.sucursalPrevia = sucursalPrevia;
+	}
+
+	public Integer getClienteId() {
+		return clienteId;
+	}
+
+	public void setClienteId(Integer clienteId) {
+		this.clienteId = clienteId;
+	}
+
+	public Integer getSucursalId() {
+		return sucursalId;
+	}
+
+	public void setSucursalId(Integer sucursalId) {
+		this.sucursalId = sucursalId;
+	}
+	
 }

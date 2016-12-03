@@ -14,7 +14,7 @@
 		</f:metadata>
 		<p:panel id="content">
 			<p:focus context="content" />
-			<p:growl id="messages" showDetail="true"/>
+			<p:growl id="messages" showDetail="true" />
 			<div class="ui-grid ui-grid-responsive">
 				<h1 align="center">Repuesto</h1>
 				<BR />
@@ -29,6 +29,9 @@
 							requiredMessage="El modelo del repuesto debe ser ingresado">
 							<f:validateLength minimum="4" />
 						</p:inputText>
+						<h:outputText id="ast" value="**" ></h:outputText>
+						<p:tooltip id="modToltip" for="ast" trackMouse="true"
+							value="El modelo debe ser ingresado." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="modelo" />
@@ -59,7 +62,9 @@
 						<pe:inputNumber value="#{datosRepuestoBean.precio}"
 							required="true" maxValue="99999" id="precio"
 							requiredMessage="El precio debe ser ingresado"></pe:inputNumber>
-
+						<h:outputText id="ast2" value="**" ></h:outputText>
+						<p:tooltip id="precioToltip" for="ast2" trackMouse="true"
+							value="El precio debe ser ingresado." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="precio" />
@@ -81,6 +86,9 @@
 							<f:selectItems value="#{datosRepuestoBean.categorias}" var="c"
 								itemLabel="#{c.categoriaRepuesto}" itemValue="#{c}" />
 						</p:selectOneMenu>
+						<h:outputText id="ast3" value="**" ></h:outputText>
+						<p:tooltip id="catToltip" for="ast3" trackMouse="true"
+							value="Se debe seleccionar una categoria para el repuesto." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="categoria" />
@@ -101,6 +109,9 @@
 							<f:selectItems value="#{datosRepuestoBean.marcas}" var="c"
 								itemLabel="#{c.marca}" itemValue="#{c}" />
 						</p:selectOneMenu>
+						<h:outputText id="ast4" value="**" ></h:outputText>
+						<p:tooltip id="marcaToltip" for="ast4" trackMouse="true"
+							value="Se debe seleccionar una marca para el repuesto." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="marca" />
@@ -121,6 +132,9 @@
 							<f:selectItems value="#{datosRepuestoBean.motos}" var="c"
 								itemLabel="#{c.modelo}" itemValue="#{c}" />
 						</p:selectOneMenu>
+						<h:outputText id="ast5" value="**" ></h:outputText>
+						<p:tooltip id="motoToltip" for="ast5" trackMouse="true"
+							value="Se debe seleccionar una moto compatible." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="moto" />
@@ -162,7 +176,7 @@
 			<p:blockUI block="content" trigger="modificarBtn">
 				<p:graphicImage library="images" name="ajax-loader.gif" />
 			</p:blockUI>
-						<p:dialog id="successDialog" widgetVar="successDialog" modal="true"
+			<p:dialog id="successDialog" widgetVar="successDialog" modal="true"
 				resizable="false" appendTo="@(body)" header="Mensaje" width="600"
 				closable="false">
 				<div class="ui-grid-row">

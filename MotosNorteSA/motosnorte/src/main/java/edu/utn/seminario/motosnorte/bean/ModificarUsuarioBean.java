@@ -32,7 +32,8 @@ public class ModificarUsuarioBean implements Serializable{
 	private Integer rolID;
 	private List<Rol> roles;
 	private UIComponent mensaje;
-
+	private Boolean activo;
+	
 	@PostConstruct
 	public void init() {
 		
@@ -46,6 +47,7 @@ public class ModificarUsuarioBean implements Serializable{
 			contrasenia= userById.getContrasenia();
 			legajo= userById.getLegajo();
 			rolID= userById.getRol();
+			activo = userById.getActivo();
 		} catch (UsuarioNoEncontradoException e) {
 			redirectError(e);
 		}
@@ -67,11 +69,6 @@ public class ModificarUsuarioBean implements Serializable{
 	public void guardar(){
 		try {
 			service.modificar(armarUsuario());
-			FacesContext.getCurrentInstance().addMessage(
-					mensaje.getClientId(),
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"",
-							"Usuario modificado correctamente"));
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('successDialog').show();");
 //			return "index.xhtml";
@@ -88,14 +85,14 @@ public class ModificarUsuarioBean implements Serializable{
 
 	private Usuario armarUsuario() {
 		Usuario u = new Usuario();
-		u.setActivo(true);
+		u.setActivo(activo);
 		u.setContrasenia(contrasenia);
 		u.setLegajo(legajo);
 		u.setRol(rolID);
 		u.setUsuario(usuario);
 		return u;
 	}
-
+	
 	public UsuarioService getService() {
 		return service;
 	}
@@ -142,5 +139,13 @@ public class ModificarUsuarioBean implements Serializable{
 
 	public void setMensaje(UIComponent mensaje) {
 		this.mensaje = mensaje;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
 }

@@ -88,12 +88,6 @@ public class DatosRepuestoBean implements Serializable{
 			}
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('successDialog').show();");
-			//			FacesContext.getCurrentInstance().addMessage(
-			//					mensaje.getClientId(),
-			//					new FacesMessage(FacesMessage.SEVERITY_INFO,
-			//							"",
-			//							"Repuesto persistido correctamente"));
-			//			return "index.xhtml";
 		}catch (RepuestoYaExistenteException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					mensaje.getClientId(),

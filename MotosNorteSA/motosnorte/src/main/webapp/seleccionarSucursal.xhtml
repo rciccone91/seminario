@@ -46,12 +46,12 @@
 							</p:column>
 
 							<p:column>
-								<p:button value="Modificar"
+								<p:button value="Modificar" icon="fa fa-edit"
 									outcome="modificarSucursal.xhtml?id=#{su.id}" />
 
 							</p:column>
 							<p:column>
-								<p:commandButton value="Eliminar"
+								<p:commandButton value="Eliminar" icon="fa fa-remove"
 									actionListener="#{seleccionarSucursalBean.eliminarSucursal(su)}"
 									oncomplete="redirect()">
 									<p:confirm header="Confirmación"

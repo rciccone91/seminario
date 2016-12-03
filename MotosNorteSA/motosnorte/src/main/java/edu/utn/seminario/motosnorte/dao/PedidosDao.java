@@ -12,6 +12,7 @@ import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.CategoriaMoto;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.Pedido;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class PedidosDao {
 
@@ -20,8 +21,7 @@ public class PedidosDao {
 
 	public PedidosDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

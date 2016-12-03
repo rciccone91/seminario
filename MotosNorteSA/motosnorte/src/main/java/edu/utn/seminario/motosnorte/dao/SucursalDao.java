@@ -15,6 +15,7 @@ import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 import edu.utn.seminario.motosnorte.exception.SucursalNoEncontradaException;
 import edu.utn.seminario.motosnorte.helper.Constants;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class SucursalDao implements Serializable{
 	private SessionFactory sessionFactory;
@@ -22,8 +23,7 @@ public class SucursalDao implements Serializable{
 
 	public SucursalDao() {
 		if (sessionFactory == null) {
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

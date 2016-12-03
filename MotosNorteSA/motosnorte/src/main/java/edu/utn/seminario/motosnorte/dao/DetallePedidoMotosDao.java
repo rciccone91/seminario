@@ -15,6 +15,7 @@ import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.CategoriaMoto;
 import edu.utn.seminario.motosnorte.domain.DetallePedidoMotos;
 import edu.utn.seminario.motosnorte.domain.Pedido;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 import edu.utn.seminario.motosnorte.transferobject.MotosMasVendidas;
 
 public class DetallePedidoMotosDao {
@@ -27,8 +28,7 @@ public class DetallePedidoMotosDao {
 	public DetallePedidoMotosDao(){
 		motoDao = new MotoDao();
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

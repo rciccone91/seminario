@@ -29,6 +29,9 @@
 							requiredMessage="Debe ingresar una descripción para la sucursal.">
 							<f:validateLength minimum="6" />
 						</p:inputText>
+						<h:outputText id="ast" value="**"></h:outputText>
+						<p:tooltip id="descToltip" for="ast" trackMouse="true"
+							value="La descripción debe ser ingresada." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="descripcion" />
@@ -43,9 +46,11 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<p:inputText value="#{nuevaSucursalBean.direccion}"
-							required="true" maxValue="99999" id="direccion"
+							required="true" maxlength="30" id="direccion"
 							requiredMessage="La dirección debe ser ingresada"></p:inputText>
-
+						<h:outputText id="ast2" value="**"></h:outputText>
+						<p:tooltip id="dirToltip" for="ast2" trackMouse="true"
+							value="La dirección debe ser ingresada." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="direccion" />
@@ -62,9 +67,14 @@
 						<p:inputMask id="telefono" onstyle="width:125px"
 							value="#{nuevaSucursalBean.telefono}" required="true"
 							requiredMessage="Se debe ingresar un nro. de teléfono"
-							maxlength="15">
+							maxlength="15" title="Ingresar solo números sin espacios">
 							<pe:keyFilter regEx="/[\d]/" />
 						</p:inputMask>
+						<h:outputText id="ast3" value="**" ></h:outputText>
+						<p:tooltip id="telToltip" for="ast3" trackMouse="true"
+							value="El telefóno debe ser ingresado." />
+						<p:tooltip id="toolTipTelefono" for="telefono" showEvent="focus"
+							hideEvent="blur"></p:tooltip>
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="telefono" />
@@ -82,7 +92,7 @@
 					</div>
 					<div class="ui-grid-col-2">
 						<p:button id="volverBtn" value="Volver"
-							outcome="seleccionarMoto.xhtml" />
+							outcome="seleccionarSucursal.xhtml" />
 					</div>
 					<div class="ui-grid-col-4"></div>
 				</div>

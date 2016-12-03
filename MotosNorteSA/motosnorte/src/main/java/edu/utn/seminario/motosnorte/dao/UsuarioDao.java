@@ -15,6 +15,7 @@ import edu.utn.seminario.motosnorte.domain.Rol;
 import edu.utn.seminario.motosnorte.domain.Usuario;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
 import edu.utn.seminario.motosnorte.exception.UsuarioOContraseñaIncorrectoException;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class UsuarioDao implements Serializable{
 
@@ -23,8 +24,7 @@ public class UsuarioDao implements Serializable{
 
 	public UsuarioDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

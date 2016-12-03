@@ -1,6 +1,7 @@
 package edu.utn.seminario.motosnorte.helper;
 
 public class Constants {
+	
 	public final static Integer ADMINISTRADOR_ID = 1;
 	public final static Integer VENDEDOR_ID = 2;
 	public final static Integer EMPLEADO_DE_DEPOSITO_ID = 3;
@@ -83,5 +84,12 @@ public class Constants {
 		return estado;
 	}
 	
-
+	public final static Integer MOTIVO_SALIDA_VENTA = 1;
+	public final static Integer MOTIVO_SALIDA_DESPERFECTO_O_MAL_ESTADO = 2;
+	public final static Integer MOTIVO_SALIDA_CARGADO_INCORRECTAMENTE = 3;
+	
+	public final static Integer MOTIVO_ENTRADA_COMPRA = 1;
+	public final static Integer MOTIVO_ENTRADA_PEDIDO_REINTEGRADO = 2;
+	public final static Integer MOTIVO_ENTRADA_PEDIDO_CANCELADO = 3;
+	
 }

@@ -25,6 +25,9 @@
 							<f:selectItems value="#{notaDePedidoBean.clientes}" var="c"
 								itemLabel="#{c.descripcion}" itemValue="#{c}" />
 						</p:selectOneMenu>
+						<h:outputText id="ast" value="**"></h:outputText>
+						<p:tooltip id="clieToltip" for="ast" trackMouse="true"
+							value="Se debe ingresar un cliente." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message id="clienteMessage" for="cliente" />
@@ -40,10 +43,16 @@
 						<p:selectOneMenu id="sucursal" onstyle="width:125px"
 							value="#{notaDePedidoBean.sucursal}"
 							converter="sucursalConverter">
-							<f:selectItem itemLabel="Seleccionar.." />
+							<p:ajax event="change"
+								listener="#{notaDePedidoBean.cambioDeSucursal()}"
+								update="@this mainForm:tabPedido:repuesto mainForm:tabPedido:cant mainForm:tabPedido:agregarRepBtn mainForm:tabPedido:moto mainForm:tabPedido:cantMoto mainForm:tabPedido:agregarMotoBtn" />
+							<f:selectItem itemValue="" itemLabel="Seleccionar.." />
 							<f:selectItems value="#{notaDePedidoBean.sucursales}" var="s"
 								itemLabel="#{s.descripcion}" itemValue="#{s}" />
 						</p:selectOneMenu>
+						<h:outputText id="ast2" value="**"></h:outputText>
+						<p:tooltip id="sucToltip" for="ast2" trackMouse="true"
+							value="Se debe seleccionar la sucursal." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message id="sucursalMessage" for="sucursal" />
@@ -54,35 +63,60 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2"></div>
 					<div class="ui-grid-col-8">
-						<p:tabView>
+						<p:tabView id="tabPedido">
 							<p:tab id="tabRepuestos" title="Repuestos">
 								<p:panel id="panelDetalle" header="Repuestos de Pedido"
 									style="width: 800px;">
-									<p:panelGrid columns="2">
-										<h:outputLabel for="repuesto" value="Repuesto: " />
-										<p:selectOneMenu id="repuesto" onstyle="width:125px"
-											value="#{notaDePedidoBean.repuesto}"
-											converter="repuestoConverter">
-											<f:selectItem itemLabel="Seleccionar.." />
-											<f:selectItems value="#{notaDePedidoBean.repuestos}" var="r"
-												itemLabel="#{r.modelo}" itemValue="#{r}" />
-										</p:selectOneMenu>
-										<h:outputLabel for="cant" value="Cantidad: " />
-										<pe:inputNumber id="cant"
-											value="#{notaDePedidoBean.cantidadRepuesto}" required="true"
-											requiredMessage="La cantidad es requerida" />
-										<f:facet name="footer">
-											<p:commandButton value="Agregar Repuesto"
-												process="@parent mainForm:sucursal mainForm:cliente mainForm:guardarBtn repuesto cant"
-												update="@form" action="#{notaDePedidoBean.addAction}" />
-										</f:facet>
-									</p:panelGrid>
+									<div class="ui-grid-row">
+										<div class="ui-grid-col-6">
+											<p:panelGrid columns="2">
+												<h:outputLabel for="repuesto" value="Repuesto: " />
+												<p:selectOneMenu id="repuesto" onstyle="width:180px"
+													value="#{notaDePedidoBean.repuesto}"
+													converter="repuestoConverter"
+													disabled="#{notaDePedidoBean.sucursalSeleccionada()}">
+													<f:selectItem itemValue="" itemLabel="Seleccionar.." />
+													<f:selectItems value="#{notaDePedidoBean.repuestos}"
+														var="r" itemLabel="#{r.modelo}" itemValue="#{r}" />
+													<p:ajax event="change"
+														listener="#{notaDePedidoBean.cambioDeRepuesto(notaDePedidoBean.repuesto)}"
+														update="@this mainForm:tabPedido:precioAct mainForm:tabPedido:cantAct" />
+												</p:selectOneMenu>
+												<h:outputLabel for="cant" value="Cantidad: " />
+												<pe:inputNumber id="cant"
+													value="#{notaDePedidoBean.cantidadRepuesto}"
+													required="true" minValue="1" maxValue="99999"
+													requiredMessage="La cantidad es requerida"
+													disabled="#{notaDePedidoBean.sucursalSeleccionada()}" />
+												<f:facet name="footer">
+													<p:commandButton id="agregarRepBtn"
+														disabled="#{notaDePedidoBean.sucursalSeleccionada()}"
+														value="Agregar Repuesto"
+														process="@parent mainForm:sucursal mainForm:cliente mainForm:guardarBtn repuesto cant"
+														update="@form" action="#{notaDePedidoBean.addAction}"></p:commandButton>
+												</f:facet>
+											</p:panelGrid>
+										</div>
+										<div class="ui-grid-col-3">
+											<h:outputLabel for="precioAct" value="Precio: " />
+											<pe:inputNumber disabled="true" id="precioAct"
+												value="#{notaDePedidoBean.precioActualRep}"
+												style="width: 60px;" />
+										</div>
+										<div class="ui-grid-col-3">
+											<h:outputLabel for="cantAct" value="Stock Actual: " />
+											<pe:inputNumber disabled="true" id="cantAct"
+												value="#{notaDePedidoBean.stockActualRep}"
+												style="width: 60px;" />
+
+										</div>
+									</div>
 									<p:spacer height="30px;" />
 									<p:dataTable id="repuestosTable"
 										value="#{notaDePedidoBean.detalleRepuestosList}"
 										scrollable="true" scrollHeight="100px" var="o" widgetVar="50"
-										style="width: 700px;" editable="true" 
-										emptyMessage="No se agregaron repuestos" >
+										style="width: 700px;" editable="true"
+										emptyMessage="No se agregaron repuestos">
 										<f:facet name="header">  
                         Repuestos  
                     </f:facet>
@@ -105,23 +139,47 @@
 							<p:tab title="Motos">
 								<p:panel id="panelDetalleMoto" header="Motos de Pedido"
 									style="width: 800px;">
-									<p:panelGrid columns="2">
-										<h:outputLabel for="moto" value="Moto " />
-										<p:selectOneMenu id="moto" onstyle="width:125px"
-											value="#{notaDePedidoBean.moto}" converter="motoConverter">
-											<f:selectItem itemLabel="Seleccionar.." />
-											<f:selectItems value="#{notaDePedidoBean.motos}" var="m"
-												itemLabel="#{m.modelo}" itemValue="#{m}" />
-										</p:selectOneMenu>
-										<h:outputLabel for="cantMoto" value="Cantidad: " />
-										<pe:inputNumber id="cantMoto"
-											value="#{notaDePedidoBean.cantidadMoto}" />
-										<f:facet name="footer">
-											<p:commandButton value="Agregar Moto"
-												process="@parent mainForm:sucursal mainForm:cliente mainForm:guardarBtn moto cantMoto"
-												update="@form" action="#{notaDePedidoBean.addActionMoto}" />
-										</f:facet>
-									</p:panelGrid>
+									<div class="ui-grid-row">
+										<div class="ui-grid-col-6">
+											<p:panelGrid columns="2">
+												<h:outputLabel for="moto" value="Moto " />
+												<p:selectOneMenu id="moto" onstyle="width:125px"
+													disabled="#{notaDePedidoBean.sucursalSeleccionada()}"
+													value="#{notaDePedidoBean.moto}" converter="motoConverter">
+													<f:selectItem itemLabel="Seleccionar.." />
+													<f:selectItems value="#{notaDePedidoBean.motos}" var="m"
+														itemLabel="#{m.modelo}" itemValue="#{m}" />
+													<p:ajax event="change"
+														listener="#{notaDePedidoBean.cambioDeMoto(notaDePedidoBean.moto)}"
+														update="@this mainForm:tabPedido:precioActMoto mainForm:tabPedido:cantActMoto" />
+												</p:selectOneMenu>
+												<h:outputLabel for="cantMoto" value="Cantidad: " />
+												<pe:inputNumber id="cantMoto" required="true" minValue="1"
+													disabled="#{notaDePedidoBean.sucursalSeleccionada()}"
+													maxValue="99999" requiredMessage="La cantidad es requerida"
+													value="#{notaDePedidoBean.cantidadMoto}" />
+												<f:facet name="footer">
+													<p:commandButton id="agregarMotoBtn" value="Agregar Moto"
+														disabled="#{notaDePedidoBean.sucursalSeleccionada()}"
+														process="@parent mainForm:sucursal mainForm:cliente mainForm:guardarBtn moto cantMoto"
+														update="@form" action="#{notaDePedidoBean.addActionMoto}" />
+												</f:facet>
+											</p:panelGrid>
+										</div>
+										<div class="ui-grid-col-3">
+											<h:outputLabel for="precioActMoto" value="Precio: " />
+											<pe:inputNumber disabled="true" id="precioActMoto"
+												value="#{notaDePedidoBean.precioActualMoto}"
+												style="width: 80px;" />
+										</div>
+										<div class="ui-grid-col-3">
+											<h:outputLabel for="cantActMoto" value="Stock Actual: " />
+											<pe:inputNumber disabled="true" id="cantActMoto"
+												value="#{notaDePedidoBean.stockActualMoto}"
+												style="width: 60px;" />
+
+										</div>
+									</div>
 									<p:spacer height="30px;" />
 									<p:dataTable id="motosTable"
 										value="#{notaDePedidoBean.detalleMotosList}" scrollable="true"
@@ -180,13 +238,12 @@
 			<p:blockUI block="content" trigger="guardarBtn">
 				<p:graphicImage library="images" name="ajax-loader.gif" />
 			</p:blockUI>
-						<p:dialog id="successDialog" widgetVar="successDialog" modal="true"
+			<p:dialog id="successDialog" widgetVar="successDialog" modal="true"
 				resizable="false" appendTo="@(body)" header="Mensaje" width="600"
 				closable="false">
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-12">
-						<p:outputLabel
-							value="La nota de pedido se guardó correctamente" />
+						<p:outputLabel value="La nota de pedido se guardó correctamente" />
 					</div>
 				</div>
 				<BR />
@@ -194,6 +251,23 @@
 					<div class="ui-grid-col-12">
 						<p:button value="Continuar" icon="fa fa-check"
 							outcome="pedidosListado.xhtml" />
+					</div>
+				</div>
+			</p:dialog>
+			<p:dialog id="sucursalDialog" widgetVar="sucursalDialog" modal="true"
+				resizable="false" appendTo="@(body)" header="Mensaje" width="600"
+				closable="false" appendToBody="false">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:outputLabel
+							value="Al cambiar la sucursal, se borraran los productos agregados para otras sucursales" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:button value="Continuar" icon="fa fa-check"
+							outcome="notaDePedido.xhtml?cli=#{cliente.id}&amp;suc=#{sucursal.id}" />
 					</div>
 				</div>
 

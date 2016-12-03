@@ -64,11 +64,6 @@ public class NuevoClienteBean implements Serializable{
 		
 		try {
 			service.guardar(armarCliente());
-			FacesContext.getCurrentInstance().addMessage(
-					mensaje.getClientId(),
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"",
-							"Cliente registrado correctamente"));
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('successDialog').show();");
 //			return "index.xhtml";

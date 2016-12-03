@@ -50,11 +50,6 @@ public class NuevoUsuarioBean implements Serializable{
 	public void guardar(){
 		try {
 			service.guardar(armarUsuario());
-			FacesContext.getCurrentInstance().addMessage(
-					mensaje.getClientId(),
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"",
-							"Usuario registrado correctamente"));
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('successDialog').show();");
 //			return "index.xhtml";

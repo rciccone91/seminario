@@ -53,4 +53,12 @@ public class StockMotosService {
 		return dao.validarCantidadSalida(moto,sucursal,cantidad);
 	}
 
+	public Integer getStockByMotoAndSucursal(Moto moto, Sucursal sucursal) throws Exception {
+		return dao.getStockByMotoAndSucursal(moto,sucursal);
+	}
+
+	public List<StockMotos> getStockByMoto(Moto moto) throws Exception {
+		return dao.getStockByMoto(moto);
+	}
+
 }

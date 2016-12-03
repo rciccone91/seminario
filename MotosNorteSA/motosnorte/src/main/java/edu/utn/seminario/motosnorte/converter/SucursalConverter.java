@@ -14,9 +14,9 @@ import edu.utn.seminario.motosnorte.service.SucursalBackingService;
 
 @FacesConverter("sucursalConverter")
 public class SucursalConverter implements Converter{
-	
+		
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-        if(value != null && value.trim().length() > 0) {
+        if(value != null && value.trim().length() > 0 && !value.equals("Seleccionar..")) {
             try {
             	SucursalBackingService service = (SucursalBackingService) fc.getExternalContext().getApplicationMap().get("sucursalBackingService");
                 return service.getById(Integer.parseInt(value));
@@ -33,7 +33,7 @@ public class SucursalConverter implements Converter{
     }
  
     public String getAsString(FacesContext fc, UIComponent uic, Object object) {
-        if(object != null) {
+        if(object != null && !object.toString().isEmpty()) {
             return String.valueOf(((Sucursal) object).getId());
         }
         else {

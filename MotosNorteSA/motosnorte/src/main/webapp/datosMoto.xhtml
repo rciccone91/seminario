@@ -14,7 +14,7 @@
 		</f:metadata>
 		<p:panel id="content">
 			<p:focus context="content" />
-			<p:growl id="messages" showDetail="true"/>
+			<p:growl id="messages" showDetail="true" />
 			<div class="ui-grid ui-grid-responsive">
 				<h1 align="center">Moto</h1>
 				<BR />
@@ -29,9 +29,12 @@
 							requiredMessage="El modelo de la moto debe ser ingresado">
 							<f:validateLength minimum="4" />
 						</p:inputText>
+						<h:outputText id="ast" value="**"></h:outputText>
+						<p:tooltip id="modeloToltip" for="ast" trackMouse="true"
+							value="El modelo debe ser ingresado." />
 					</div>
 					<div class="ui-grid-col-4">
-						<p:message for="modelo" showDetail="false"/>
+						<p:message for="modelo" />
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
@@ -88,8 +91,8 @@
 						<p:outputLabel value="Peso: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<pe:inputNumber value="#{datosMotoBean.peso}" maxValue="9999"
-							id="peso" />
+						<pe:inputNumber value="#{datosMotoBean.peso}" minValue="1"
+							maxValue="99999" id="peso" />
 					</div>
 					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-2"></div>
@@ -104,7 +107,9 @@
 						<pe:inputNumber value="#{datosMotoBean.precio}" required="true"
 							maxValue="999999" id="precio"
 							requiredMessage="El precio debe ser ingresado"></pe:inputNumber>
-
+						<h:outputText id="ast2" value="**"></h:outputText>
+						<p:tooltip id="precioToltip" for="ast2" trackMouse="true"
+							value="El precio debe ser ingresado." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="precio" />
@@ -143,6 +148,9 @@
 							<f:selectItems value="#{datosMotoBean.marcas}" var="c"
 								itemLabel="#{c.marca}" itemValue="#{c}" />
 						</p:selectOneMenu>
+						<h:outputText id="ast3" value="**"></h:outputText>
+						<p:tooltip id="marcaToltip" for="ast3" trackMouse="true"
+							value="Se debe seleccionar una marca para la moto." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="marca" />
@@ -169,9 +177,7 @@
 					</div>
 					<div class="ui-grid-col-4"></div>
 				</div>
-				<BR />
-				<BR />
-				<BR /> <BR />
+				<BR /> <BR /> <BR /> <BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-5">

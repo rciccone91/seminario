@@ -32,7 +32,7 @@ public class Usuario implements Serializable{
 	}
 
 	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+		this.usuario = usuario.replace("'", "");;
 	}
 
 	public String getContrasenia() {
@@ -40,7 +40,7 @@ public class Usuario implements Serializable{
 	}
 
 	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
+		this.contrasenia = contrasenia.replace("'", "");;
 	}
 
 	public Integer getLegajo() {

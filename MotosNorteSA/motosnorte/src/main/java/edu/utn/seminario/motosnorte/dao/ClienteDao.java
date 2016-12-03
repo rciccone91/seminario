@@ -15,6 +15,7 @@ import edu.utn.seminario.motosnorte.domain.Cliente;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.exception.ClienteNoEncontradoException;
 import edu.utn.seminario.motosnorte.exception.UsuarioNoEncontradoException;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class ClienteDao implements Serializable{
 
@@ -23,8 +24,7 @@ public class ClienteDao implements Serializable{
 
 	public ClienteDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

@@ -1,29 +1,25 @@
 package edu.utn.seminario.motosnorte.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import edu.utn.seminario.motosnorte.domain.CategoriaMoto;
-import edu.utn.seminario.motosnorte.domain.Cilindrada;
-import edu.utn.seminario.motosnorte.domain.Color;
+import org.primefaces.context.RequestContext;
+
 import edu.utn.seminario.motosnorte.domain.Marca;
 import edu.utn.seminario.motosnorte.domain.Moto;
-import edu.utn.seminario.motosnorte.helper.Constants;
-import edu.utn.seminario.motosnorte.service.CategoriaMotoBackingService;
-import edu.utn.seminario.motosnorte.service.CategoriaRepuestoBackingService;
-import edu.utn.seminario.motosnorte.service.CilindradaBackingService;
+import edu.utn.seminario.motosnorte.domain.StockMotos;
 import edu.utn.seminario.motosnorte.service.MarcaBackingService;
-import edu.utn.seminario.motosnorte.service.MotoBackingService;
 import edu.utn.seminario.motosnorte.service.MotoService;
-import edu.utn.seminario.motosnorte.service.RepuestosService;
+import edu.utn.seminario.motosnorte.service.StockMotosService;
 
 
 @ManagedBean(name = "productoMotosBean")
@@ -35,6 +31,9 @@ public class productoMotosBean implements Serializable{
 	private MarcaBackingService marcaService;
 	private List<Moto> motos;
 	private List<Marca> marcas;
+	private List<StockMotos> stockMotos;
+	private StockMotosService stockService;
+	private UIComponent mensaje;
 	
 	@PostConstruct
 	public void init() {
@@ -42,6 +41,21 @@ public class productoMotosBean implements Serializable{
 		marcaService = new MarcaBackingService();
 		marcas = marcaService.listar();
 		motos = service.listar();	
+	}
+	
+	public void buscarStock(Moto moto){
+		try {
+			stockMotos = new ArrayList<StockMotos>();
+			stockService = new StockMotosService();
+			stockMotos = stockService.getStockByMoto(moto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					mensaje.getClientId(),
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error",
+							e.getMessage()));
+		}
 	}
 
 	public MotoService getService() {
@@ -81,5 +95,31 @@ public class productoMotosBean implements Serializable{
 	public void setMarcas(List<Marca> marcas) {
 		this.marcas = marcas;
 	}
+
+	public List<StockMotos> getStockMotos() {
+		return stockMotos;
+	}
+
+	public void setStockMotos(List<StockMotos> stockMotos) {
+		this.stockMotos = stockMotos;
+	}
+
+	public StockMotosService getStockService() {
+		return stockService;
+	}
+
+	public void setStockService(StockMotosService stockService) {
+		this.stockService = stockService;
+	}
+
+	public UIComponent getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(UIComponent mensaje) {
+		this.mensaje = mensaje;
+	}
+	
+	
 
 }

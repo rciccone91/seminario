@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Cilindrada;
 import edu.utn.seminario.motosnorte.domain.Marca;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 
 public class CilindradaDao {
@@ -20,8 +21,7 @@ public class CilindradaDao {
 
 	public CilindradaDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

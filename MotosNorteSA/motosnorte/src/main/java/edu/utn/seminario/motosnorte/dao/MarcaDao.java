@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Marca;
 import edu.utn.seminario.motosnorte.domain.Rol;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class MarcaDao {
 	
@@ -19,8 +20,7 @@ public class MarcaDao {
 
 	public MarcaDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

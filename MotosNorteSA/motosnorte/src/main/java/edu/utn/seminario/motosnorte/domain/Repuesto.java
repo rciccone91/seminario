@@ -47,7 +47,7 @@ public class Repuesto implements Serializable{
 	}
 
 	public void setModelo(String modelo) {
-		this.modelo = modelo;
+		this.modelo = modelo.replace("'", "");;
 	}
 
 	public Marca getMarca() {
@@ -71,7 +71,7 @@ public class Repuesto implements Serializable{
 	}
 
 	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+		this.descripcion = descripcion.replace("'", "");;
 	}
 
 	public Integer getPrecio() {
@@ -167,5 +167,10 @@ public class Repuesto implements Serializable{
 	
 	public String getNombre(){
 		return this.marca.getMarca() + " - " + this.getModelo();
+	}
+	
+	public String getDescripcionForNotaDePedido(String stock){
+		if(stock==null) stock="0";
+		return this.modelo + " ("+stock+")"+ " - $" + this.precio;
 	}
 }

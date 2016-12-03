@@ -14,7 +14,7 @@
 		</f:metadata>
 		<p:panel id="content">
 			<p:focus context="content" />
-			<p:growl id="messages" showDetail="true"/>
+			<p:growl id="messages" showDetail="true" />
 			<div class="ui-grid ui-grid-responsive">
 				<h1 align="center">Modificar Usuario</h1>
 				<BR />
@@ -26,6 +26,9 @@
 					<div class="ui-grid-col-3">
 						<p:inputText id="usuario" value="#{modificarUsuarioBean.usuario}"
 							disabled="true" />
+						<h:outputText id="ast" value="**"></h:outputText>
+						<p:tooltip id="userToltip" for="ast" trackMouse="true"
+							value="El usuario debe ser ingresado." />
 					</div>
 					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-2"></div>
@@ -42,6 +45,9 @@
 							requiredMessage="La password debe ser ingresada">
 							<f:validateLength minimum="6" />
 						</p:inputText>
+						<h:outputText id="ast2" value="**"></h:outputText>
+						<p:tooltip id="pswdToltip" for="ast2" trackMouse="true"
+							value="La password debe ser ingresada." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="password" />
@@ -56,9 +62,11 @@
 					</div>
 					<div class="ui-grid-col-3">
 						<pe:inputNumber value="#{modificarUsuarioBean.legajo}"
-							required="true" maxValue="999999" id="legajo"
+							required="true" minValue="1" maxValue="99999" id="legajo"
 							requiredMessage="El legajo debe ser ingresado"></pe:inputNumber>
-
+						<h:outputText id="ast3" value="**"></h:outputText>
+						<p:tooltip id="legToltip" for="ast3" trackMouse="true"
+							value="El legajo debe ser ingresado." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="legajo" />
@@ -79,13 +87,27 @@
 							<f:selectItems value="#{modificarUsuarioBean.roles}" var="r"
 								itemLabel="#{r.rol}" itemValue="#{r.id}" />
 						</p:selectOneMenu>
+						<h:outputText id="ast4" value="**" ></h:outputText>
+						<p:tooltip id="rolToltip" for="ast4" trackMouse="true"
+							value="Se debe seleccionar el rol del usuario." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="rol" />
 					</div>
 				</div>
 				<div class="ui-grid-col-2"></div>
-
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Activo: " rendered="#{!modificarUsuarioBean.activo}"></p:outputLabel>
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectBooleanCheckbox value="#{modificarUsuarioBean.activo}" rendered="#{!modificarUsuarioBean.activo}"/>
+					</div>
+					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-2"></div>
+				</div>
 				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4"></div>

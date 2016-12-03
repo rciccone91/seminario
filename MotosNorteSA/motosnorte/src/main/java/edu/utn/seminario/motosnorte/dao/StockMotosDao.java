@@ -16,6 +16,7 @@ import edu.utn.seminario.motosnorte.domain.StockRepuestos;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 import edu.utn.seminario.motosnorte.exception.NoHayStockSuficienteException;
 import edu.utn.seminario.motosnorte.exception.NoSePuedeRegistrarSalidaDeStockException;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class StockMotosDao {
 
@@ -24,8 +25,7 @@ public class StockMotosDao {
 
 	public StockMotosDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}
@@ -138,5 +138,49 @@ public class StockMotosDao {
 		}
 		session.close();
 		return true;
+	}
+
+	public Integer getStockByMotoAndSucursal(Moto moto, Sucursal sucursal) throws Exception {
+		StockMotos stock = null;
+		try {
+			if(!session.isOpen()){
+				session = sessionFactory.openSession();
+			}
+			Query query = session.createQuery("from StockMotos as sm where sm.moto.id = :moto "
+					+ "and sm.sucursal.id = :sucursal");
+			query.setInteger("moto", moto.getId());
+			query.setInteger("sucursal", sucursal.getId());
+			stock = (StockMotos) query.uniqueResult();
+		}catch (Exception e) {
+			session.close();
+			e.printStackTrace();
+			throw new Exception("Ocurrió un error al intentar consultar el stock, por favor comunicarse con el administrador");
+		}
+		session.close();
+		
+		if(stock != null){
+			return stock.getCantidad();
+		}else{
+			return 0;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<StockMotos> getStockByMoto(Moto moto) throws Exception {
+		List<StockMotos> stock = null;
+		try {
+			if(!session.isOpen()){
+				session = sessionFactory.openSession();
+			}
+			Query query = session.createQuery("from StockMotos as sm where sm.moto.id = :moto");
+			query.setInteger("moto", moto.getId());
+			stock = (List<StockMotos>)(List<?>) query.list();
+		}catch (Exception e) {
+			session.close();
+			e.printStackTrace();
+			throw new Exception("Ocurrió un error al intentar consultar el stock, por favor comunicarse con el administrador");
+		}
+		session.close();
+		return stock;
 	}
 }

@@ -20,12 +20,14 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-1"></div>
 					<div class="ui-grid-col-10">
-						<p:dataTable var="us" value="#{seleccionarUsuarioBean.usuarios}"
-							scrollable="true" scrollHeight="220" style="float: right">
+						<p:dataTable id="usuariosTable" name="usuariosTable" var="us" widgetVar="usuariosTable"
+							value="#{seleccionarUsuarioBean.usuarios}" scrollable="true"
+							scrollHeight="220" style="float: right">
 							<p:column headerText="ID" rendered="false">
 								<h:outputText value="#{us.id}" style="text-align: center" />
 							</p:column>
-							<p:column headerText="Usuario" sortBy="#{us.usuario}">
+							<p:column headerText="Usuario" sortBy="#{us.usuario}"
+								filterBy="#{us.usuario}" filterMatchMode="contains">
 								<h:outputText value="#{us.usuario}" style="text-align: center" />
 							</p:column>
 
@@ -33,18 +35,27 @@
 								<h:outputText value="#{us.legajo}" />
 							</p:column>
 
-							<p:column headerText="Rol">
+							<p:column headerText="Rol" filterBy="#{us.descripcionDeRol}" sortBy="#{us.descripcionDeRol}"
+								filterMatchMode="exact">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('usuariosTable').filter()">
+										<f:selectItem itemLabel="Todos los roles" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{seleccionarUsuarioBean.roles}" var="r"
+											itemLabel="#{r}" itemValue="#{r}" />
+									</p:selectOneMenu>
+								</f:facet>
 								<h:outputText value="#{us.descripcionDeRol}" />
 							</p:column>
 							<p:column headerText="Activo">
 								<p:selectBooleanCheckbox value="#{us.activo}" disabled="true" />
 							</p:column>
 							<p:column>
-								<p:button value="Modificar"
+								<p:button value="Modificar" icon="fa fa-edit"
 									outcome="modificarUsuario.xhtml?usuario=#{us.usuario}" />
 							</p:column>
 							<p:column>
-								<p:commandButton value="Eliminar"
+								<p:commandButton value="Eliminar" icon="fa fa-remove"
 									actionListener="#{seleccionarUsuarioBean.eliminarUsuario(us)}"
 									oncomplete="redirect()">
 									<p:confirm header="Confirmación"
@@ -74,7 +85,7 @@
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-5"></div>
 					<div class="ui-grid-col-2">
-						<p:button value="Volver" outcome="seleccionarUsuario.xhtml" />
+						<p:button value="Volver" outcome="index.xhtml" />
 					</div>
 					<div class="ui-grid-col-5"></div>
 				</div>

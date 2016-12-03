@@ -25,6 +25,10 @@ public class MovimientoStockMoto implements Serializable {
 	private Sucursal sucursal;
 	@Column(nullable=false)
 	private Date fecha;
+	@Column(name="remito",nullable=false)
+	private String remito;
+	@Column(name="motivo_salida")
+	private Integer motivoSalida;
 	
 	public MovimientoStockMoto() {
 	}
@@ -73,6 +77,26 @@ public class MovimientoStockMoto implements Serializable {
 		this.cantidad = cantidad;
 	}
 
+	public String getRemito() {
+		return remito;
+	}
+
+	public void setRemito(String remito) {
+		this.remito = remito;
+	}
+
+	public Integer getMotivoSalida() {
+		return motivoSalida;
+	}
+
+	public void setMotivoSalida(Integer motivoSalida) {
+		this.motivoSalida = motivoSalida;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,7 +104,9 @@ public class MovimientoStockMoto implements Serializable {
 		result = prime * result + cantidad;
 		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((motivoSalida == null) ? 0 : motivoSalida.hashCode());
 		result = prime * result + ((moto == null) ? 0 : moto.hashCode());
+		result = prime * result + ((remito == null) ? 0 : remito.hashCode());
 		result = prime * result + ((sucursal == null) ? 0 : sucursal.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
@@ -107,10 +133,20 @@ public class MovimientoStockMoto implements Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (motivoSalida == null) {
+			if (other.motivoSalida != null)
+				return false;
+		} else if (!motivoSalida.equals(other.motivoSalida))
+			return false;
 		if (moto == null) {
 			if (other.moto != null)
 				return false;
 		} else if (!moto.equals(other.moto))
+			return false;
+		if (remito == null) {
+			if (other.remito != null)
+				return false;
+		} else if (!remito.equals(other.remito))
 			return false;
 		if (sucursal == null) {
 			if (other.sucursal != null)
@@ -124,6 +160,5 @@ public class MovimientoStockMoto implements Serializable {
 			return false;
 		return true;
 	}
-
 	
 }

@@ -2,10 +2,14 @@ package edu.utn.seminario.motosnorte.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 
 import edu.utn.seminario.motosnorte.domain.StockRepuestos;
 import edu.utn.seminario.motosnorte.service.StockRepuestosService;
@@ -30,7 +34,14 @@ public class StockRepuestosBean implements Serializable{
 	public void init() {
 		service = new StockRepuestosService();	
 		repuestos = service.listar();
-		
+//		FacesContext context = FacesContext.getCurrentInstance();
+//		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+//		setRepuestoId(paramMap.get("id"));
+//		if(repuestoId != null){
+//			RequestContext contextRq = RequestContext.getCurrentInstance();
+//			contextRq.execute(" PF('stockRep').filter();");
+//		}	
+//		
 	}
 	
 //	public List<StockRepuestos> filtroRepuestos(){
@@ -53,6 +64,14 @@ public class StockRepuestosBean implements Serializable{
 	public void setRepuestos(List<StockRepuestos> repuestos) {
 		this.repuestos = repuestos;
 	}
+
+//	public String getRepuestoId() {
+//		return repuestoId;
+//	}
+//
+//	public void setRepuestoId(String repuestoId) {
+//		this.repuestoId = repuestoId;
+//	}
 
 //	public StockRepuestos getDescripcion() {
 //		return descripcion;

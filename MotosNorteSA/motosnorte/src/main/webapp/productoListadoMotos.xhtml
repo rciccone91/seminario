@@ -14,16 +14,15 @@
 		</f:metadata>
 		<p:panel id="content">
 			<p:focus context="content" />
+			<p:growl id="messages" showDetail="true" />
 			<div class="ui-grid ui-grid-responsive">
 				<h1 align="center">Listar Motos</h1>
 				<BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-1"></div>
-					<div class="ui-grid-col-10">
+					<div class="ui-grid-col-12">
 						<p:dataTable id="motosTable" var="mot" widgetVar="motosTable"
-						resizableColumns="true"
-							value="#{productoMotosBean.motos}" scrollable="true"
-							scrollHeight="220" style="float: right"
+							resizableColumns="true" value="#{productoMotosBean.motos}"
+							scrollable="true" scrollHeight="300" style="float: right"
 							emptyMessage="No se encontraron registros para la búsqueda">
 
 							<p:column headerText="Modelo" filterBy="#{mot.modelo}"
@@ -33,14 +32,16 @@
 							<p:column headerText="Precio" sortBy="#{mot.precio}">
 								<h:outputText value="#{mot.precio}" />
 							</p:column>
-							<p:column headerText="Categoría" sortBy="#{mot.categoriaMoto.categoriaMoto}">
+							<p:column headerText="Categoría"
+								sortBy="#{mot.categoriaMoto.categoriaMoto}">
 								<h:outputText value="#{mot.categoriaMoto.categoriaMoto}" />
 							</p:column>
 							<p:column headerText="Marca" filterBy="#{mot.marca.marca}"
 								filterMatchMode="contains">
 								<h:outputText value="#{mot.marca.marca}" />
 							</p:column>
-							<p:column headerText="Cilindrada" sortBy="#{mot.cilindrada.cilindrada}">
+							<p:column headerText="Cilindrada"
+								sortBy="#{mot.cilindrada.cilindrada}">
 								<h:outputText value="#{mot.cilindrada.cilindrada}" />
 							</p:column>
 							<p:column headerText="Peso Kg" sortBy="#{mot.peso}">
@@ -52,9 +53,40 @@
 							<p:column headerText="Activo">
 								<p:selectBooleanCheckbox value="#{mot.activo}" disabled="true" />
 							</p:column>
+							<p:column width="130">
+								<p:commandButton id="stockBtn" value="Ver Stock"
+									binding="#{productoMotosBean.mensaje}"
+									icon="fa fa-cubes" update=":mainForm:stockPanel"
+									action="#{productoMotosBean.buscarStock(mot)}"
+									oncomplete="PF('stockOP').show('#{component.clientId}')">
+								</p:commandButton>
+							</p:column>
 						</p:dataTable>
+						<p:overlayPanel id="stockPanel" widgetVar="stockOP"
+							hideEffect="fade" dismissable="true" style="width:600px">
+							<p:dataTable var="stock" value="#{productoMotosBean.stockMotos}"
+								rows="10" scrollable="true" scrollHeight="100"
+								emptyMessage="La moto no posee stock en ninguna sucursal">
+								<p:column headerText="Sucursal">
+									<h:outputText value="#{stock.sucursal.descripcion}" />
+								</p:column>
+								<p:column headerText="Moto">
+									<h:outputText value="#{stock.moto.modelo}" />
+								</p:column>
+								<p:column headerText="Cantidad">
+									<h:outputText value="#{stock.cantidad}" />
+								</p:column>
+							</p:dataTable>
+						</p:overlayPanel>
 					</div>
-					<div class="ui-grid-col-1"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-2">
+						<p:button value="Volver" outcome="index.xhtml" />
+					</div>
+					<div class="ui-grid-col-5"></div>
 				</div>
 			</div>
 		</p:panel>

@@ -11,11 +11,13 @@ import org.hibernate.cfg.Configuration;
 
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Repuesto;
+import edu.utn.seminario.motosnorte.domain.StockMotos;
 import edu.utn.seminario.motosnorte.domain.StockRepuestos;
 import edu.utn.seminario.motosnorte.domain.Sucursal;
 import edu.utn.seminario.motosnorte.exception.NoHayStockSuficienteException;
 import edu.utn.seminario.motosnorte.exception.NoSePuedeRegistrarSalidaDeStockException;
 import edu.utn.seminario.motosnorte.exception.UsuarioOContraseñaIncorrectoException;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class StockRepuestosDao {
 
@@ -24,8 +26,7 @@ public class StockRepuestosDao {
 
 	public StockRepuestosDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}
@@ -137,5 +138,49 @@ public class StockRepuestosDao {
 		}
 		session.close();
 		return true;
+	}
+
+	public Integer getStockByRepuestoAndSucursal(Repuesto repuesto, Sucursal sucursal) throws Exception {
+		StockRepuestos stock = null;
+		try {
+			if(!session.isOpen()){
+				session = sessionFactory.openSession();
+			}
+			Query query = session.createQuery("from StockRepuestos as sr where sr.repuesto.id = :repuesto "
+					+ "and sr.sucursal.id = :sucursal");
+			query.setInteger("repuesto", repuesto.getId());
+			query.setInteger("sucursal", sucursal.getId());
+			stock = (StockRepuestos) query.uniqueResult();
+		}catch (Exception e) {
+			session.close();
+			e.printStackTrace();
+			throw new Exception("Ocurrió un error al intentar consultar el stock, por favor comunicarse con el administrador");
+		}
+		session.close();
+		
+		if(stock != null){
+			return stock.getCantidad();
+		}else{
+			return 0;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<StockRepuestos> getStockByRepuesto(Repuesto rep) throws Exception {
+		List<StockRepuestos> stock = null;
+		try {
+			if(!session.isOpen()){
+				session = sessionFactory.openSession();
+			}
+			Query query = session.createQuery("from StockRepuestos as sr where sr.repuesto.id = :rep");
+			query.setInteger("rep", rep.getId());
+			stock = (List<StockRepuestos>)(List<?>) query.list();
+		}catch (Exception e) {
+			session.close();
+			e.printStackTrace();
+			throw new Exception("Ocurrió un error al intentar consultar el stock, por favor comunicarse con el administrador");
+		}
+		session.close();
+		return stock;
 	}
 }

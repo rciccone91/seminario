@@ -31,6 +31,10 @@ public class MovimientoStockRepuesto implements Serializable {
 	private Sucursal sucursal;
 	@Column(nullable=false)
 	private Date fecha;
+	@Column(name="remito",nullable=false)
+	private String remito;
+	@Column(name="motivo_salida")
+	private Integer motivoSalida;
 	
 	public MovimientoStockRepuesto() {
 	}
@@ -82,4 +86,86 @@ public class MovimientoStockRepuesto implements Serializable {
 	public void setSucursal(Sucursal sucursal) {
 		this.sucursal = sucursal;
 	}
+
+	public String getRemito() {
+		return remito;
+	}
+
+	public void setRemito(String remito) {
+		this.remito = remito;
+	}
+
+	public Integer getMotivoSalida() {
+		return motivoSalida;
+	}
+
+	public void setMotivoSalida(Integer motivoSalida) {
+		this.motivoSalida = motivoSalida;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + cantidad;
+		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((motivoSalida == null) ? 0 : motivoSalida.hashCode());
+		result = prime * result + ((remito == null) ? 0 : remito.hashCode());
+		result = prime * result + ((repuesto == null) ? 0 : repuesto.hashCode());
+		result = prime * result + ((sucursal == null) ? 0 : sucursal.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MovimientoStockRepuesto other = (MovimientoStockRepuesto) obj;
+		if (cantidad != other.cantidad)
+			return false;
+		if (fecha == null) {
+			if (other.fecha != null)
+				return false;
+		} else if (!fecha.equals(other.fecha))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (motivoSalida == null) {
+			if (other.motivoSalida != null)
+				return false;
+		} else if (!motivoSalida.equals(other.motivoSalida))
+			return false;
+		if (remito == null) {
+			if (other.remito != null)
+				return false;
+		} else if (!remito.equals(other.remito))
+			return false;
+		if (repuesto == null) {
+			if (other.repuesto != null)
+				return false;
+		} else if (!repuesto.equals(other.repuesto))
+			return false;
+		if (sucursal == null) {
+			if (other.sucursal != null)
+				return false;
+		} else if (!sucursal.equals(other.sucursal))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
+		return true;
+	}
+	
+	
 }

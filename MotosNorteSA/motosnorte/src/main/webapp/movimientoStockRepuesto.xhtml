@@ -19,12 +19,21 @@
 						<p:outputLabel value="Repuesto:  "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:autoComplete id="repuesto" value="#{movimientoStockRepuestoBean.repuesto}"
+						<p:autoComplete id="repuesto"
+							value="#{movimientoStockRepuestoBean.repuesto}"
 							minQueryLength="2" required="true"
 							requiredMessage="Se debe seleccionar el repuesto."
-							completeMethod="#{movimientoStockRepuestoBean.completeRepuesto}" var="r"
-							itemLabel="#{r.modelo}" itemValue="#{r}"
-							converter="repuestoConverter" />
+							completeMethod="#{movimientoStockRepuestoBean.completeRepuesto}"
+							var="r" itemLabel="#{r.modelo}" itemValue="#{r}"
+							converter="repuestoConverter">
+							<p:ajax event="itemSelect" listener="#{movimientoStockRepuestoBean.onRepuestoSelect}"
+								update="@this" />
+							<p:ajax event="itemUnselect" listener="#{movimientoStockRepuestoBean.onRepuestoUnSelect}"
+								update="@this" />
+							</p:autoComplete>
+						<h:outputText id="ast" value="**"></h:outputText>
+						<p:tooltip id="repToltip" for="ast" trackMouse="true"
+							value="Se debe ingresar un repuesto." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="repuesto" />
@@ -43,10 +52,35 @@
 							requiredMessage="Se debe seleccionar el tipo de movimiento">
 							<f:selectItem itemLabel="Entrada" itemValue="Entrada" />
 							<f:selectItem itemLabel="Salida" itemValue="Salida" />
+							<p:ajax event="change" 
+								update="@this mainForm:motivo" />
 						</p:selectOneMenu>
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="movimiento" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel id="motivoLabel" value="Motivo Salida "/>
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectOneMenu id="motivo" onstyle="width:125px"
+							value="#{movimientoStockRepuestoBean.motivoSalida}"
+							disabled="#{movimientoStockRepuestoBean.requiereMotivo()}"
+							required="#{movimientoStockRepuestoBean.requiereMotivo()}"
+							requiredMessage="Se debe seleccionar el tipo de movimiento">
+							<f:selectItem itemLabel="Desperfecto / Mal Estado" itemValue="2" />
+							<f:selectItem itemLabel="Carga Errónea" itemValue="3" />
+						</p:selectOneMenu>
+						<h:outputText id="ast5" value="**"></h:outputText>
+						<p:tooltip id="motivoToltip" for="ast5" trackMouse="true"
+							value="El motivo de salida solo se ingresará cuando es un motivimiento de salida." />
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="motivo" />
 					</div>
 				</div>
 				<BR />
@@ -59,10 +93,16 @@
 						<p:selectOneMenu id="sucursal" onstyle="width:125px"
 							value="#{movimientoStockRepuestoBean.sucursal}"
 							converter="sucursalConverter">
+							<p:ajax event="change"
+								listener="#{movimientoStockRepuestoBean.cambioDeSucursalORepuesto()}"
+								update="@this" />
 							<f:selectItem itemLabel="Seleccionar..." />
-							<f:selectItems value="#{movimientoStockRepuestoBean.sucursales}" var="s"
-								itemLabel="#{s.descripcion}" itemValue="#{s}" />
+							<f:selectItems value="#{movimientoStockRepuestoBean.sucursales}"
+								var="s" itemLabel="#{s.descripcion}" itemValue="#{s}" />
 						</p:selectOneMenu>
+						<h:outputText id="ast2" value="**"></h:outputText>
+						<p:tooltip id="sucToltip" for="ast2" trackMouse="true"
+							value="Se debe seleccionar la sucursal." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="sucursal" />
@@ -80,13 +120,57 @@
 							minValue="1" maxValue="99999"
 							requiredMessage="La cantidad debe ser ingresada">
 						</pe:inputNumber>
+						<h:outputText id="ast3" value="**"></h:outputText>
+						<p:tooltip id="cantToltip" for="ast3" trackMouse="true"
+							value="Se debe ingresar la cantidad." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="cantidad" />
 					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
-
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Remito: "></p:outputLabel>
+					</div>
+					<div class="ui-grid-col-3">
+						<p:inputMask id="rem" value="#{movimientoStockRepuestoBean.remito}"
+							required="true"
+							requiredMessage="Se debe ingresar el número de remito"
+							maxlength="10" title="Ingresar solo números sin espacios">
+							<pe:keyFilter regEx="/[\d]/" />
+						</p:inputMask>
+						<h:outputText id="ast6" value="**"></h:outputText>
+						<p:tooltip id="telToltip" for="ast6" trackMouse="true"
+							value="El remito debe ser ingresado." />
+						<p:tooltip id="toolTipRem" for="rem" showEvent="focus"
+							hideEvent="blur"></p:tooltip>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:message for="rem" />
+					</div>
+					<div class="ui-grid-col-2"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row" id="stockActual">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel id="stockActualLabel" value="Stock en Sucursal: "></p:outputLabel>
+					</div>
+					<div class="ui-grid-col-3">
+						<pe:inputNumber id="stockActual" disabled="true"
+							value="#{movimientoStockRepuestoBean.stockActual}" minValue="0"
+							maxValue="99999">
+						</pe:inputNumber>
+						<h:outputText id="ast4" value="**"></h:outputText>
+						<p:tooltip id="actToltip" for="ast4 stockActual" trackMouse="true"
+							value="El valor del stock actual se acutalizará en base a la sucursal y el repuesto selecionado." />
+					</div>
+					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-2"></div>
+				</div>
 				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-4"></div>
@@ -95,7 +179,9 @@
 							action="#{movimientoStockRepuestoBean.guardar}" update="@parent"
 							binding="#{movimientoStockRepuestoBean.mensaje}" />
 					</div>
-					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-2">
+						<p:button id="volverBtn" value="Volver" outcome="index.xhtml" />
+					</div>
 					<div class="ui-grid-col-4"></div>
 				</div>
 				<BR />
@@ -111,6 +197,23 @@
 			<p:blockUI block="content" trigger="guardarBtn">
 				<p:graphicImage library="images" name="ajax-loader.gif" />
 			</p:blockUI>
+			<p:dialog id="successDialog" widgetVar="successDialog" modal="true"
+				resizable="false" appendTo="@(body)" header="Mensaje" width="600"
+				closable="false">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:outputLabel
+							value="El movimiento de stock se ha registrado correctamente" />
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:button value="Continuar" icon="fa fa-check"
+							outcome="listarStockRepuesto.xhtml" />
+					</div>
+				</div>
+			</p:dialog>
 		</p:panel>
 	</ui:define>
 </ui:composition>

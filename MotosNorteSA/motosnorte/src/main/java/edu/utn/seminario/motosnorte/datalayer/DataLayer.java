@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
+
 public class DataLayer {
 	
 
@@ -19,8 +21,7 @@ public class DataLayer {
 	public DataLayer()
 	{
 		if(this.sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-						.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 				this.session = sessionFactory.openSession();
 		}
 	}

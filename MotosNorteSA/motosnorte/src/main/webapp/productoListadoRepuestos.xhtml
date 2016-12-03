@@ -14,14 +14,14 @@
 		</f:metadata>
 		<p:panel id="content">
 			<p:focus context="content" />
+			<p:growl id="messages" showDetail="true" />
 			<div class="ui-grid ui-grid-responsive">
 				<h1 align="center">Listar Repuestos</h1>
 				<BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-1"></div>
-					<div class="ui-grid-col-10">
+					<div class="ui-grid-col-12">
 						<p:dataTable var="rep" value="#{productosRepuestosBean.repuestos}"
-							scrollable="true" scrollHeight="220" style="float: right"
+							scrollable="true" scrollHeight="300" style="float: right"
 							resizableColumns="true"
 							emptyMessage="No se encontraron registros para la búsqueda">
 							<p:column headerText="ID Repuesto">
@@ -34,23 +34,56 @@
 							<p:column headerText="Precio" sortBy="#{rep.precio}">
 								<h:outputText value="#{rep.precio}" />
 							</p:column>
-							<p:column headerText="Categoria" sortBy="#{rep.categoriaRepuesto.categoriaRepuesto}">
+							<p:column headerText="Categoria"
+								sortBy="#{rep.categoriaRepuesto.categoriaRepuesto}">
 								<h:outputText value="#{rep.categoriaRepuesto.categoriaRepuesto}" />
 							</p:column>
 							<p:column headerText="Marca" filterBy="#{rep.marca.marca}"
 								filterMatchMode="contains">
 								<h:outputText value="#{rep.marca.marca}" />
 							</p:column>
-							<p:column headerText="Moto Compatible"  filterBy="#{rep.motoCompatible.modelo}"
+							<p:column headerText="Moto Compatible"
+								filterBy="#{rep.motoCompatible.modelo}"
 								filterMatchMode="contains">
 								<h:outputText value="#{rep.motoCompatible.modelo}" />
 							</p:column>
 							<p:column headerText="Activo">
 								<p:selectBooleanCheckbox value="#{rep.activo}" disabled="true" />
 							</p:column>
+							<p:column width="130">
+								<p:commandButton id="stockBtn" value="Ver Stock"
+									binding="#{productosRepuestosBean.mensaje}"
+									icon="fa fa-cubes" update=":mainForm:stockPanel"
+									action="#{productosRepuestosBean.buscarStock(rep)}"
+									oncomplete="PF('stockOP').show('#{component.clientId}')">
+								</p:commandButton>
+							</p:column>
 						</p:dataTable>
+						<p:overlayPanel id="stockPanel" widgetVar="stockOP"
+							hideEffect="fade" dismissable="true" style="width:600px">
+							<p:dataTable var="stock" value="#{productosRepuestosBean.stockRepuestos}"
+								rows="10" scrollable="true" scrollHeight="100"
+								emptyMessage="El repuesto no posee stock en ninguna sucursal">
+								<p:column headerText="Sucursal">
+									<h:outputText value="#{stock.sucursal.descripcion}" />
+								</p:column>
+								<p:column headerText="Repuesto">
+									<h:outputText value="#{stock.repuesto.modelo}" />
+								</p:column>
+								<p:column headerText="Cantidad">
+									<h:outputText value="#{stock.cantidad}" />
+								</p:column>
+							</p:dataTable>
+						</p:overlayPanel>
 					</div>
-					<div class="ui-grid-col-1"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-2">
+						<p:button value="Volver" outcome="index.xhtml" />
+					</div>
+					<div class="ui-grid-col-5"></div>
 				</div>
 			</div>
 		</p:panel>

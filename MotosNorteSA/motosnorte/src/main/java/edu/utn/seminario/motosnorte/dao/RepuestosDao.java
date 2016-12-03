@@ -17,6 +17,7 @@ import edu.utn.seminario.motosnorte.domain.Usuario;
 import edu.utn.seminario.motosnorte.exception.MotoYaExistenteException;
 import edu.utn.seminario.motosnorte.exception.RepuestoYaExistenteException;
 import edu.utn.seminario.motosnorte.helper.Constants;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class RepuestosDao {
 	
@@ -25,8 +26,7 @@ public class RepuestosDao {
 
 	public RepuestosDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

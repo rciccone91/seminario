@@ -51,5 +51,10 @@ public class StockRepuestosService {
 	public boolean validarCantidadSalida(Repuesto repuesto, Sucursal sucursal, Integer cantidad) throws NoSePuedeRegistrarSalidaDeStockException, Exception {
 		return dao.validarCantidadSalida(cantidad, repuesto, sucursal);
 	}
-
+	public Integer getStockByRepuestoAndSucursal(Repuesto repuesto, Sucursal sucursal) throws Exception {
+		return dao.getStockByRepuestoAndSucursal(repuesto,sucursal);
+	}
+	public List<StockRepuestos> getStockByRepuesto(Repuesto rep) throws Exception {
+		return dao.getStockByRepuesto(rep);
+	}
 }

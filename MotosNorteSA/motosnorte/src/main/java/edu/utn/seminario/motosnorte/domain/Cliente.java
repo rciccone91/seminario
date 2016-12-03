@@ -48,7 +48,7 @@ public class Cliente implements Serializable{
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.nombre = nombre.replace("'", "");
 	}
 
 	public String getApellido() {
@@ -56,7 +56,7 @@ public class Cliente implements Serializable{
 	}
 
 	public void setApellido(String apellido) {
-		this.apellido = apellido;
+		this.apellido = apellido.replace("'", "");;
 	}
 
 	public String getDni() {
@@ -64,7 +64,7 @@ public class Cliente implements Serializable{
 	}
 
 	public void setDni(String dni) {
-		this.dni = dni;
+		this.dni = dni.replace("'", "");;
 	}
 
 	public String getCuiCuit() {

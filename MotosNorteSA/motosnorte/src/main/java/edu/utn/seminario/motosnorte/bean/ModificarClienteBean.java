@@ -71,11 +71,6 @@ public class ModificarClienteBean implements Serializable{
 	public void guardar(){
 		try {
 			service.modificar(armarCliente());
-			FacesContext.getCurrentInstance().addMessage(
-					mensaje.getClientId(),
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"",
-							"Cliente modificado correctamente"));
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('successDialog').show();");
 //			return "index.xhtml";
@@ -93,7 +88,7 @@ public class ModificarClienteBean implements Serializable{
 	private Cliente armarCliente() {
 		Cliente c = new Cliente();
 		c.setId(id);//----------------	OJO CON ESTO CHANNNNN----------
-		c.setActive(true);
+		c.setActive(active);
 		c.setApellido(apellido);
 		c.setNombre(nombre);
 		c.setDni(dni);

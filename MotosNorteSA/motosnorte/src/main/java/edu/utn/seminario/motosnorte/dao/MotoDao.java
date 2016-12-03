@@ -15,6 +15,7 @@ import edu.utn.seminario.motosnorte.domain.Marca;
 import edu.utn.seminario.motosnorte.domain.Moto;
 import edu.utn.seminario.motosnorte.exception.MotoYaExistenteException;
 import edu.utn.seminario.motosnorte.helper.Constants;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class MotoDao {
 
@@ -23,8 +24,7 @@ public class MotoDao {
 
 	public MotoDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

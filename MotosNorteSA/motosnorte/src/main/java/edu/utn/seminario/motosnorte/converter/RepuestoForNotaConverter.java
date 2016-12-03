@@ -8,14 +8,13 @@ import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
 import edu.utn.seminario.motosnorte.domain.Repuesto;
-import edu.utn.seminario.motosnorte.service.RepuestoBackingService;
 import edu.utn.seminario.motosnorte.service.RepuestosService;
 
-@FacesConverter("repuestoConverter")
-public class RepuestoConverter implements Converter {
+@FacesConverter("repuestoForNotaConverter")
+public class RepuestoForNotaConverter implements Converter {
  
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-        if(value != null && value.trim().length() > 0 && !value.equals("Seleccionar..")) {
+        if(value != null && value.trim().length() > 0) {
             try {
             	RepuestosService service = new RepuestosService();
                 return service.getById(Integer.parseInt(value));
@@ -29,7 +28,7 @@ public class RepuestoConverter implements Converter {
     }
  
     public String getAsString(FacesContext fc, UIComponent uic, Object object) {
-        if(object != null && !object.toString().isEmpty()) {
+        if(object != null) {
             return String.valueOf(((Repuesto) object).getId());
         }
         else {

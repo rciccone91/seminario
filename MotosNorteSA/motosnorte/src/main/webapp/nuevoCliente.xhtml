@@ -14,7 +14,7 @@
 		</f:metadata>
 		<p:panel id="content">
 			<p:focus context="content" />
-			<p:growl id="messages" showDetail="true"/>
+			<p:growl id="messages" showDetail="true" />
 			<div class="ui-grid ui-grid-responsive">
 				<h1 align="center">Nuevo Cliente</h1>
 				<BR /> <BR />
@@ -27,8 +27,12 @@
 						<p:inputText id="Ape" value="#{nuevoClienteBean.apellido}"
 							required="true" maxlength="20"
 							requiredMessage="El apellido del cliente debe ser ingresado">
-							<f:validateLength minimum="4" />
+							<f:validateLength minimum="2" />
 						</p:inputText>
+						<h:outputText id="ast" value="**"></h:outputText>
+						<p:tooltip id="apToltip" for="ast" trackMouse="true"
+							value="El apellido debe ser ingresado." />
+
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="Ape" />
@@ -47,6 +51,9 @@
 							requiredMessage="El nombre del cliente debe ser ingresado">
 							<f:validateLength minimum="4" />
 						</p:inputText>
+						<h:outputText id="ast2" value="**"></h:outputText>
+						<p:tooltip id="nomToltip" for="ast2" trackMouse="true"
+							value="El nombre debe ser ingresado." />
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="nombrecli" />
@@ -60,10 +67,16 @@
 						<p:outputLabel value="DNI "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText value="#{nuevoClienteBean.dni}" required="true"
-							maxlength="12" id="doc"
-							requiredMessage="El DNI debe ser ingresado"></p:inputText>
-
+						<p:inputMask id="doc" value="#{nuevoClienteBean.dni}"
+							required="true" requiredMessage="El DNI debe ser ingresado"
+							maxlength="9" title="Ingresar solo números sin espacios">
+							<pe:keyFilter regEx="/[\d]/" />
+						</p:inputMask>
+						<h:outputText id="ast3" value="**"></h:outputText>
+						<p:tooltip id="dniToltip" for="ast3" trackMouse="true"
+							value="El DNI debe ser ingresado." />
+						<p:tooltip id="toolTipDNI" for="doc" showEvent="focus"
+							hideEvent="blur"></p:tooltip>
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="doc" />
@@ -82,6 +95,10 @@
 						<p:calendar id="fecha" value="#{nuevoClienteBean.fechaNacimiento}"
 							showOn="button" required="true" navigator="true"
 							requiredMessage="La fecha de nacimiento debe ser ingresada" />
+						<h:outputText id="ast4" value="**"></h:outputText>
+						<p:tooltip id="fechaToltip" for="ast4" trackMouse="true"
+							value="La fecha de nacimiento debe ser ingresada." />
+
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="fecha" />
@@ -113,12 +130,16 @@
 						<p:outputLabel value="Mail: "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText id="correo" value="#{nuevoClienteBean.mail}"
-							maxlength="40">
-							<f:validateLength minimum="4" />
+						<p:inputText maxlength="40" id="correo"
+							value="#{nuevoClienteBean.mail}"
+							validatorMessage="El e-mail es inválido.">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						</p:inputText>
 					</div>
-					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-4">
+						<p:message for="correo" />
+					</div>
 					<div class="ui-grid-col-2"></div>
 				</div>
 				<BR />
@@ -129,10 +150,17 @@
 						<p:outputLabel value="Telefono "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText value="#{nuevoClienteBean.telefono}" required="true"
-							id="tel" requiredMessage="El Telefono debe ser ingresado"
-							maxlength="20"></p:inputText>
-
+						<p:inputMask id="tel" value="#{nuevoClienteBean.telefono}"
+							required="true"
+							requiredMessage="Se debe ingresar un nro. de teléfono"
+							maxlength="15" title="Ingresar solo números sin espacios">
+							<pe:keyFilter regEx="/[\d]/" />
+						</p:inputMask>
+						<h:outputText id="ast5" value="**"></h:outputText>
+						<p:tooltip id="telToltip" for="ast5" trackMouse="true"
+							value="El telefóno debe ser ingresado." />
+						<p:tooltip id="toolTipTel" for="tel" showEvent="focus"
+							hideEvent="blur"></p:tooltip>
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="tel" />
@@ -148,9 +176,9 @@
 						<p:outputLabel value="Cuil/Cuit "></p:outputLabel>
 					</div>
 					<div class="ui-grid-col-3">
-						<p:inputText value="#{nuevoClienteBean.cuiCuit}" id="anses"
-							maxlength="20"></p:inputText>
-
+						<p:inputMask id="anses" value="#{nuevoClienteBean.cuiCuit}"
+							mask="99-99999999-9">
+						</p:inputMask>
 					</div>
 					<div class="ui-grid-col-4">
 						<p:message for="anses" />

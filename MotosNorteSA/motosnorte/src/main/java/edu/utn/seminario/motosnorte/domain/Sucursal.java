@@ -35,7 +35,7 @@ public class Sucursal implements Serializable{
 	}
 
 	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+		this.descripcion = descripcion.replace("'", "");;
 	}
 
 	public String getTelefono() {
@@ -43,7 +43,7 @@ public class Sucursal implements Serializable{
 	}
 
 	public void setTelefono(String telefono) {
-		this.telefono = telefono;
+		this.telefono = telefono.replace("'", "");;
 	}
 
 	public String getDireccion() {
@@ -51,7 +51,7 @@ public class Sucursal implements Serializable{
 	}
 
 	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+		this.direccion = direccion.replace("'", "");;
 	}
 
 	public Boolean getActivo() {

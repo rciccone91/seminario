@@ -6,6 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.MovimientoStockRepuesto;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class MovimientoStockRepuestoDao {
 	
@@ -14,8 +15,7 @@ public class MovimientoStockRepuestoDao {
 
 	public MovimientoStockRepuestoDao(){
 		if(sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			session = sessionFactory.openSession();
 		}
 	}

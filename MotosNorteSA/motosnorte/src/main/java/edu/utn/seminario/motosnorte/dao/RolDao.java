@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 
 import edu.utn.seminario.motosnorte.datalayer.DataLayer;
 import edu.utn.seminario.motosnorte.domain.Rol;
+import edu.utn.seminario.motosnorte.helper.SessionFactoryHelper;
 
 public class RolDao {
 	
@@ -19,8 +20,7 @@ public class RolDao {
 	public RolDao()
 	{
 		if(this.sessionFactory == null){
-			sessionFactory = new Configuration().configure()
-					.buildSessionFactory();
+			sessionFactory = SessionFactoryHelper.getInstance();
 			this.session = sessionFactory.openSession();
 		}
 	}

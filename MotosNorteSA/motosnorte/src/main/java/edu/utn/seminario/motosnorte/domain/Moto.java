@@ -55,7 +55,7 @@ public class Moto implements Serializable{
 	}
 
 	public void setModelo(String modelo) {
-		this.modelo = modelo;
+		this.modelo = modelo.replace("'", "");
 	}
 
 	public Marca getMarca() {
