@@ -19,7 +19,7 @@
 				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-12">
-						<p:dataTable var="su"
+						<p:dataTable id="table" var="su"
 							value="#{seleccionarSucursalBean.sucursales}" scrollable="true"
 							scrollHeight="220" style="float: right">
 
@@ -45,12 +45,12 @@
 								<h:outputText value="#{su.telefono}" />
 							</p:column>
 
-							<p:column>
+							<p:column exportable="false">
 								<p:button value="Modificar" icon="fa fa-edit"
 									outcome="modificarSucursal.xhtml?id=#{su.id}" />
 
 							</p:column>
-							<p:column>
+							<p:column exportable="false">
 								<p:commandButton value="Eliminar" icon="fa fa-remove"
 									actionListener="#{seleccionarSucursalBean.eliminarSucursal(su)}"
 									oncomplete="redirect()">
@@ -68,9 +68,21 @@
 						</p:confirmDialog>
 					</div>
 				</div>
-								<BR />
+				<BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-10"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Exportar:" />
+					</div>
+					<div class="ui-grid-col-9">
+					    <h:commandLink>
+					        <p:graphicImage url="/resources/images/icon_excel.png" />
+					        <p:dataExporter type="xls" target="table" fileName="sucursales" />
+					    </h:commandLink>
+					    <h:commandLink>
+					    	<p:graphicImage url="/resources/images/icon_pdf.png" />
+					        <p:dataExporter type="pdf" target="table" fileName="sucursales" />
+					    </h:commandLink>
+					</div>
 					<div class="ui-grid-col-2">
 						<p:button value="Agregar Sucursal" icon="fa fa-plus"
 							outcome="nuevaSucursal.xhtml" />

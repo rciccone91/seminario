@@ -80,13 +80,24 @@ public class DatosMotoBean {
 		id = moto.getId();
 		modelo = moto.getModelo();
 		marca = moto.getMarca();
-		anio = moto.getAño();
 		color = moto.getColor();
 		precio = moto.getPrecio();
 		cilindrada = moto.getCilindrada();
 		peso = moto.getPeso();
 		categoriaMoto = moto.getCategoriaMoto();
 		activo = moto.getActivo();
+		anio = moto.getAño();
+	}
+	
+	public Boolean mostrarActivo(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+		operacion = paramMap.get("op");
+		if(activo!= null && activo == false && operacion.equals(Constants.PARAMETRO_MODIFICAR)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public void guardar(){
@@ -117,7 +128,7 @@ public class DatosMotoBean {
 	
 	private Moto armarMoto() {
 		Moto moto = new Moto();
-		moto.setActivo(true);
+		moto.setActivo(activo);
 		moto.setAño(anio);
 		moto.setCategoriaMoto(categoriaMoto);
 		moto.setCilindrada(cilindrada);
@@ -129,6 +140,8 @@ public class DatosMotoBean {
 		moto.setPrecio(precio);
 		return moto;
 	}
+	
+	
 
 	public Integer getId() {
 		return id;

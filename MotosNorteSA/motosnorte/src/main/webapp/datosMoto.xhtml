@@ -158,6 +158,18 @@
 				</div>
 				<BR />
 				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Activo: " rendered="#{datosMotoBean.mostrarActivo()}"></p:outputLabel>
+					</div>
+					<div class="ui-grid-col-3">
+						<p:selectBooleanCheckbox value="#{datosMotoBean.activo}" rendered="#{datosMotoBean.mostrarActivo()}"/>
+					</div>
+					<div class="ui-grid-col-4"></div>
+					<div class="ui-grid-col-2"></div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
 					<div class="ui-grid-col-4"></div>
 					<div class="ui-grid-col-2">
 						<p:commandButton id="guardarBtn" value="Guardar"

@@ -31,11 +31,11 @@ public class CategoriaRepuestoConverter implements Converter {
     }
  
     public String getAsString(FacesContext fc, UIComponent uic, Object object) {
-        if(object != null) {
+        if(object != null && !object.toString().isEmpty()) {
             return String.valueOf(((CategoriaRepuesto) object).getId());
         }
         else {
-            return null;
+            return "";
         }
     }   
 

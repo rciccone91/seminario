@@ -53,7 +53,7 @@
 							<p:column headerText="Activo">
 								<p:selectBooleanCheckbox value="#{mot.activo}" disabled="true" />
 							</p:column>
-							<p:column width="130">
+							<p:column width="130" exportable="false">
 								<p:commandButton id="stockBtn" value="Ver Stock"
 									binding="#{productoMotosBean.mensaje}"
 									icon="fa fa-cubes" update=":mainForm:stockPanel"
@@ -78,6 +78,28 @@
 								</p:column>
 							</p:dataTable>
 						</p:overlayPanel>
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Exportar:" />
+					</div>
+					<div class="ui-grid-col-3">
+					    <h:commandLink>
+					        <p:graphicImage url="/resources/images/icon_excel.png" />
+					        <p:dataExporter type="xls" target="motosTable" fileName="motos" />
+					    </h:commandLink>
+					    <h:commandLink>
+					    	<p:graphicImage url="/resources/images/icon_pdf.png" />
+					        <p:dataExporter type="pdf" target="motosTable" fileName="motos" />
+					    </h:commandLink>
+					</div>
+					<div class="ui-grid-col-6">
+					</div>
+					<div class="ui-grid-col-2">
+					<p:button value="Motos más vendidas" icon="fa fa-check"
+							outcome="motosVendidas.xhtml" />
 					</div>
 				</div>
 				<BR />

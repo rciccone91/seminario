@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/template.xhtml">
+	<ui:define name="content">
+		<f:metadata>
+		</f:metadata>
+		<p:panel id="content">
+			<p:focus context="content" />
+			<p:growl id="messages" showDetail="true" />
+			<div class="ui-grid ui-grid-responsive">
+				<h1 align="center">Repuestos vendidos</h1>
+				<BR /> <BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2">
+						<h:outputText value="Fecha Desde" />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:calendar id="fechaDesde"
+							value="#{repuestosMasVendidosBean.fechaDesde}" showOn="button"
+							required="true" navigator="true"
+							requiredMessage="La fecha desde debe ser ingresada" 
+							pattern="dd/MM/yyyy" mask="true"/>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:outputText value="Fecha Hasta" />
+					</div>
+					<div class="ui-grid-col-3">
+						<p:calendar id="fechaHasta"
+							value="#{repuestosMasVendidosBean.fechaHasta}" showOn="button"
+							required="true" navigator="true"
+							requiredMessage="La fecha hasta debe ser ingresada" 
+							maxdate="#{repuestosMasVendidosBean.maxDate}"
+							pattern="dd/MM/yyyy" mask="true"/>
+					</div>
+				</div>
+				<BR />
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-5"></div>
+					<div class="ui-grid-col-2">
+						<p:commandButton value="Buscar"
+							process="@parent mainForm:fechaDesde mainForm:fechaHasta"
+							update="@form mainForm:fechaDesde mainForm:fechaHasta mainForm:fechaDesde mainForm:estadisticasTable"
+							action="#{repuestosMasVendidosBean.buscar}" oncomplete="" />
+					</div>
+					<div class="ui-grid-col-5"></div>
+				</div>
+				<BR />
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:dataTable id="estadisticasTable" name="estadisticasTable"
+							var="est" value="#{repuestosMasVendidosBean.lista}" scrollable="true"
+							scrollHeight="220" style="float: right" resizableColumns="true"
+							widgetVar="estadisticasTable"
+							emptyMessage="No se encontraron registros para la búsqueda">
+							<p:column headerText="Modelo" filterBy="#{est.repuesto.modelo}" sortBy="#{est.repuesto.modelo}"
+								filterMatchMode="contains">
+								<h:outputText value="#{est.repuesto.modelo}"
+									style="text-align: center" />
+							</p:column>
+							<p:column filterBy="#{est.repuesto.categoriaRepuesto.categoriaRepuesto}" sortBy="#{est.repuesto.categoriaRepuesto.categoriaRepuesto}" headerText="Categoria" filterMatchMode="exact" width="200">
+					            <f:facet name="filter">
+					                <p:selectOneMenu onchange="PF('estadisticasTable').filter()" >
+					                    <f:selectItem itemLabel="Todas las categorias" itemValue="#{null}" noSelectionOption="true" />
+					                    <f:selectItems value="#{repuestosMasVendidosBean.categorias}" />
+					                </p:selectOneMenu>
+					            </f:facet>
+					            <h:outputText value="#{est.repuesto.categoriaRepuesto.categoriaRepuesto}" />
+					        </p:column>
+							<p:column headerText="Cantidad" sortBy="#{est.cantidad}">
+								<h:outputText value="#{est.cantidad}" style="text-align: center" />
+							</p:column>
+							<p:column headerText="Precio" sortBy="#{est.repuesto.precio}">
+								<h:outputText value="#{est.repuesto.precio}" />
+							</p:column>
+							<p:column headerText="Entre Fehas">
+								<h:outputText value="#{est.fechas}" />
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</p:panel>
+	</ui:define>
+</ui:composition>

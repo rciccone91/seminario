@@ -19,7 +19,7 @@
 				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-12">
-						<p:dataTable var="rep"
+						<p:dataTable id="table" var="rep"
 							value="#{seleccionarRepuestoBean.repuestos}" scrollable="true"
 							scrollHeight="290" style="float: right"
 							emptyMessage="No se encontraron repuestos para la búsqueda">
@@ -47,11 +47,11 @@
 							<p:column headerText="Activo" width="50">
 								<p:selectBooleanCheckbox value="#{rep.activo}" disabled="true" />
 							</p:column>
-							<p:column width="130">
+							<p:column width="130" exportable="false">
 								<p:button value="Modificar" icon="fa fa-edit"
 									outcome="datosRepuesto.xhtml?op=modificar&amp;id=#{rep.id}" />
 							</p:column>
-							<p:column width="130">
+							<p:column width="130" exportable="false">
 								<p:commandButton value="Eliminar" icon="fa fa-remove"
 									actionListener="#{seleccionarRepuestoBean.eliminarRepuesto(rep)}"
 									oncomplete="redirect()">
@@ -60,7 +60,7 @@
 										icon="ui-icon-alert" />
 								</p:commandButton>
 							</p:column>
-							<p:column width="130">
+							<p:column width="130" exportable="false">
 								<p:splitButton value="Stock" icon="fa fa-cubes">
 									<p:menuitem value="Cargar" icon="fa fa-plus"
 										url="movimientoStockRepuesto.xhtml?id=#{rep.id}" ajax="false" />
@@ -77,7 +77,19 @@
 				</div>
 				<BR />
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-10"></div>
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Exportar:" />
+					</div>
+					<div class="ui-grid-col-9">
+					    <h:commandLink>
+					        <p:graphicImage url="/resources/images/icon_excel.png" />
+					        <p:dataExporter type="xls" target="table" fileName="repuestos" />
+					    </h:commandLink>
+					    <h:commandLink>
+					    	<p:graphicImage url="/resources/images/icon_pdf.png" />
+					        <p:dataExporter type="pdf" target="table" fileName="repuestos" />
+					    </h:commandLink>
+					</div>
 					<div class="ui-grid-col-2">
 						<p:button value="Agregar Repuesto" icon="fa fa-plus"
 							outcome="datosRepuesto.xhtml?op=crear" />

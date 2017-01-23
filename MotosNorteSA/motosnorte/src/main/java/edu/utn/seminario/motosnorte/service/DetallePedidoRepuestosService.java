@@ -9,7 +9,9 @@ import edu.utn.seminario.motosnorte.dao.DetallePedidoRepuestosDao;
 import edu.utn.seminario.motosnorte.dao.MovimientoStockRepuestoDao;
 import edu.utn.seminario.motosnorte.dao.StockRepuestosDao;
 import edu.utn.seminario.motosnorte.domain.CategoriaMoto;
+import edu.utn.seminario.motosnorte.domain.CategoriaRepuesto;
 import edu.utn.seminario.motosnorte.domain.DetallePedidoRepuestos;
+import edu.utn.seminario.motosnorte.domain.RepuestosMasVendidos;
 import edu.utn.seminario.motosnorte.transferobject.MotosMasVendidas;
 
 public class DetallePedidoRepuestosService implements Serializable{
@@ -29,6 +31,11 @@ public class DetallePedidoRepuestosService implements Serializable{
 	
 	public List<DetallePedidoRepuestos> listarFilterByPedidoId(Integer idPed) {
 		return dao.listarFilterByPedidoId(idPed);
+	}
+
+	public List<RepuestosMasVendidos> getRepuestosMasVendidos(Date fechaDesde, Date fechaHasta,
+			CategoriaRepuesto categoriaRepuesto) {
+		return dao.getRepuestosMasVendidos(fechaDesde,fechaHasta,categoriaRepuesto);
 	}
 
 	

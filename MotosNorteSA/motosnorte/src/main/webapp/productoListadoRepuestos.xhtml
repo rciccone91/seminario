@@ -20,9 +20,9 @@
 				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-12">
-						<p:dataTable var="rep" value="#{productosRepuestosBean.repuestos}"
-							scrollable="true" scrollHeight="300" style="float: right"
-							resizableColumns="true"
+						<p:dataTable id="table" var="rep"
+							value="#{productosRepuestosBean.repuestos}" scrollable="true"
+							scrollHeight="300" style="float: right" resizableColumns="true"
 							emptyMessage="No se encontraron registros para la búsqueda">
 							<p:column headerText="ID Repuesto">
 								<h:outputText value="#{rep.id}" style="text-align: center" />
@@ -52,8 +52,8 @@
 							</p:column>
 							<p:column width="130">
 								<p:commandButton id="stockBtn" value="Ver Stock"
-									binding="#{productosRepuestosBean.mensaje}"
-									icon="fa fa-cubes" update=":mainForm:stockPanel"
+									binding="#{productosRepuestosBean.mensaje}" icon="fa fa-cubes"
+									update=":mainForm:stockPanel"
 									action="#{productosRepuestosBean.buscarStock(rep)}"
 									oncomplete="PF('stockOP').show('#{component.clientId}')">
 								</p:commandButton>
@@ -61,8 +61,9 @@
 						</p:dataTable>
 						<p:overlayPanel id="stockPanel" widgetVar="stockOP"
 							hideEffect="fade" dismissable="true" style="width:600px">
-							<p:dataTable var="stock" value="#{productosRepuestosBean.stockRepuestos}"
-								rows="10" scrollable="true" scrollHeight="100"
+							<p:dataTable var="stock"
+								value="#{productosRepuestosBean.stockRepuestos}" rows="10"
+								scrollable="true" scrollHeight="100"
 								emptyMessage="El repuesto no posee stock en ninguna sucursal">
 								<p:column headerText="Sucursal">
 									<h:outputText value="#{stock.sucursal.descripcion}" />
@@ -75,6 +76,27 @@
 								</p:column>
 							</p:dataTable>
 						</p:overlayPanel>
+					</div>
+				</div>
+				<BR />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1">
+						<p:outputLabel value="Exportar:" />
+					</div>
+					<div class="ui-grid-col-3">
+						<h:commandLink>
+							<p:graphicImage url="/resources/images/icon_excel.png" />
+							<p:dataExporter type="xls" target="table" fileName="repuestos" />
+						</h:commandLink>
+						<h:commandLink>
+							<p:graphicImage url="/resources/images/icon_pdf.png" />
+							<p:dataExporter type="pdf" target="table" fileName="repuestos" />
+						</h:commandLink>
+					</div>
+					<div class="ui-grid-col-6"></div>
+					<div class="ui-grid-col-2">
+						<p:button value="Repuestos más vendidos" icon="fa fa-check"
+							outcome="repuestosVendidos.xhtml" />
 					</div>
 				</div>
 				<BR />

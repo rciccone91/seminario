@@ -30,6 +30,7 @@ public class MotosMasVendidasBean implements Serializable{
 	private CategoriaMoto categoriaMoto;
 	private List<CategoriaMoto> categorias;
 	private List<MotosMasVendidas> lista;
+	private Date maxDate;
 	
 	@ManagedProperty("#{categoriaMotoBackingService}")
 	CategoriaMotoBackingService categoriaMotoBackingService;
@@ -41,6 +42,7 @@ public class MotosMasVendidasBean implements Serializable{
 	public void init() {
 		categorias = categoriaMotoBackingService.listar();
 		detalleService = new DetallePedidoMotosService();
+		maxDate = CommonHelper.getTodayDate();
 	}
 	
 	public void buscar(){
@@ -93,4 +95,15 @@ public class MotosMasVendidasBean implements Serializable{
 	public void setDetalleService(DetallePedidoMotosService detalleService) {
 		this.detalleService = detalleService;
 	}
+
+	public Date getMaxDate() {
+		return maxDate;
+	}
+
+	public void setMaxDate(Date maxDate) {
+		this.maxDate = maxDate;
+	}
+	
+
+	
 }

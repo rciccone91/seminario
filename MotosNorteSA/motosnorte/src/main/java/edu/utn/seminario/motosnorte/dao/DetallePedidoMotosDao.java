@@ -64,16 +64,19 @@ public class DetallePedidoMotosDao {
 		SimpleDateFormat formatter2 = new SimpleDateFormat("dd/MM/yyyy");
 		List<MotosMasVendidas> masVendidas = new ArrayList<MotosMasVendidas>();
 		try {
-			StringBuilder queryString = new StringBuilder(" select sum(dp.cantidad), dp.moto_id  "+
-					" from motosnorte.detallepedidomotos as dp "+
-					" inner join motosnorte.pedidos as p  "+
-					" on dp.pedido_id  = p.pedido_id and p.fecha >= '"+formatter.format(fechaDesde)+"' "
-					+ "and p.fecha <= '"+formatter.format(fechaHasta)+"' ");
+			StringBuilder queryString = new StringBuilder("select sum(dp.cantidad), dp.moto_id"+
+					" from motosnorte.detallepedidomotos as dp"+
+					" inner join motosnorte.pedidos as p"+
+					" on dp.pedido_id = p.pedido_id and DATE_FORMAT(p.fecha,'%Y/%m/%d') between '"+formatter.format(fechaDesde)+"'"+
+					" and '"+formatter.format(fechaHasta)+"'"+
+					" inner join motosnorte.motos as m"+
+					" on dp.moto_id = m.moto_id"
+					);
 			
 			if(categoriaMoto != null){
-				queryString.append(" inner join motosnorte.motos as m "+
-						" on dp.moto_id = m.moto_id and m.categoriamoto_id = 1 ");
+				queryString.append(" and m.categoriamoto_id = "+categoriaMoto.getId());
 			}
+			
 			queryString.append(" group by dp.moto_id");
 					
 			
@@ -86,7 +89,7 @@ public class DetallePedidoMotosDao {
 				Object[] obj = (Object[]) itr.next();
 				Integer cantidad = Integer.valueOf(String.valueOf(obj[0]));
 				Integer motoId =  Integer.valueOf(String.valueOf(obj[1]));
-				masVendidas.add(new MotosMasVendidas(motoDao.getById(motoId),cantidad,entreFechas));
+				masVendidas.add(new MotosMasVendidas(new MotoDao().getById(motoId),cantidad,entreFechas));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

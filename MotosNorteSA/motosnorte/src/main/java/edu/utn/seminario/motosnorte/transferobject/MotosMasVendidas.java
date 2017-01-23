@@ -1,8 +1,10 @@
 package edu.utn.seminario.motosnorte.transferobject;
 
+import java.io.Serializable;
+
 import edu.utn.seminario.motosnorte.domain.Moto;
 
-public class MotosMasVendidas {
+public class MotosMasVendidas implements Serializable{
 
 	private Moto moto;
 	private Integer cantidad;
@@ -32,6 +34,8 @@ public class MotosMasVendidas {
 	public void setFechas(String fechas) {
 		this.fechas = fechas;
 	}
+	
+
 	
 	
 }

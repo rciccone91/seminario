@@ -12,7 +12,7 @@
 			<p:focus context="content" />
 			<p:growl id="messages" showDetail="true" />
 			<div class="ui-grid ui-grid-responsive">
-				<h1 align="center">Motos más vendidas</h1>
+				<h1 align="center">Motos vendidas</h1>
 				<BR /> <BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-2">
@@ -22,7 +22,8 @@
 						<p:calendar id="fechaDesde"
 							value="#{motosMasVendidasBean.fechaDesde}" showOn="button"
 							required="true" navigator="true"
-							requiredMessage="La fecha desde debe ser ingresada" />
+							requiredMessage="La fecha desde debe ser ingresada" 
+							pattern="dd/MM/yyyy" mask="true"/>
 					</div>
 					<div class="ui-grid-col-2">
 						<h:outputText value="Fecha Hasta" />
@@ -31,24 +32,12 @@
 						<p:calendar id="fechaHasta"
 							value="#{motosMasVendidasBean.fechaHasta}" showOn="button"
 							required="true" navigator="true"
-							requiredMessage="La fecha hasta debe ser ingresada" />
+							requiredMessage="La fecha hasta debe ser ingresada" 
+							maxdate="#{motosMasVendidasBean.maxDate}"
+							pattern="dd/MM/yyyy" mask="true"/>
 					</div>
 				</div>
 				<BR />
-				<div class="ui-grid-row">
-					<div class="ui-grid-col-2">
-						<h:outputText value="Categoria:" />
-					</div>
-					<div class="ui-grid-col-3">
-						<p:selectOneMenu id="categoria" onstyle="width:125px"
-							value="#{motosMasVendidasBean.categoriaMoto}"
-							converter="categoriaMotoConverter">
-							<f:selectItem itemValue="" itemLabel="Seleccionar..." />
-							<f:selectItems value="#{motosMasVendidasBean.categorias}" var="c"
-								itemLabel="#{c.categoriaMoto}" itemValue="#{c}" />
-						</p:selectOneMenu>
-					</div>
-				</div>
 				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-5"></div>
@@ -61,6 +50,7 @@
 					<div class="ui-grid-col-5"></div>
 				</div>
 				<BR />
+				<BR />
 				<div class="ui-grid-row">
 					<div class="ui-grid-col-12">
 						<p:dataTable id="estadisticasTable" name="estadisticasTable"
@@ -68,14 +58,24 @@
 							scrollHeight="220" style="float: right" resizableColumns="true"
 							widgetVar="estadisticasTable"
 							emptyMessage="No se encontraron registros para la búsqueda">
-							<p:column headerText="Modelo">
+							<p:column headerText="Modelo" filterBy="#{est.moto.modelo}" sortBy="#{est.moto.modelo}"
+								filterMatchMode="contains">
 								<h:outputText value="#{est.moto.modelo}"
 									style="text-align: center" />
 							</p:column>
-							<p:column headerText="Cantidad">
+							<p:column filterBy="#{est.moto.categoriaMoto.categoriaMoto}" sortBy="#{est.moto.categoriaMoto.categoriaMoto}" headerText="Categoria" filterMatchMode="exact" width="200">
+					            <f:facet name="filter">
+					                <p:selectOneMenu onchange="PF('estadisticasTable').filter()" >
+					                    <f:selectItem itemLabel="Todas las categorias" itemValue="#{null}" noSelectionOption="true" />
+					                    <f:selectItems value="#{motosMasVendidasBean.categorias}" />
+					                </p:selectOneMenu>
+					            </f:facet>
+					            <h:outputText value="#{est.moto.categoriaMoto.categoriaMoto}" />
+					        </p:column>
+							<p:column headerText="Cantidad vendidas" sortBy="#{est.cantidad}">
 								<h:outputText value="#{est.cantidad}" style="text-align: center" />
 							</p:column>
-							<p:column headerText="Precio">
+							<p:column headerText="Precio" sortBy="#{est.moto.precio}">
 								<h:outputText value="#{est.moto.precio}" />
 							</p:column>
 							<p:column headerText="Entre Fehas">

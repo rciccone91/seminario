@@ -36,4 +36,9 @@ public class MenuBean {
 	public Boolean mostrarNotaDePedido(){
 		return SessionHelper.getRolId().equals(Constants.VENDEDOR_ID);
 	}
+	
+	public Boolean mostrarEstadisticas(){
+		return SessionHelper.getRolId().equals(Constants.ADMINISTRADOR_ID)
+				|| SessionHelper.getRolId().equals(Constants.VENDEDOR_ID);
+	}
 }

@@ -30,4 +30,9 @@ public class CommonHelper {
 		cal.add(Calendar.DAY_OF_YEAR, -1);
 		return cal.getTime();	
 	}
+	
+	public static Date getTodayDate(){
+		Calendar cal = Calendar.getInstance();
+		return cal.getTime();	
+	}
 }
