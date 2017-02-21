@@ -17,6 +17,7 @@
 *.so
 *.bak
 
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -28,6 +29,7 @@
 *.jar
 *.rar
 *.tar
+*.zi
 *.zip
 
 # Logs and databases #

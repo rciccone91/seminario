@@ -25,11 +25,13 @@ public class Propiedad {
 	private Double longitud;
 	//
 	private List<Imagen> imagenes;
+	private List<Caracteristica> caracteristicas;
 	private Boolean activo;
 	private Date createDate;
 	private String createUser;
 	private Date updateDate;
 	private String updateUser;
+	private Boolean reservada;
 	
 	public Propiedad() {
 		super();
@@ -41,7 +43,7 @@ public class Propiedad {
 			Integer banios, Integer superficieCubierta, Integer precio,
 			TipoDeOperacion tipoDeOperacion, TipoDePropiedad tipoDePropiedad,
 			Boolean activo, Date createDate, String createUser,
-			Date updateDate, String updateUser) {
+			Date updateDate, String updateUser, Boolean reservada) {
 		super();
 		this.id = id;
 		this.desc = desc;
@@ -56,6 +58,7 @@ public class Propiedad {
 		this.createUser = createUser;
 		this.updateDate = updateDate;
 		this.updateUser = updateUser;
+		this.reservada = reservada;
 	}
 
 	public Integer getId() {
@@ -277,6 +280,32 @@ public class Propiedad {
 	public void setLongitud(Double longitud) {
 		this.longitud = longitud;
 	}
+
+
+
+	public List<Caracteristica> getCaracteristicas() {
+		return caracteristicas;
+	}
+
+
+
+	public void setCaracteristicas(List<Caracteristica> caracteristicas) {
+		this.caracteristicas = caracteristicas;
+	}
+
+
+
+	public Boolean getReservada() {
+		return reservada;
+	}
+
+
+
+	public void setReservada(Boolean reservada) {
+		this.reservada = reservada;
+	}
+	
+	
 	
 	
 

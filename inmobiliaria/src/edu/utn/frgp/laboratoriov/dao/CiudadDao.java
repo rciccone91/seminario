@@ -4,13 +4,15 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.PreparedStatement;
 
 import edu.utn.frgp.laboratoriov.db.ConexionDB;
 import edu.utn.frgp.laboratoriov.domain.Ciudad;
+
 
 
 public class CiudadDao {
@@ -39,8 +41,42 @@ public class CiudadDao {
 			e.printStackTrace();
 		}finally {
 			if (rs != null) try { rs.close(); } catch (SQLException e) {e.printStackTrace();}
+			if (connection != null) try { connection.close(); } catch (SQLException e) {e.printStackTrace();}
         }
 		return ciudades;
+	}
+
+	
+	
+	public Ciudad getCiudadById(int id) {
+		
+		Connection connection = null;
+		ResultSet rs = null;
+		Ciudad ciudad = new Ciudad();
+		
+		try {
+			connection = ConexionDB.getConexion();
+			PreparedStatement st = (PreparedStatement) connection.prepareStatement("select * from final_labov.ciudad where ciudad_id = ?");
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			
+			while (rs.next()) {
+				ciudad.setId(rs.getInt("ciudad_id"));
+				ciudad.setCiudad(rs.getString("nombre"));
+			}
+			
+		} catch (SQLException s) {
+			System.out.println("Error: ");
+			s.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Error: ");
+			e.printStackTrace();
+		}finally {
+			if (rs != null) try { rs.close(); } catch (SQLException e) {e.printStackTrace();}
+			if (connection != null) try { connection.close(); } catch (SQLException e) {e.printStackTrace();}
+        }
+		
+		return ciudad;
 	}
 
 //	public List<Ciudad> getCiudades() {

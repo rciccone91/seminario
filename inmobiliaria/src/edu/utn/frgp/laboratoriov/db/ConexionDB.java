@@ -41,9 +41,7 @@ public final class ConexionDB {
 	}
 	
 	public static Connection getConexion(){
-		if(conexion!=null){ 
-			return conexion; 
-		}else return initConexion();
+		return initConexion();
 	}
 	
 }
