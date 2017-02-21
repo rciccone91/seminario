@@ -4,11 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Date;
 
+import edu.utn.frgp.laboratoriov.common.CommonHelper;
 import edu.utn.frgp.laboratoriov.db.ConexionDB;
 import edu.utn.frgp.laboratoriov.domain.Propiedad;
 import edu.utn.frgp.laboratoriov.domain.PropiedadFavorita;
+import edu.utn.frgp.laboratoriov.domain.Reservas;
+import edu.utn.frgp.laboratoriov.domain.Usuario;
 import edu.utn.frgp.laboratoriov.exceptions.PropiedadNoEncontradaException;
 
 public class PropiedadFavoritaDao {
@@ -57,5 +62,31 @@ public class PropiedadFavoritaDao {
 			if (connection != null) try { connection.close(); } catch (SQLException e) {e.printStackTrace();}
 		}
 		return false;
+	}
+
+	public List<Propiedad> getFavoritasByUser(Usuario usuario) {
+		Connection connection = null;
+		ResultSet rs = null;
+		List<Propiedad> propiedades = new ArrayList<Propiedad>();
+		PropiedadesDao propDao = new PropiedadesDao();
+		try {
+			StringBuffer query = new StringBuffer("select * from final_labov.propiedadesfavoritas where usuario = ?");
+			connection = ConexionDB.getConexion();
+			PreparedStatement st = (PreparedStatement)connection.prepareStatement(query.toString());
+			st.setString(1, usuario.getUsuario());
+			rs = st.executeQuery();
+			while (rs.next()){
+				Propiedad propiedad = new Propiedad();
+				propiedad = propDao.getPropiedadById(rs.getInt("propiedad_id"));
+				propiedades.add(propiedad);
+			}
+		} catch (SQLException s) {
+			System.out.println("Error: ");
+			s.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch (SQLException e) {e.printStackTrace();}
+			if (connection != null) try { connection.close(); } catch (SQLException e) {e.printStackTrace();}
+		}
+		return propiedades;
 	}
 }

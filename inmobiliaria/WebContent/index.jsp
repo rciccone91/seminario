@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -61,7 +62,7 @@
 
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
-							<span>.................................................................................................................................</span>
+							<span>.</span>
 						</div>
 					</div>
 					<div class="row"></div>
@@ -73,7 +74,8 @@
 									<span class="fa fa-phone"></span> 034505-920278
 								</div>
 								<div class="aa-email hidden-xs">
-									<span class="fa fa-envelope-o"></span> cm.inmobiliaria@gmail.com
+									<span class="fa fa-envelope-o"></span>
+									cm.inmobiliaria@gmail.com
 								</div>
 							</div>
 						</div>
@@ -83,7 +85,8 @@
 									<a href="registro.jsp" class="aa-register">Registrarse</a>
 									<a href="login.jsp" class="aa-login">Login</a>
 								</c:if>
-								<form action="${pageContext.request.contextPath}/LogoutServlet" method="post">
+								<form action="${pageContext.request.contextPath}/LogoutServlet"
+									method="post">
 									<c:if test="${sessionScope.usuario != null}">
 										<input id="logout" name="logout" type="submit" value="Logout"
 											class="btn-link">
@@ -114,19 +117,24 @@
 			</button>
 			<!-- LOGO -->
 			<!-- Text based logo -->
-			<a class="navbar-brand aa-logo" href="${pageContext.request.contextPath}/IndexServlet"> CM <span>Inmobiliaria</span></a>
+			<a class="navbar-brand aa-logo"
+				href="${pageContext.request.contextPath}/IndexServlet"> CM <span>Inmobiliaria</span></a>
 			<!-- Image based logo -->
 			<!-- <a class="navbar-brand aa-logo-img" href="index.html"><img src="img/logo.png" alt="logo"></a> -->
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul id="top-menu" class="nav navbar-nav navbar-right aa-main-nav">
-				<li class="active"><a href="${pageContext.request.contextPath}/IndexServlet">Home</a></li>
+				<li class="active"><a
+					href="${pageContext.request.contextPath}/IndexServlet">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="properties.html">Propiedades <span
-						class="caret"></span></a>
+					data-toggle="dropdown">Propiedades <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="${pageContext.request.contextPath}/ResultadosPropiedadServlet?op=2">En Alquiler</a></li>
-						<li><a href="${pageContext.request.contextPath}/ResultadosPropiedadServlet?op=1">En Venta</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/ResultadosPropiedadServlet?op=2">En
+								Alquiler</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/ResultadosPropiedadServlet?op=1">En
+								Venta</a></li>
 					</ul></li>
 				<c:if test="${sessionScope.usuario != null}">
 					<c:if test="${sessionScope.usuario.admin}">
@@ -135,10 +143,16 @@
 								class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="registro.jsp">Alta</a></li>
-								<li><a href="blog-single.html">Baja</a></li>
-								<li><a href="blog-single.html">Modificación</a></li>
+								<li><a href="paginaEnConstruccion.jsp">Baja</a></li>
+								<li><a href="paginaEnConstruccion.jsp">Modificación</a></li>
 							</ul></li>
 					</c:if>
+				</c:if>
+				<c:if test="${sessionScope.usuario != null}">
+					<li><a
+						href="${pageContext.request.contextPath}/FavoritasServlet">Favoritas</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/ReservadasServlet">Reservadas</a></li>
 				</c:if>
 				<li><a href="contact.html">Contacto</a></li>
 			</ul>
@@ -152,90 +166,25 @@
 		<section id="aa-slider">
 		<div class="aa-slider-area">
 			<div class="aa-top-slider">
-				<div class="aa-top-slider-single">
-					<img src="img/slider/3.jpg" alt="img">
-					<div class="aa-top-slider-content">
-						<span class="aa-top-slider-catg">Duplex</span>
-						<h2 class="aa-top-slider-title">1560 Square Feet</h2>
-						<p class="aa-top-slider-location">
-							<i class="fa fa-map-marker"></i>South Beach, Miami (USA)
-						</p>
-						<span class="aa-top-slider-off">30% OFF</span>
-						<p class="aa-top-slider-price">$460,000</p>
-						<a href="#" class="aa-top-slider-btn">Read More <span
-							class="fa fa-angle-double-right"></span></a>
+				<c:forEach var="d" items="${propiedadesDestacadas}">
+					<div class="aa-top-slider-single">
+						<img src="${d.imagenes[0].archivo}" alt="img">
+						<div class="aa-top-slider-content">
+							<span class="aa-top-slider-catg">${d.tipoDePropiedad.descripcion}</span>
+							<h2 class="aa-top-slider-title">Destacada</h2>
+							<p class="aa-top-slider-location">
+								<i class="fa fa-map-marker"></i>${d.superficieTotal} Metros 2
+							</p>
+							<p class="aa-top-slider-location">
+								<i class="fa fa-map-marker"></i>${d.ciudad.ciudad}, Buenos Aires
+								(ARG)
+							</p>
+							<p class="aa-top-slider-price">$${d.precio}</p>
+							<!-- <a href="#" class="aa-top-slider-btn">Read More <span
+								class="fa fa-angle-double-right"></span></a> -->
+						</div>
 					</div>
-				</div>
-				<div class="aa-top-slider-single">
-					<img src="img/slider/2.jpg" alt="img">
-					<div class="aa-top-slider-content">
-						<span class="aa-top-slider-catg">Duplex</span>
-						<h2 class="aa-top-slider-title">1560 Square Feet</h2>
-						<p class="aa-top-slider-location">
-							<i class="fa fa-map-marker"></i>South Beach, Miami (USA)
-						</p>
-						<span class="aa-top-slider-off">30% OFF</span>
-						<p class="aa-top-slider-price">$460,000</p>
-						<a href="#" class="aa-top-slider-btn">Read More <span
-							class="fa fa-angle-double-right"></span></a>
-					</div>
-				</div>
-				<div class="aa-top-slider-single">
-					<img src="img/slider/1.jpg" alt="img">
-					<div class="aa-top-slider-content">
-						<span class="aa-top-slider-catg">Duplex</span>
-						<h2 class="aa-top-slider-title">1560 Square Feet</h2>
-						<p class="aa-top-slider-location">
-							<i class="fa fa-map-marker"></i>South Beach, Miami (USA)
-						</p>
-						<span class="aa-top-slider-off">30% OFF</span>
-						<p class="aa-top-slider-price">$460,000</p>
-						<a href="#" class="aa-top-slider-btn">Read More <span
-							class="fa fa-angle-double-right"></span></a>
-					</div>
-				</div>
-				<div class="aa-top-slider-single">
-					<img src="img/slider/5.jpg" alt="img">
-					<div class="aa-top-slider-content">
-						<span class="aa-top-slider-catg">Duplex</span>
-						<h2 class="aa-top-slider-title">1560 Square Feet</h2>
-						<p class="aa-top-slider-location">
-							<i class="fa fa-map-marker"></i>South Beach, Miami (USA)
-						</p>
-						<span class="aa-top-slider-off">30% OFF</span>
-						<p class="aa-top-slider-price">$460,000</p>
-						<a href="#" class="aa-top-slider-btn">Read More <span
-							class="fa fa-angle-double-right"></span></a>
-					</div>
-				</div>
-				<div class="aa-top-slider-single">
-					<img src="img/slider/4.jpg" alt="img">
-					<div class="aa-top-slider-content">
-						<span class="aa-top-slider-catg">Duplex</span>
-						<h2 class="aa-top-slider-title">1560 Square Feet</h2>
-						<p class="aa-top-slider-location">
-							<i class="fa fa-map-marker"></i>South Beach, Miami (USA)
-						</p>
-						<span class="aa-top-slider-off">30% OFF</span>
-						<p class="aa-top-slider-price">$460,000</p>
-						<a href="#" class="aa-top-slider-btn">Read More <span
-							class="fa fa-angle-double-right"></span></a>
-					</div>
-				</div>
-				<div class="aa-top-slider-single">
-					<img src="img/slider/6.jpg" alt="img">
-					<div class="aa-top-slider-content">
-						<span class="aa-top-slider-catg">Duplex</span>
-						<h2 class="aa-top-slider-title">1560 Square Feet</h2>
-						<p class="aa-top-slider-location">
-							<i class="fa fa-map-marker"></i>South Beach, Miami (USA)
-						</p>
-						<span class="aa-top-slider-off">30% OFF</span>
-						<p class="aa-top-slider-price">$460,000</p>
-						<a href="#" class="aa-top-slider-btn">Read More <span
-							class="fa fa-angle-double-right"></span></a>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 		</section>
@@ -326,8 +275,14 @@
 						<c:forEach var="p" items="${propiedades}">
 							<div class="col-md-4">
 								<article class="aa-properties-item"> <a href="#"
-									class="aa-properties-item-img"> <img src="img/item/1.jpg"
-									alt="img">
+									class="aa-properties-item-img"> <c:choose>
+										<c:when test="${fn:length(p.imagenes) gt 0}">
+											<img src="${p.imagenes[0].archivo}" alt="img">
+										</c:when>
+										<c:otherwise>
+											<img src="img/item/1.jpg" alt="img">
+										</c:otherwise>
+									</c:choose>
 								</a>
 								<div class="aa-tag for-sale">
 									${p.tipoDeOperacion.descripcion}</div>
@@ -373,7 +328,7 @@
 						<div class="row">
 							<div class="col-md-5">
 								<div class="aa-about-us-left">
-									<img src="img/about-us.png" alt="image">
+									<img src="img/logoCM.png" alt="image">
 								</div>
 							</div>
 							<div class="col-md-7">
@@ -441,7 +396,9 @@
 											<h4>
 												<a href="#">Alquiler de Propiedades</a>
 											</h4>
-											<p>Gran cantidad de propiedades en alquiler en zonas centricas muy requeridas, y con propiedades nuevas entrando cada día</p>
+											<p>Gran cantidad de propiedades en alquiler en zonas
+												centricas muy requeridas, y con propiedades nuevas entrando
+												cada día</p>
 										</div>
 									</div>
 								</div>
@@ -454,7 +411,8 @@
 											<h4>
 												<a href="#">Desarrollo de Propiedades</a>
 											</h4>
-											<p>Proveemos un servicio de desarrollo de proyectos de propiedades, junto a nuestros profesionales</p>
+											<p>Proveemos un servicio de desarrollo de proyectos de
+												propiedades, junto a nuestros profesionales</p>
 										</div>
 									</div>
 								</div>
@@ -467,8 +425,9 @@
 											<h4>
 												<a href="#">Análisis de Mercado</a>
 											</h4>
-											<p>Brindamos un análisis personalizado a cada cliente, para que el mismo 
-											pueda llevarse la mejor experiencia al momento de cumplir el sueño de la casa propia</p>
+											<p>Brindamos un análisis personalizado a cada cliente,
+												para que el mismo pueda llevarse la mejor experiencia al
+												momento de cumplir el sueño de la casa propia</p>
 										</div>
 									</div>
 								</div>

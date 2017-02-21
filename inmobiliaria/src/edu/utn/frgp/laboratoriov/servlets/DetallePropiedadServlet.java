@@ -45,15 +45,18 @@ public class DetallePropiedadServlet extends HttpServlet{
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		PropiedadFavoritaDao propDao = new PropiedadFavoritaDao();
+		PropiedadFavoritaDao favDao = new PropiedadFavoritaDao();
 		ReservasDao resDao = new ReservasDao();
 		Propiedad prop = (Propiedad) request.getAttribute("prop");
+		PropiedadesDao propDao = new PropiedadesDao();
 		Usuario us = (Usuario) sess.getAttribute("usuario");
+		request.setAttribute("propCercanas",propDao.getPropiedadesCercanas(prop.getCiudad().getId(),prop.getId()));
 		
 		if(us != null){
 			System.out.println("En el Servlet de detalle. Tengo el usuario");
-			request.setAttribute("esFavorita",propDao.isPropiedadFavorita(prop.getId(), us.getUsuario()));
+			request.setAttribute("esFavorita",favDao.isPropiedadFavorita(prop.getId(), us.getUsuario()));
 			request.setAttribute("estaReservada",resDao.isReservada(prop.getId()));
+			
 		}
 		request.getRequestDispatcher("/detallePropiedad.jsp").forward(request, response);
 	}

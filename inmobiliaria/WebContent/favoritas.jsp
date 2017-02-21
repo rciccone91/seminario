@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CM Inmobiliaria | Home</title>
+<title>CM Inmobiliaria</title>
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -115,7 +115,7 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul id="top-menu" class="nav navbar-nav navbar-right aa-main-nav">
-				<li class="active"><a href="${pageContext.request.contextPath}/IndexServlet">Home</a></li>
+				<li><a href="${pageContext.request.contextPath}/IndexServlet">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown">Propiedades <span
 						class="caret"></span></a>
@@ -136,7 +136,7 @@
 					</c:if>
 				</c:if>
 				<c:if test="${sessionScope.usuario != null}">
-				<li><a href="${pageContext.request.contextPath}/FavoritasServlet">Favoritas</a></li>
+				<li class="active"><a href="${pageContext.request.contextPath}/FavoritasServlet">Favoritas</a></li>
 				<li><a href="${pageContext.request.contextPath}/ReservadasServlet">Reservadas</a></li>
 				</c:if>
 				<li><a href="contact.html">Contacto</a></li>
@@ -154,7 +154,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="aa-property-header-inner">
-					<h2>Propiedades</h2>
+					<h2>Propiedades Reservadas</h2>
 					<!-- <ol class="breadcrumb">
 						<li><a href="#">HOME</a></li>
 						<li class="active">PROPERTIES</li>
@@ -197,9 +197,9 @@
 							<a id="aa-list-properties" href="#"><span class="fa fa-list"></span></a>
 						</div>-->
 						<div class="aa-title">
-							<h2>Propiedades</h2>
+							<h2>Favoritas</h2>
 							<span></span>
-							<p>Estas son las propiedades que coinciden con su criterio de búsqueda</p>
+							<p>Estas son las propiedades marcadas como favoritas</p>
 						</div>
 					</div>
 					<!-- Start properties content body -->
@@ -207,7 +207,7 @@
 					<div class="aa-properties-content-body">
 						<div class="row">
 							<form id="formPropiedades"
-								action="${pageContext.request.contextPath}/ResultadosPropiedadServlet"
+								action="${pageContext.request.contextPath}/FavoritasServlet"
 								class="aa-sort-form" method="post">
 								<input id="propSel" name="propSel" type="hidden" value="0">
 								<c:forEach var="p" items="${resultados}">
@@ -234,13 +234,14 @@
 											<div class="aa-properties-detial">
 												<span class="aa-price"> $${p.precio} </span>
 											</div>
-											<div class="aa-properties-detial">
-												<input type="submit" class="form-control btn btn-info"
-													name="action" value="Detalles"
-													onclick="return setId(${p.id})" />
-											</div>
 										</div>
-										</article>
+										<div class="aa-properties-detial">
+											<input type="submit" class="form-control btn btn-info"
+												name="action" value="Detalles"
+												onclick="return setId(${p.id})" />
+										</div>
+									
+									</article>
 									</div>
 								</c:forEach>
 							</form>

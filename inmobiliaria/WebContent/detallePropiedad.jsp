@@ -63,10 +63,10 @@
 						<div class="col-md-6 col-sm-6 col-xs-6">
 							<div class="aa-header-left">
 								<div class="aa-telephone-no">
-									<span class="fa fa-phone"></span> 1-900-523-3564
+									<span class="fa fa-phone"></span> 034505-920278
 								</div>
 								<div class="aa-email hidden-xs">
-									<span class="fa fa-envelope-o"></span> info@markups.com
+									<span class="fa fa-envelope-o"></span> cm.inmobiliaria@gmail.com
 								</div>
 							</div>
 						</div>
@@ -94,7 +94,7 @@
 	<!-- End header section -->
 
 	<!-- Start menu section -->
-	<section id="aa-menu-area"> <nav
+<section id="aa-menu-area"> <nav
 		class="navbar navbar-default main-navbar" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -108,32 +108,35 @@
 			</button>
 			<!-- LOGO -->
 			<!-- Text based logo -->
-			<a class="navbar-brand aa-logo" href="index.html"> CM <span>Inmobiliaria</span></a>
+			<a class="navbar-brand aa-logo" href="${pageContext.request.contextPath}/IndexServlet"> CM <span>Inmobiliaria</span></a>
 			<!-- Image based logo -->
 			<!-- <a class="navbar-brand aa-logo-img" href="index.html"><img src="img/logo.png" alt="logo"></a> -->
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul id="top-menu" class="nav navbar-nav navbar-right aa-main-nav">
-				<li class="active"><a href="index.html">Home</a></li>
+				<li class="active"><a href="${pageContext.request.contextPath}/IndexServlet">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="properties.html">Propiedades <span
+					data-toggle="dropdown">Propiedades <span
 						class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="properties.html">En Alquiler</a></li>
-						<li><a href="properties-detail.html">En Venta</a></li>
+						<li><a href="${pageContext.request.contextPath}/ResultadosPropiedadServlet?op=2">En Alquiler</a></li>
+						<li><a href="${pageContext.request.contextPath}/ResultadosPropiedadServlet?op=1">En Venta</a></li>
 					</ul></li>
-				<li><a href="gallery.html">Galeria</a></li>
 				<c:if test="${sessionScope.usuario != null}">
 					<c:if test="${sessionScope.usuario.admin}">
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="blog-archive.html">Usuarios<span
 								class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="blog-archive.html">Alta</a></li>
-								<li><a href="blog-single.html">Baja</a></li>
-								<li><a href="blog-single.html">Modificacion</a></li>
+								<li><a href="registro.jsp">Alta</a></li>
+								<li><a href="paginaEnConstruccion.jsp">Baja</a></li>
+								<li><a href="paginaEnConstruccion.jsp">Modificación</a></li>
 							</ul></li>
 					</c:if>
+				</c:if>
+				<c:if test="${sessionScope.usuario != null}">
+				<li><a href="${pageContext.request.contextPath}/FavoritasServlet">Favoritas</a></li>
+				<li><a href="${pageContext.request.contextPath}/ReservadasServlet">Reservadas</a></li>
 				</c:if>
 				<li><a href="contact.html">Contacto</a></li>
 			</ul>
@@ -174,7 +177,7 @@
 							</c:forEach>
 						</div>
 						<div class="aa-properties-info">
-							<input id="propId" name="" propId"" type="hidden"
+							<input id="propId" name="propId" type="hidden"
 								value="${prop.id}">
 							<h2>${prop.direccion}-${prop.ciudad.ciudad}</h2>
 							<span class="aa-price">$${prop.precio}</span>
@@ -276,8 +279,8 @@
 										<form id="formCercanas"
 											action="${pageContext.request.contextPath}/PropiedadesCercanasServlet"
 											class="aa-sort-form" method="post">
-											<input id="propSel" name="propSel" type="hidden" value="0">
-											<c:forEach var="p" items="${cercanas}">
+											<input id="propSelCercana" name="propSelCercana" type="hidden" value="0">
+											<c:forEach var="p" items="${propCercanas}">
 												<div class="col-md-6">
 													<article class="aa-properties-item"> <a href="#"
 														class="aa-properties-item-img"> <img
@@ -304,7 +307,7 @@
 														<div class="aa-properties-detial">
 															<input type="submit" class="form-control btn btn-info"
 																name="action" value="Detalles"
-																onclick="return setId(${p.id})" />
+																onclick="return setCercanaId(${p.id})" />
 														</div>
 													</div>
 													</article>
@@ -403,6 +406,12 @@
 			$('#propSel').val(id);
 		}
 
+		function setCercanaId(id) {
+			console.log(id);
+			$('#propSelCercana').val(id);
+		}
+		
+		
 		$(document)
 				.ready(
 						function() {

@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CM Inmobiliaria | Home</title>
+<title>CM Inmobiliaria</title>
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -115,7 +115,7 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul id="top-menu" class="nav navbar-nav navbar-right aa-main-nav">
-				<li class="active"><a href="${pageContext.request.contextPath}/IndexServlet">Home</a></li>
+				<li><a href="${pageContext.request.contextPath}/IndexServlet">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown">Propiedades <span
 						class="caret"></span></a>
@@ -136,7 +136,7 @@
 					</c:if>
 				</c:if>
 				<c:if test="${sessionScope.usuario != null}">
-				<li><a href="${pageContext.request.contextPath}/FavoritasServlet">Favoritas</a></li>
+				<li class="active"><a href="${pageContext.request.contextPath}/FavoritasServlet">Favoritas</a></li>
 				<li><a href="${pageContext.request.contextPath}/ReservadasServlet">Reservadas</a></li>
 				</c:if>
 				<li><a href="contact.html">Contacto</a></li>
@@ -154,11 +154,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="aa-property-header-inner">
-					<h2>Propiedades</h2>
-					<!-- <ol class="breadcrumb">
-						<li><a href="#">HOME</a></li>
-						<li class="active">PROPERTIES</li>
-					</ol> -->
+					<h2></h2>
 				</div>
 			</div>
 		</div>
@@ -175,96 +171,12 @@
 				<div class="aa-properties-content">
 					<!-- start properties content head -->
 					<div class="aa-properties-content-head">
-						<!-- <div class="aa-properties-content-head-left">
-							<form action="" class="aa-sort-form">
-								<label for="">Sort by</label> <select name="">
-									<option value="1" selected="Default">Default</option>
-									<option value="2">Name</option>
-									<option value="3">Price</option>
-									<option value="4">Date</option>
-								</select>
-							</form>
-							<form action="" class="aa-show-form">
-								<label for="">Show</label> <select name="">
-									<option value="1" selected="12">6</option>
-									<option value="2">12</option>
-									<option value="3">24</option>
-								</select>
-							</form>
-						</div> 
-						<div class="aa-properties-content-head-right">
-							<a id="aa-grid-properties" href="#"><span class="fa fa-th"></span></a>
-							<a id="aa-list-properties" href="#"><span class="fa fa-list"></span></a>
-						</div>-->
 						<div class="aa-title">
-							<h2>Propiedades</h2>
+							<h2>Página en construcción</h2>
 							<span></span>
-							<p>Estas son las propiedades que coinciden con su criterio de búsqueda</p>
+							<p>Esta página todavía esta en construcción. Disculpe las molestias.</p>
 						</div>
 					</div>
-					<!-- Start properties content body -->
-
-					<div class="aa-properties-content-body">
-						<div class="row">
-							<form id="formPropiedades"
-								action="${pageContext.request.contextPath}/ResultadosPropiedadServlet"
-								class="aa-sort-form" method="post">
-								<input id="propSel" name="propSel" type="hidden" value="0">
-								<c:forEach var="p" items="${resultados}">
-									<div class="col-md-4">
-										<article class="aa-properties-item"> <a href="#"
-											class="aa-properties-item-img"> <img src="img/item/1.jpg"
-											alt="img">
-										</a>
-										<div class="aa-tag for-sale">
-											${p.tipoDeOperacion.descripcion}</div>
-										<div class="aa-properties-item-content">
-											<div class="aa-properties-info">
-												<span>${p.ambientes} Amb.</span> <span>${p.habitaciones}
-													Hab.</span> <span>${p.banios} Baño<c:if
-														test="${p.banios >1}">s</c:if></span> <span>Sup.
-													Total:${p.superficieTotal} </span>
-											</div>
-											<div class="aa-properties-about">
-												<h4>
-													<a>${p.direccion} - ${p.ciudad.ciudad}</a>
-												</h4>
-												<!-- <p style="margin-right:16 px" >${p.desc}</p> -->
-											</div>
-											<div class="aa-properties-detial">
-												<span class="aa-price"> $${p.precio} </span>
-											</div>
-											<div class="aa-properties-detial">
-												<input type="submit" class="form-control btn btn-info"
-													name="action" value="Detalles"
-													onclick="return setId(${p.id})" />
-											</div>
-										</div>
-										</article>
-									</div>
-								</c:forEach>
-							</form>
-						</div>
-
-					</div>
-					<!-- Start properties content bottom 
-					<div class="aa-properties-content-bottom">
-						<form id="formPaginado" name="" class="aa-sort-form" method="post"
-							action="ResultadosPropiedadServlet">
-							<nav> <input type="hidden" id="numPagina" name="numPagina"
-								value="1">
-							<ul class="pagination">
-								<c:forEach var="p" items="${props}">
-									<li id="pagina" value="numPagina">
-										<input id="pagSeleccionada" type="submit" 
-										onclick="return setPagina()" class="btn-link">
-									</li>
-								</c:forEach>
-							</ul>
-
-							</nav>
-						</form>
-					</div>-->
 				</div>
 			</div>
 		</div>

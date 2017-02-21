@@ -31,11 +31,12 @@ public class IndexServlet  extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();	
-		Gson gson = new Gson();
 		List<TipoDePropiedad> tipoDePropiedades = new TipoDePropiedadDao().getTiposDePropiedades();
 		List<Propiedad> propiedades = new PropiedadesDao().getUltimasPropiedades();
+		List<Propiedad> propiedadesDestacadas = new PropiedadesDao().getPropiedadesDestacadas();
 		request.setAttribute("tipoDePropiedades", tipoDePropiedades);
 		request.setAttribute("propiedades", propiedades);
+		request.setAttribute("propiedadesDestacadas", propiedadesDestacadas);
 		if(session.getAttribute("usuario")!= null){
 			System.out.println("getwithUserAfterLogin");
 		 }
@@ -52,8 +53,6 @@ public class IndexServlet  extends HttpServlet{
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("postIndexServlet");
-//		request.getSession().setAttribute("usuario",(Usuario) request.getSession().getAttribute("usuario")); 
-//		request.setAttribute("usuario",(Usuario) request.getSession().getServletContext().getAttribute("usuario")); 
 		String action = request.getParameter("action");
 		PropiedadesDao dao = new PropiedadesDao();
 
@@ -67,7 +66,7 @@ public class IndexServlet  extends HttpServlet{
 			Integer ambientes = Integer.parseInt(request.getParameter("inputAmbientes"));
 			Integer operacion = Integer.parseInt(request.getParameter("inputOperacion"));
 			request.setAttribute("props", dao.getPropiedadesFiltradas(ciudad,tipoProp,ambientes,operacion));
-			request.getRequestDispatcher("/ResultadosPropiedadServlet").forward(request, response);;
+			request.getRequestDispatcher("ResultadosPropiedadServlet").forward(request, response);;
 //			response.sendRedirect("resultadoPropiedades.jsp");
 		}
 	}

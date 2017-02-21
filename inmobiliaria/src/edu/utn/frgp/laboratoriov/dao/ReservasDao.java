@@ -4,12 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import edu.utn.frgp.laboratoriov.common.CommonHelper;
 import edu.utn.frgp.laboratoriov.db.ConexionDB;
 import edu.utn.frgp.laboratoriov.domain.ApplicationProperty;
 import edu.utn.frgp.laboratoriov.domain.Properties;
+import edu.utn.frgp.laboratoriov.domain.Propiedad;
 import edu.utn.frgp.laboratoriov.domain.PropiedadFavorita;
 import edu.utn.frgp.laboratoriov.domain.Reservas;
+import edu.utn.frgp.laboratoriov.domain.Usuario;
 
 public class ReservasDao {
 	
@@ -61,6 +66,37 @@ public class ReservasDao {
 			if (connection != null) try { connection.close(); } catch (SQLException e) {e.printStackTrace();}
 		}
 		return false;
+	}
+
+	public List<Reservas> getReservadasByUser(Usuario usuario) {
+		Connection connection = null;
+		ResultSet rs = null;
+		List<Reservas> reservas = new ArrayList<Reservas>();
+		PropiedadesDao propDao = new PropiedadesDao();
+		try {
+			StringBuffer query = new StringBuffer("select * from final_labov.reservas where usuario = ? order by fecha_reserva;");
+			connection = ConexionDB.getConexion();
+			PreparedStatement st = (PreparedStatement)connection.prepareStatement(query.toString());
+			st.setString(1, usuario.getUsuario());
+			rs = st.executeQuery();
+			while (rs.next()){
+				Reservas reserva = new Reservas();
+				reserva.setFechaReserva(rs.getDate("fecha_reserva"));
+				reserva.setId(rs.getInt("reserva_id"));
+				reserva.setPropiedad(propDao.getPropiedadById(rs.getInt("propiedad_id")));
+				reserva.setUsuario(usuario);
+				reserva.setVencida(CommonHelper.convertToJavaBoolean(rs.getString("vencida")));
+				reserva.setVencimiento(rs.getDate("vencimiento_reserva"));
+				reservas.add(reserva);
+			}
+		} catch (SQLException s) {
+			System.out.println("Error: ");
+			s.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch (SQLException e) {e.printStackTrace();}
+			if (connection != null) try { connection.close(); } catch (SQLException e) {e.printStackTrace();}
+		}
+		return reservas;
 	}
 
 }

@@ -1,6 +1,5 @@
 package edu.utn.frgp.laboratoriov.domain;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -8,12 +7,12 @@ public class Reservas {
 
 	private Integer id;
 	private Usuario usuario;
-	private Timestamp fechaReserva;
-	private Timestamp vencimiento;
+	private Date fechaReserva;
+	private Date vencimiento;
 	private Propiedad propiedad;
 	private Boolean vencida;
 	
-	public Reservas(Integer id, Usuario usuario, Timestamp fechaReserva, Timestamp vencimiento, Propiedad propiedad, Boolean vencida) {
+	public Reservas(Integer id, Usuario usuario, Date fechaReserva, Date vencimiento, Propiedad propiedad, Boolean vencida) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
@@ -21,6 +20,9 @@ public class Reservas {
 		this.vencimiento = vencimiento;
 		this.propiedad = propiedad;
 		this.vencida = vencida;
+	}
+	public Reservas() {
+		super();
 	}
 	public Integer getId() {
 		return id;
@@ -34,16 +36,16 @@ public class Reservas {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public Timestamp getFechaReserva() {
+	public Date getFechaReserva() {
 		return fechaReserva;
 	}
-	public void setFechaReserva(Timestamp fechaReserva) {
+	public void setFechaReserva(Date fechaReserva) {
 		this.fechaReserva = fechaReserva;
 	}
-	public Timestamp getVencimiento() {
+	public Date getVencimiento() {
 		return vencimiento;
 	}
-	public void setVencimiento(Timestamp vencimiento) {
+	public void setVencimiento(Date vencimiento) {
 		this.vencimiento = vencimiento;
 	}
 	public Propiedad getPropiedad() {

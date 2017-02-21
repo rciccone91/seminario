@@ -26,7 +26,8 @@ public class ImagenDao {
 					(PreparedStatement) connection.prepareStatement("select i.IMAGEN_ID,i.IMAGE_PATH,i.PROPIEDAD_ID "
 							+ "from final_labov.imagenes as i "
 							+ "inner join propiedades as p "
-							+ "on i.propiedad_id = p.propiedad_id and p.propiedad_id = ?");
+							+ "on i.propiedad_id = p.propiedad_id and p.propiedad_id = ? "
+							+ "order by i.IMAGE_PATH");
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			
